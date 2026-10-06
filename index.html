@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261006-231736"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261007-075254"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
 <title>Luke의 VOCA TRAVEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -284,6 +284,10 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .wrow{display:flex;align-items:center;gap:calc(var(--m)*1.6);padding:calc(var(--m)*1.2) calc(var(--m)*1.4);border-bottom:2px dashed #bdb6a2}
 .wrow .en{font-family:var(--f-en);font-weight:700;font-size:calc(var(--m)*3);min-width:calc(var(--m)*20)}
 .wrow .ko{flex:1;min-width:0;font-weight:700}
+.xp-list{list-style:none;margin:0 0 calc(var(--m)*1.2);padding:0;display:flex;flex-direction:column;gap:calc(var(--m)*.5);font-size:calc(var(--m)*2.4)}
+.xp-list li{display:flex;justify-content:space-between;gap:12px}.xp-list b{font-family:var(--f-en)}.xp-list b.g{color:#1f8a52}
+.xpp .xpbar{margin-bottom:calc(var(--m)*.8)}.xpp .xpbar i{transition:width 1.2s .6s ease-out}
+.replay-note.xpn{background:#e8f6ea;border-color:#3ec27a}
 .pips{display:inline-flex;gap:3px;flex:none}.pips i{width:calc(var(--m)*1.5);height:calc(var(--m)*1.5);border-radius:50%;border:2px solid var(--ink);background:#fff;display:block}.pips i.on{background:#3ec27a}
 @media (max-width:520px){.wrow .pips{display:inline-flex}}
 .wrow.w2{flex-direction:column;align-items:stretch;gap:calc(var(--m)*.8)}
@@ -294,7 +298,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .item .sw.pimg{padding:0;overflow:hidden;background:#fff6dc;width:calc(var(--m)*10);height:calc(var(--m)*8.4)}.item .sw.pimg img{width:100%;height:100%;object-fit:contain}
 .qbtn{margin-left:calc(var(--m)*.8);vertical-align:middle;font-family:var(--f-en);font-weight:800;font-size:calc(var(--m)*2.4);width:calc(var(--m)*3.6)!important;height:calc(var(--m)*3.6)!important}
 .hp-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:calc(var(--m)*.8);font-weight:700;font-size:calc(var(--m)*2.4)}
-.hp-list li{display:flex;gap:calc(var(--m)*1.2);align-items:center}.hp-list .pips{margin-left:auto}
+.hp-list li{display:flex;gap:calc(var(--m)*1.2);align-items:flex-start}.hp-list li>b:first-child{flex:none;white-space:nowrap}.hp-list li small{display:block}.hp-list .pips{margin-left:auto}
 .hp-list b.g{color:var(--green-d)}.hp-list b.r{color:var(--red-d)}
 .hp-box{background:var(--paper2);border:3px solid var(--ink);border-radius:14px;padding:calc(var(--m)*1.4);font-size:calc(var(--m)*2.3);font-weight:700;line-height:1.5}
 .pill{font-size:calc(var(--m)*1.9);font-weight:700;border:2px solid var(--ink);border-radius:999px;padding:0 calc(var(--m)*1.2);white-space:nowrap}
@@ -551,7 +555,7 @@ function newSave() {
     badges: {}, daily: { date: '', runs: 0 }, streak: { last: '', count: 0 },
     settings: { sound: true, speech: true, pace: 1, readMode: 'always', readV: 2, cheer: true, names: ['Luke', '우진'] },
     stats: { bossWins: 0, maxCombo: 0, perfect: 0, correct: 0, records: 0 },
-    seenTip: false, gun: 1, bonus: 0, rank: null,
+    seenTip: false, gun: 1, bonus: 0, rank: null, xp: 0, xpV: 0,
   };
 }
 function mergeSave(base, src) {
@@ -667,35 +671,47 @@ function stageMastered(set, si) { let n = 0; for (const wi of set.stages[si].idx
 /* ============ ranks, worlds, shop ============ */
 const RANKS = [
   { n: '이등병', need: 0, g: 0, ins: { t: 'bar', n: 1 }, d: '막대 1개 · 이제 막 입대했어요' },
-  { n: '일병', need: 10, g: 0, ins: { t: 'bar', n: 2 }, d: '막대 2개 · 씩씩하게 적응 중!' },
-  { n: '상병', need: 25, g: 0, ins: { t: 'bar', n: 3 }, d: '막대 3개 · 이제 제법 든든해요' },
-  { n: '병장', need: 45, g: 0, ins: { t: 'bar', n: 4 }, d: '막대 4개 · 병사의 최고 계급!' },
-  { n: '하사', need: 70, g: 1, ins: { t: 'chev', n: 1 }, d: '금색 갈매기 1개 · 부사관이 됐어요' },
-  { n: '중사', need: 100, g: 1, ins: { t: 'chev', n: 2 }, d: '금색 갈매기 2개' },
-  { n: '상사', need: 135, g: 1, ins: { t: 'chev', n: 3 }, d: '금색 갈매기 3개' },
-  { n: '소위', need: 175, g: 2, ins: { t: 'dia', n: 1 }, d: '금빛 마름모 1개 · 장교가 됐어요' },
-  { n: '중위', need: 220, g: 2, ins: { t: 'dia', n: 2 }, d: '금빛 마름모 2개' },
-  { n: '대위', need: 270, g: 2, ins: { t: 'dia', n: 3 }, d: '금빛 마름모 3개' },
-  { n: '소령', need: 325, g: 3, ins: { t: 'rose', n: 1 }, d: '은빛 무궁화 1송이 · 모자챙 금장' },
-  { n: '중령', need: 385, g: 3, ins: { t: 'rose', n: 2 }, d: '은빛 무궁화 2송이' },
-  { n: '대령', need: 450, g: 3, ins: { t: 'rose', n: 3 }, d: '은빛 무궁화 3송이' },
-  { n: '준장', need: 520, g: 4, ins: { t: 'star', n: 1 }, d: '별 1개 · 장군이 됐어요' },
-  { n: '소장', need: 595, g: 4, ins: { t: 'star', n: 2 }, d: '별 2개' },
-  { n: '중장', need: 675, g: 4, ins: { t: 'star', n: 3 }, d: '별 3개' },
-  { n: '대장', need: 760, g: 4, ins: { t: 'star', n: 4 }, d: '별 4개 · 군의 최고 계급!' },
-  { n: '남작', need: 850, g: 5, ins: { t: 'noble', n: 1 }, d: '귀족이 됐어요 · 작은 관' },
-  { n: '자작', need: 945, g: 5, ins: { t: 'noble', n: 2 }, d: '진주 달린 관' },
-  { n: '백작', need: 1050, g: 5, ins: { t: 'noble', n: 3 }, d: '진주 뾰족관 · 붉은 보석' },
-  { n: '후작', need: 1165, g: 5, ins: { t: 'noble', n: 4 }, d: '잎사귀와 진주 관 · 모피 망토' },
-  { n: '공작', need: 1290, g: 5, ins: { t: 'noble', n: 5 }, d: '귀족 중 으뜸 · 보라 보석 관' },
-  { n: '왕', need: 1430, g: 6, ins: { t: 'king', n: 1 }, d: '왕관과 모피 망토' },
-  { n: '황제', need: 1600, g: 7, ins: { t: 'emp', n: 1 }, d: '큰 왕관, 황금 망토, 빛나는 날개' },
-  { n: '신', need: 1800, g: 8, ins: { t: 'god', n: 1 }, d: '머리 위에 후광, 하얀 날개… 전설이 됐어요' },
+  { n: '일병', need: 120, g: 0, ins: { t: 'bar', n: 2 }, d: '막대 2개 · 씩씩하게 적응 중!' },
+  { n: '상병', need: 330, g: 0, ins: { t: 'bar', n: 3 }, d: '막대 3개 · 이제 제법 든든해요' },
+  { n: '병장', need: 630, g: 0, ins: { t: 'bar', n: 4 }, d: '막대 4개 · 병사의 최고 계급!' },
+  { n: '하사', need: 1020, g: 1, ins: { t: 'chev', n: 1 }, d: '금색 갈매기 1개 · 부사관이 됐어요' },
+  { n: '중사', need: 1500, g: 1, ins: { t: 'chev', n: 2 }, d: '금색 갈매기 2개' },
+  { n: '상사', need: 2070, g: 1, ins: { t: 'chev', n: 3 }, d: '금색 갈매기 3개' },
+  { n: '소위', need: 2730, g: 2, ins: { t: 'dia', n: 1 }, d: '금빛 마름모 1개 · 장교가 됐어요' },
+  { n: '중위', need: 3480, g: 2, ins: { t: 'dia', n: 2 }, d: '금빛 마름모 2개' },
+  { n: '대위', need: 4320, g: 2, ins: { t: 'dia', n: 3 }, d: '금빛 마름모 3개' },
+  { n: '소령', need: 5250, g: 3, ins: { t: 'rose', n: 1 }, d: '은빛 무궁화 1송이 · 모자챙 금장' },
+  { n: '중령', need: 6270, g: 3, ins: { t: 'rose', n: 2 }, d: '은빛 무궁화 2송이' },
+  { n: '대령', need: 7380, g: 3, ins: { t: 'rose', n: 3 }, d: '은빛 무궁화 3송이' },
+  { n: '준장', need: 8580, g: 4, ins: { t: 'star', n: 1 }, d: '별 1개 · 장군이 됐어요' },
+  { n: '소장', need: 9870, g: 4, ins: { t: 'star', n: 2 }, d: '별 2개' },
+  { n: '중장', need: 11250, g: 4, ins: { t: 'star', n: 3 }, d: '별 3개' },
+  { n: '대장', need: 12720, g: 4, ins: { t: 'star', n: 4 }, d: '별 4개 · 군의 최고 계급!' },
+  { n: '남작', need: 14280, g: 5, ins: { t: 'noble', n: 1 }, d: '귀족이 됐어요 · 작은 관' },
+  { n: '자작', need: 15930, g: 5, ins: { t: 'noble', n: 2 }, d: '진주 달린 관' },
+  { n: '백작', need: 17670, g: 5, ins: { t: 'noble', n: 3 }, d: '진주 뾰족관 · 붉은 보석' },
+  { n: '후작', need: 19500, g: 5, ins: { t: 'noble', n: 4 }, d: '잎사귀와 진주 관 · 모피 망토' },
+  { n: '공작', need: 21420, g: 5, ins: { t: 'noble', n: 5 }, d: '귀족 중 으뜸 · 보라 보석 관' },
+  { n: '왕', need: 23430, g: 6, ins: { t: 'king', n: 1 }, d: '왕관과 모피 망토' },
+  { n: '황제', need: 25530, g: 7, ins: { t: 'emp', n: 1 }, d: '큰 왕관, 황금 망토, 빛나는 날개' },
+  { n: '신', need: 27720, g: 8, ins: { t: 'god', n: 1 }, d: '머리 위에 후광, 하얀 날개… 전설이 됐어요' },
 ];
 const RANK_GROUPS = ['병사', '부사관', '위관 장교', '영관 장교', '장성', '귀족', '왕', '황제', '신'];
-function rankElig(m = totalMastered()) { let r = 0; RANKS.forEach((x, i) => { if (m >= x.need) r = i; }); return r; }
+// 계급은 XP(경험치)로 정해져요. 스테이지를 깰 때마다 XP를 받고, XP가 차면 승급시험(10문제)에 도전해요.
+const curXp = () => { if (Store.data.xpV !== 2 && typeof SETS !== 'undefined') xpMigrate(); return Math.max(0, Math.floor(Store.data.xp || 0)); };
+function rankElig(x = curXp()) { let r = 0; RANKS.forEach((k, i) => { if (x >= k.need) r = i; }); return r; }
+const xpLabel = n => fmt(n) + ' XP';
+const OLD_NEED = [0, 10, 25, 45, 70, 100, 135, 175, 220, 270, 325, 385, 450, 520, 595, 675, 760, 850, 945, 1050, 1165, 1290, 1430, 1600, 1800];
+// 예전 저장(마스터 단어 수로 계급 결정) → XP 방식: 지금 계급이 되는 XP에서 시작해요 (1회만)
+function xpMigrate() {
+  const d = Store.data; if (d.xpV === 2) return;
+  if (d.xpV === 1) { d.xpV = 2; const r1 = clamp(d.rank | 0, 0, RANKS.length - 1); d.xp = Math.max(d.xp || 0, RANKS[r1].need); return; } // 계급별 필요 XP가 3배가 되어도 현재 계급 아래로 내려가지 않게
+  d.xpV = 2;
+  let r = d.rank; if (r == null) { const m = totalMastered(); r = 0; OLD_NEED.forEach((k, i) => { if (m >= k) r = i; }); d.rank = r; }
+  d.xp = Math.max(d.xp || 0, RANKS[clamp(r | 0, 0, RANKS.length - 1)].need);
+}
 // 실제 계급: 점수(마스터 단어)가 차도 승급시험을 통과해야 올라가요. 예전 저장 데이터는 처음 한 번 지금 자격 그대로 인정해요.
-function rankIdx() { const d = Store.data; if (d.rank == null) d.rank = rankElig(); return clamp(d.rank | 0, 0, RANKS.length - 1); }
+function rankIdx() { const d = Store.data; if (d.xpV !== 2 && typeof SETS !== 'undefined') xpMigrate(); if (d.rank == null) d.rank = rankElig(); return clamp(d.rank | 0, 0, RANKS.length - 1); }
 const examAvail = () => rankIdx() < RANKS.length - 1 && rankElig() > rankIdx();
 
 const WORLDS = [
@@ -795,7 +811,7 @@ const GUNS = [
   { n: '플라즈마 총', dmg: 22, iv: 0.10, price: 1000, rk: 9, c: '#8a63d2', d: '보라색 에너지탄' },
   { n: '황금 대포', dmg: 30, iv: 0.09, price: 2000, rk: 14, c: '#e0b23c', d: '가장 강한 황금 총' },
 ];
-const SHOP_TABS = [['color', '목도리 색'], ['hat', '모자'], ['pet', '펫'], ['trail', '꼬리 효과']];
+const SHOP_TABS = [['color', '목도리 색'], ['hat', '모자'], ['pet', '펫'], ['trail', '이동 효과']];
 /* 펫 보조화력: 보스전에서 계급이 높은 펫일수록 도와줘요 (5% ~ 20%) */
 const petAssist = id => { const it = SHOP.pet.find(x => x.id === id); return !it || id === 'none' ? 0 : 0.05 + 0.15 * it.rk / 24; };
 const shopItem = (cat, id) => SHOP[cat].find(x => x.id === id) || SHOP[cat][0];
@@ -1465,9 +1481,54 @@ function trailColors(id, t) {
     default: return [pick(['rgba(255,255,255,.85)', 'rgba(230,230,230,.8)']), 'sq'];
   }
 }
-function emitTrail(x, y, id, t, speed) {
-  const [c, k] = trailColors(id, t);
-  addP({ x: x + rnd(-G.laneW * 0.1, G.laneW * 0.1), y: y - 2, vx: rnd(-14, 14), vy: speed * rnd(0.6, 1.1), life: rnd(0.35, 0.65), size: (k === 'star' ? rnd(6, 11) : rnd(4, 9)) * Math.max(0.8, G.laneW / 250), color: c, kind: k, rot: rnd(0, 6), vr: rnd(-4, 4) });
+/* ---- 이동 효과: 좌우로 길을 옮길 때 그림자(잔상)와 입자가 남아요 ---- */
+function mfxColor(id, hue) {
+  switch (id) {
+    case 'fire': return 'rgba(255,110,30,.7)';
+    case 'rainbow': return `hsla(${hue},95%,60%,.7)`;
+    case 'star': return 'rgba(255,214,90,.7)';
+    case 'bolt': return 'rgba(110,225,255,.75)';
+    case 'petal': return 'rgba(255,150,200,.7)';
+    default: return 'rgba(235,238,245,.6)';
+  }
+}
+function emitMove(S, px, dir, id, h, yy, t) {
+  S.gh = S.gh || []; S.hue = ((S.hue || 0) + 32) % 360;
+  S.gh.push({ x: px, y: yy, h, dir, life: 0.4, max: 0.4, hue: S.hue });
+  if (S.gh.length > 24) S.gh.shift();
+  const sc = Math.max(0.8, G.laneW / 250), bx = px - dir * h * 0.12, fy = yy - h * rnd(0.05, 0.6);
+  switch (id) {
+    case 'petal': for (let i = 0; i < 2; i++) addP({ x: bx + rnd(-10, 10), y: yy - h * rnd(0.1, 0.8), vx: -dir * rnd(30, 130), vy: rnd(-80, 10), g: 70, life: rnd(0.7, 1.1), size: rnd(6, 12) * sc, color: pick(['#ffb3d1', '#ff8fc0', '#ffd6e6']), kind: 'sq', rot: rnd(0, 6), vr: rnd(-6, 6) }); break;
+    case 'star': addP({ x: bx + rnd(-12, 12), y: fy, vx: -dir * rnd(10, 60), vy: rnd(-70, -10), life: rnd(0.45, 0.8), size: rnd(8, 15) * sc, color: pick(['#ffe27a', '#fff6c8', '#ffd24a']), kind: 'star', rot: rnd(0, 6), vr: rnd(-5, 5) }); break;
+    case 'bolt': addP({ x: bx + rnd(-12, 12), y: fy, vx: -dir * rnd(30, 120), vy: rnd(-50, 50), life: rnd(0.25, 0.45), size: rnd(7, 13) * sc, color: pick(['#7ae8ff', '#fff', '#b9f3ff']), kind: 'star', rot: rnd(0, 6), vr: rnd(-12, 12) }); break;
+    case 'fire': for (let i = 0; i < 2; i++) addP({ x: bx + rnd(-10, 10), y: yy - h * rnd(0.05, 0.5), vx: -dir * rnd(10, 60), vy: rnd(-150, -50), life: rnd(0.35, 0.6), size: rnd(7, 13) * sc, color: pick(['#ff7a1a', '#ffd23f', '#ff4f2e']), kind: 'sq', rot: rnd(0, 6), vr: rnd(-4, 4) }); break;
+    case 'rainbow': addP({ x: bx + rnd(-8, 8), y: fy, vx: -dir * rnd(30, 90), vy: rnd(-30, 30), life: rnd(0.4, 0.65), size: rnd(7, 12) * sc, color: `hsl(${S.hue},90%,60%)`, kind: 'sq', rot: rnd(0, 6), vr: rnd(-4, 4) }); break;
+    default: addP({ x: bx + rnd(-10, 10), y: yy - 2, vx: -dir * rnd(20, 70), vy: rnd(-50, -10), life: rnd(0.3, 0.5), size: rnd(6, 11) * sc, color: 'rgba(255,255,255,.8)', kind: 'sq', rot: rnd(0, 6), vr: rnd(-3, 3) });
+  }
+}
+function stepMoveFx(S, dt, px, id, h, yy, t, minSp) {
+  const dx = px - (S.px0 == null ? px : S.px0); S.px0 = px;
+  S.gh = S.gh || []; for (let i = S.gh.length - 1; i >= 0; i--) { S.gh[i].life -= dt; if (S.gh[i].life <= 0) S.gh.splice(i, 1); }
+  const sp = Math.abs(dx) / Math.max(dt, 0.001);
+  S.mt = (S.mt || 0) - dt;
+  if (sp > (minSp || G.laneW * 1.4) && S.mt <= 0) { S.mt = 0.022; emitMove(S, px, dx > 0 ? 1 : -1, id, h, yy, t); }
+}
+function drawMoveGhosts(S, id) {
+  if (!S || !S.gh || !S.gh.length) return;
+  ctx.save();
+  let prev = null;
+  for (const g of S.gh) {
+    const a = clamp(g.life / g.max, 0, 1), h = g.h, x = g.x, y = g.y, col = mfxColor(id, g.hue);
+    ctx.globalAlpha = a * 0.55; ctx.fillStyle = col;
+    const H = h * 1.12, w = H * 0.46;
+    ctx.fillRect(x - H * 0.16, y - H * 0.98, H * 0.32, H * 0.3);   // 머리
+    ctx.fillRect(x - w / 2, y - H * 0.7, w, H * 0.4);              // 몸통
+    ctx.fillRect(x - w * 0.42, y - H * 0.3, w * 0.38, H * 0.3);    // 다리
+    ctx.fillRect(x + w * 0.04, y - H * 0.3, w * 0.38, H * 0.3);
+    if (id === 'bolt' && prev) { ctx.globalAlpha = a; ctx.strokeStyle = '#fff'; ctx.lineWidth = Math.max(2, h * 0.025); ctx.beginPath(); const ym = y - h * 0.5; ctx.moveTo(prev.x, ym); ctx.lineTo((prev.x + x) / 2, ym - h * 0.12); ctx.lineTo((prev.x + x) / 2 + (x - prev.x) * 0.1, ym + h * 0.1); ctx.lineTo(x, ym); ctx.stroke(); }
+    prev = g;
+  }
+  ctx.restore();
 }
 
 /* ============ countries: palettes, flags, landmarks, extra scenery ============ */
@@ -2327,6 +2388,12 @@ function endRun(bossWon = false) {
   R.bossWon = !!bossWon; finalizeRun(); App.mode = 'results';
   showResults();
 }
+/* ---- XP (경험치): 스테이지를 깰 때마다 받아요. 뒤쪽 스테이지일수록 많이, 반복할수록 보너스 ---- */
+const XP_STAR = [0.25, 0.8, 1.0, 1.2], XP_REPLAY = 0.03, XP_REPLAY_MAX = 20, XP_BEST = 0.10, XP_MASTER = 3;
+const xpBase = si => 30 + 2 * si;
+function xpStageClears(set, si) { return Math.min(XP_REPLAY_MAX, stageClears(stageRec(set, si))); }
+// 이 스테이지를 별 2개로 깼을 때 받을 XP (스테이지 준비 화면 안내용)
+function xpPreview(set, si) { const n = xpStageClears(set, si); return { base: Math.round(xpBase(si)), mul: 1 + XP_REPLAY * n, n, est: Math.round(xpBase(si) * (1 + XP_REPLAY * n)) }; }
 const REPLAY_BONUS = 0.001; // 깬 스테이지를 다시 할 때마다 점수 +0.1%씩
 const stageClears = rec => (rec.clears != null ? rec.clears : rec.stars >= 1 ? Math.max(1, rec.runs - 0) : 0);
 const replayLabel = n => '+' + (n * REPLAY_BONUS * 100).toFixed(1).replace(/\.0$/, '') + '%';
@@ -2344,6 +2411,14 @@ function finalizeRun() {
     setStageRec(set, si, { stars: Math.max(rec.stars, stars), best: Math.max(rec.best, R.score), runs: rec.runs + 1, clears: n + (stars >= 1 ? 1 : 0) });
   }
   const bonus = stars * 5 + (R.bossWon ? 10 : 0) + (perfect ? 10 : 0) + (record ? 10 : 0);
+  // XP 계산: 스테이지 기본 XP × 별 배율 × (1 + 반복 보너스) × (최고 점수 갱신 시 +10%) + 보스·퍼펙트·새 마스터 단어
+  const newlyN = R.pool.filter(wi => getStat(set, set.words[wi])[0] >= MAXM && !R.mastered0.has(wi)).length;
+  let xpSi, xpN = 0, xpFree = 1;
+  if (R.kind === 'stage' && R.stages.length === 1) { xpSi = R.stages[0]; xpN = Math.min(XP_REPLAY_MAX, stageClears(stageRec(set, xpSi)) - (stars >= 1 ? 1 : 0)); xpFree = 1; }
+  else { xpSi = R.stages && R.stages.length ? Math.round(R.stages.reduce((a, b) => a + b, 0) / R.stages.length) : 0; xpFree = 0.7; }
+  const xBase = xpBase(xpSi) * XP_STAR[stars] * xpFree, xRep = xBase * XP_REPLAY * xpN, xBest = record ? (xBase + xRep) * XP_BEST : 0;
+  const xp = { base: Math.round(xBase), rep: Math.round(xRep), best: Math.round(xBest), boss: R.bossWon ? 10 : 0, perfect: perfect ? 10 : 0, master: newlyN * XP_MASTER, n: xpN, from: curXp() };
+  xp.total = xp.base + xp.rep + xp.best + xp.boss + xp.perfect + xp.master; d.xp = xp.from + xp.total; R.xp = xp;
   d.bonus = (d.bonus || 0) + stars; d.coins += R.coins + bonus; d.totalRuns++; d.bestScore = Math.max(d.bestScore, R.score);
   d.stats.correct += R.correct; d.stats.maxCombo = Math.max(d.stats.maxCombo, R.maxCombo);
   if (R.bossWon) d.stats.bossWins++; if (perfect) d.stats.perfect++; if (record) d.stats.records++;
@@ -2352,7 +2427,7 @@ function finalizeRun() {
   const badges = checkBadges();
   const newly = R.pool.filter(wi => getStat(set, set.words[wi])[0] >= MAXM && !R.mastered0.has(wi));
   const rank1 = rankIdx(), examNew = examAvail() && rankElig() > R.elig0;
-  R.res = { total, acc, stars, perfect, record, prevBest, bonus, badges, newly, rank1, rankUp: examNew, missed: [...R.missed.keys()] };
+  R.res = { xp: R.xp, total, acc, stars, perfect, record, prevBest, bonus, badges, newly, rank1, rankUp: examNew, missed: [...R.missed.keys()] };
   Store.touch(); Store.flush();
 }
 function quitRun() {
@@ -2386,9 +2461,8 @@ function updateRun(dt) {
     if (q.judged && q.t >= q.judgedAt + q.fb) { R.q = null; R.bul.length = 0; R.bonus ? bonusNext() : next(); }
   }
   if (R.wait > 0) { R.wait -= dt; if (R.wait <= 0) { const f = R.waitFn; R.waitFn = null; f && f(); } }
-  if (R.phase === 'run' && R.scrollMul > 0.5) {
-    R.trailT -= dt; if (R.trailT <= 0) { R.trailT = 0.045; emitTrail(laneX(R.laneF, G.yC), G.yC, lookOf().trail, R.t, v); }
-  }
+  if (R.phase === 'run' || R.phase === 'boss') stepMoveFx(R, dt, laneX(R.laneF, G.yC), lookOf().trail, runnerH(), G.yC, R.t);
+  else if (R.gh) stepMoveFx(R, dt, R.px0 == null ? 0 : R.px0, lookOf().trail, runnerH(), G.yC, R.t, 1e9);
   if (R.shown !== R.score) { R.shown += (R.score - R.shown) * Math.min(1, dt * 9); if (Math.abs(R.score - R.shown) < 1) R.shown = R.score; HUD['score-n'].textContent = fmt(R.shown); }
   HUD['coin-n'].textContent = R.coins;
 }
@@ -2402,7 +2476,7 @@ function renderRun() {
   near.forEach(drawGate);
   if (!typing) {
     const x = laneX(R.laneF, G.yC), hop = Math.sin(Math.PI * R.hopT) * h * 0.16 * (R.hopT < 1 ? 1 : 0);
-    drawP();
+    drawMoveGhosts(R, look.trail); drawP();
     drawPet(look.pet, R.petX - h * 0.5, G.yC + h * 0.02, h / 9.8 * 0.7, R.t, R.scrollMul);
     drawRunner(x, G.yC, h, { t: R.t, moving: clamp(R.scrollMul, 0, 1), rank, look, hop, lean: clamp(R.lane - R.laneF, -1, 1), pose: R.phase === 'outro' || R.phase === 'bossDead' ? 'cheer' : 'run' });
     if (R.phase === 'run' || R.phase === 'boss') drawGunOnRunner(x, G.yC, h, hop);
@@ -2428,8 +2502,14 @@ function renderAmbient() {
   drawWorld(); drawP();
   const x = G.W * (G.W > G.H * 1.15 ? 0.27 : 0.5), y = G.H * (G.W > G.H * 1.15 ? 0.9 : 0.5);
   App.petX = (App.petX == null ? x : App.petX + (x - App.petX) * 0.1);
-  drawPet(look.pet, x - h * 0.5, y + 2, h / 9.8 * 0.7, App.amb || 0, 1);
-  drawRunner(x, y, h, { t: App.amb || 0, moving: 0.8, rank, look, pose: App.mode === 'results' && R && R.res && R.res.stars >= 1 ? 'cheer' : 'run' });
+  let rx = x;
+  if (App.screen === 'dress' && App.dressTab === 'trail') { // 이동 효과 미리보기: 좌우로 왔다 갔다
+    const ph = Math.floor((App.amb || 0) / 1.3) % 2 ? 1 : -1; if (!(App.demoX >= -2)) App.demoX = 0; App.demoX += (ph - App.demoX) * 0.16; rx = x + App.demoX * Math.min(h * 0.4, G.W * 0.085);
+    stepMoveFx(App, 0.016, rx, look.trail, h, y, App.amb || 0, G.W * 0.012 * 60 * 0.35);
+  } else if (App.gh && App.gh.length) { App.gh.length = 0; App.px0 = null; }
+  drawMoveGhosts(App, look.trail);
+  drawPet(look.pet, rx - h * 0.5, y + 2, h / 9.8 * 0.7, App.amb || 0, 1);
+  drawRunner(rx, y, h, { t: App.amb || 0, moving: 0.8, rank, look, pose: App.mode === 'results' && R && R.res && R.res.stars >= 1 ? 'cheer' : 'run' });
 }
 function frame(ts) {
   requestAnimationFrame(frame);
@@ -2810,7 +2890,7 @@ function revealExample(w) {
   el.hidden = false; el.innerHTML = `<div class="en">${en}</div><div class="ko">${esc(ex[1])}</div>`;
 }
 
-/* ============ 보너스 스테이지: 예문 빈칸 4지선다 ============ */
+/* ============ 보너스 스테이지: 예문 빈칸 4지선다 (3문제) ============ */
 function clozeParts(w) {
   const ex = EX[w.w]; if (!ex) return null; const m = blankRe(w.w).exec(ex[0]); if (!m) return null;
   return { pre: ex[0].slice(0, m.index + m[1].length), word: m[2], post: ex[0].slice(m.index + m[1].length + m[2].length), ko: ex[1], full: ex[0] };
@@ -2820,7 +2900,7 @@ function startBonusStage() {
   R.missed.forEach((v, wi) => { if (!seen.has(wi)) { seen.add(wi); cand.push(wi); } });
   const rest = shuffle(R.log.map(l => l.wi).concat(R.pool)).filter(wi => !seen.has(wi) && seen.add(wi));
   rest.sort((a, b) => getStat(set, set.words[a])[0] - getStat(set, set.words[b])[0] + (Math.random() - 0.5) * 2);
-  const list = cand.concat(rest).filter(wi => clozeParts(set.words[wi])).slice(0, 4);
+  const list = cand.concat(rest).filter(wi => clozeParts(set.words[wi])).slice(0, 3);
   if (list.length < 2) return endRun(true);
   R.bossOn = false; R.gates = []; R.bul.length = 0; R.q = null; R.firing = false; R.scrollTarget = 0; R.phase = 'bonusIntro';
   R.bonus = { list, i: 0, n: list.length, ok: 0 }; HUD.prompt.hidden = true; hudAll();
@@ -2910,10 +2990,10 @@ function renderHome() {
   const set = curSet(), m = totalMastered(), ri = rankIdx(), rk = RANKS[ri], nx = RANKS[ri + 1], d = Store.data, ex = examAvail();
   const lg = $('#logo');
   if (!lg.firstChild) lg.innerHTML = '<small>Luke의</small>' + ['VOCA', 'TRAVEL'].map((w, wi) => `<div class="row">${[...w].map((c, i) => `<span class="t" style="background:${LANE[(i + (wi ? 2 : 0)) % 4]}">${c}</span>`).join('')}</div>`).join('') + '<small>단어를 외우며 세계 일주 · 이병에서 신까지</small>';
-  const pct = nx ? clamp((m - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100;
+  const xp = curXp(), pct = nx ? clamp((xp - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100;
   const hi = cheer('greet');
-  $('#home-rank').innerHTML = (hi ? `<div class="hi">${esc(hi)}</div>` : '') + `<div class="seg lvl">${[['base', '초등'], ['mid', '중등']].concat(SETS.custom ? [['custom', '내 단어장']] : []).map(([id, n]) => `<button class="${d.activeSet === id ? 'on' : ''}" data-act="useSet" data-id="${id}">${n}</button>`).join('')}</div><div class="top">${insImg(ri, 'hm')}<span class="rn">${rk.n}</span><span class="grp">${RANK_GROUPS[rk.g]}</span><span class="rs">마스터한 단어 ${m}개 · ${esc(set.name)}</span></div>` +
-    (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 5문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 단어 <b>${Math.max(0, nx.need - m)}개</b> 더 마스터!<button class="ibtn qbtn" data-act="rankHelp" aria-label="계급 올리는 방법">?</button></div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
+  $('#home-rank').innerHTML = (hi ? `<div class="hi">${esc(hi)}</div>` : '') + `<div class="seg lvl">${[['base', '초등'], ['mid', '중등']].concat(SETS.custom ? [['custom', '내 단어장']] : []).map(([id, n]) => `<button class="${d.activeSet === id ? 'on' : ''}" data-act="useSet" data-id="${id}">${n}</button>`).join('')}</div><div class="top">${insImg(ri, 'hm')}<span class="rn">${rk.n}</span><span class="grp">${RANK_GROUPS[rk.g]}</span><span class="rs">${xpLabel(xp)} · 마스터 단어 ${m}개</span></div>` +
+    (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 ${EXAM_N}문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 <b>${fmt(Math.max(0, nx.need - xp))} XP</b> 더!<button class="ibtn qbtn" data-act="rankHelp" aria-label="계급 올리는 방법">?</button></div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
     `<div class="chips"><span class="chip"><span class="coin"></span>${fmt(d.coins)}</span><span class="chip">${d.streak.count || 0}일 연속</span><span class="chip">최고 ${fmt(d.bestScore)}점</span>${(d.bonus || 0) > 0 ? `<button class="chip bonus" data-act="bonusOpen">★ 보너스 ${d.bonus}번</button>` : ''}</div>`;
   const si = recommendedStage(set);
   $('#btn-play').innerHTML = `RUN START!<span class="play-sub">스테이지 ${si + 1} · ${esc(stagePlace(set, si))}</span>`;
@@ -2964,6 +3044,7 @@ function openPrep(spec) {
   spec.words = pool;
   const pace = Store.data.settings.pace;
   $('#prep-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="prep" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h3>${esc(title)}</h3><div class="muted">${esc(sub)}<br>20문제 + 체크포인트 + 보스전, 약 6분</div>${(() => { if (spec.kind !== 'stage') return ''; const rec = stageRec(set, spec.si), n = stageClears(rec); return n > 0 ? `<div class="replay-note">반복 보너스 <b>${replayLabel(n)}</b> · ${n}번 클리어${rec.best ? ` · 최고 ${fmt(rec.best)}점` : ''}</div>` : `<div class="replay-note">클리어하면 다음부터 다시 할 때마다 점수 +0.1%씩 붙어요</div>`; })()}
+    ${spec.kind === 'stage' ? (() => { const xv = xpPreview(set, spec.si); return `<div class="replay-note xpn">클리어 보상 <b>약 ${xv.est} XP</b> <small>(기본 ${xv.base}${xv.n ? ` · 반복 보너스 +${xv.n * 3}%` : ''} · 최고 점수 갱신하면 +10%)</small></div>`; })() : ''}
     ${spec.kind === 'stage' ? `<div class="replay-note wkn">보스 약점 무기: <b>${esc(weakName(worldIdx(set, spec.si)))}</b> · 바주카는 모든 보스에 강해요</div>` : ''}
     <div><div class="muted" style="margin-bottom:6px">달리는 속도 <small>(빠를수록 점수 보너스)</small></div><div class="seg">${PACE_NAMES.map((n, i) => `<button class="${i === pace ? 'on' : ''}" data-act="prepPace" data-i="${i}">${paceLabel(i)}</button>`).join('')}</div></div>
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="prepCards">단어 미리보기</button><button class="btn primary" style="flex:1" data-act="prepGo">출발!</button></div>`;
@@ -2977,7 +3058,7 @@ function openCards() {
 
 /* ---- dress ---- */
 function renderDress() {
-  App.dressTab = App.dressTab || 'rank'; const d = Store.data, m = totalMastered(), cur = rankIdx();
+  App.dressTab = App.dressTab || 'rank'; const d = Store.data, m = curXp(), cur = rankIdx();
   $('#dress-coins').textContent = fmt(d.coins);
   const tabs = [['rank', '계급'], ['gun', '총'], ...SHOP_TABS];
   $('#dress-tabs').innerHTML = tabs.map(([k, n]) => `<button class="${App.dressTab === k ? 'on' : ''}" data-act="dTab" data-k="${k}">${n}</button>`).join('');
@@ -2985,12 +3066,12 @@ function renderDress() {
   if (App.dressTab === 'rank') {
     const sel = App.preview.rank != null ? App.preview.rank : cur;
     body.innerHTML = RANKS.map((r, i) => {
-      const st = i === cur ? '현재 계급' : i < cur ? '달성' : m >= r.need ? (i === cur + 1 ? '승급시험 가능!' : '앞 계급 먼저') : `${r.need - m}개 더 필요`;
+      const st = i === cur ? '현재 계급' : i < cur ? '달성' : m >= r.need ? (i === cur + 1 ? '승급시험 가능!' : '앞 계급 먼저') : `${fmt(r.need - m)} XP 더`;
       const gh = i === 0 || RANKS[i - 1].g !== r.g ? `<div class="grp-h">${RANK_GROUPS[r.g]}</div>` : '';
-      return gh + `<button class="rk ${i === cur ? 'cur' : m < r.need ? 'lock' : ''} ${i === sel ? 'sel' : ''}" data-act="rankPick" data-i="${i}"><span class="n">${insImg(i, 'li')}<em>${r.n}</em></span><span class="d"><b>마스터 단어 ${r.need}개</b>${esc(r.d)}</span><span class="pill ${i === cur ? 'master' : i < cur ? 'almost' : m >= r.need ? (i === cur + 1 ? 'master' : 'almost') : 'new'}">${st}</span></button>`;
+      return gh + `<button class="rk ${i === cur ? 'cur' : m < r.need ? 'lock' : ''} ${i === sel ? 'sel' : ''}" data-act="rankPick" data-i="${i}"><span class="n">${insImg(i, 'li')}<em>${r.n}</em></span><span class="d"><b>${fmt(r.need)} XP</b>${esc(r.d)}</span><span class="pill ${i === cur ? 'master' : i < cur ? 'almost' : m >= r.need ? (i === cur + 1 ? 'master' : 'almost') : 'new'}">${st}</span></button>`;
     }).join('');
     const showing = App.preview.rank != null && App.preview.rank !== cur;
-    act.innerHTML = `<div class="info">${showing ? `${RANKS[sel].n} 모습 미리보기` : `내 계급: ${RANKS[cur].n}`}<small>${showing ? (sel <= cur ? '이미 얻은 모습이에요' : m >= RANKS[sel].need ? '승급시험을 통과하면 이 모습이 돼요' : `마스터 단어 ${RANKS[sel].need - m}개를 더 외우면 이 모습이 돼요`) : '계급을 눌러서 앞으로의 모습을 볼 수 있어요'}</small></div>${showing ? '<button class="btn" data-act="rankReset">내 모습</button>' : ''}${examAvail() ? '<button class="btn primary pulse" data-act="examStart">도전! 승급시험!</button>' : ''}`;
+    act.innerHTML = `<div class="info">${showing ? `${RANKS[sel].n} 모습 미리보기` : `내 계급: ${RANKS[cur].n}`}<small>${showing ? (sel <= cur ? '이미 얻은 모습이에요' : m >= RANKS[sel].need ? '승급시험을 통과하면 이 모습이 돼요' : `${fmt(RANKS[sel].need - m)} XP를 더 모으면 이 모습이 돼요`) : '계급을 눌러서 앞으로의 모습을 볼 수 있어요'}</small></div>${showing ? '<button class="btn" data-act="rankReset">내 모습</button>' : ''}${examAvail() ? '<button class="btn primary pulse" data-act="examStart">도전! 승급시험!</button>' : ''}`;
   } else if (App.dressTab === 'gun') {
     const lv = d.gun || 1;
     body.innerHTML = GUNS.map((g, i) => {
@@ -3014,8 +3095,8 @@ function renderDress() {
     else if (rankIdx() < it.rk) btn = `<button class="btn" disabled>${esc(RANKS[it.rk].n)} 계급부터 살 수 있어요</button>`;
     else if (d.coins >= it.price) btn = `<button class="btn primary" data-act="itemBuy">${it.price} 코인으로 사기</button>`;
     else btn = `<button class="btn" disabled>코인 ${it.price - d.coins}개 부족</button>`;
-    const pa = cat === 'pet' ? petAssist(it.id) : 0, pn = pa ? ` · 보스전 지원 +${Math.round(pa * 100)}%` : '';
-    act.innerHTML = `<div class="info">${esc(it.name)}<small>${own ? '가지고 있어요' : rankIdx() < it.rk ? RANKS[it.rk].n + ' 계급부터 살 수 있어요 · ' + it.price + ' 코인' : it.price + ' 코인'}${pn}</small></div>${btn}`;
+    const pa = cat === 'pet' ? petAssist(it.id) : 0, pn = pa ? ` · 보스전 지원 +${Math.round(pa * 100)}%` : ''; const pn2 = cat === 'trail' ? ' · 좌우로 움직일 때 나타나요' : '';
+    act.innerHTML = `<div class="info">${esc(it.name)}<small>${own ? '가지고 있어요' : rankIdx() < it.rk ? RANKS[it.rk].n + ' 계급부터 살 수 있어요 · ' + it.price + ' 코인' : it.price + ' 코인'}${pn}${pn2 || ''}</small></div>${btn}`;
   }
 }
 
@@ -3076,6 +3157,14 @@ function openEditor() {
 }
 
 /* ---- results ---- */
+function xpPanel(res) {
+  const x = res.xp; if (!x) return '';
+  const ri = rankIdx(), rk = RANKS[ri], nx = RANKS[ri + 1], now = x.from + x.total, pct = nx ? clamp((now - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100, p0 = nx ? clamp((x.from - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100;
+  const row = (l, v, cls) => v ? `<li><span>${l}</span><b class="${cls || ''}">+${v}</b></li>` : '';
+  return `<div class="panel xpp"><div class="sec-title">경험치 <small>+${fmt(x.total)} XP</small></div>
+    <ul class="xp-list">${row('스테이지 클리어', x.base)}${row(x.n > 0 ? `반복 보너스 (${x.n}번째 재도전 · +${x.n * 3}%)` : '', x.rep, 'g')}${row('최고 점수 갱신 +10%', x.best, 'g')}${row('보스 격파', x.boss)}${row('퍼펙트', x.perfect)}${row(`새로 마스터한 단어 ${res.newly.length}개`, x.master)}</ul>
+    ${nx ? `<div class="bar xpbar"><i style="width:${p0}%" data-to="${pct}"></i></div><div class="rs">${esc(nx.n)}까지 <b>${fmt(Math.max(0, nx.need - now))} XP</b> 남았어요 <small>(${fmt(now)} / ${fmt(nx.need)})</small></div>` : '<div class="rs">가장 높은 계급이에요!</div>'}</div>`;
+}
 function showResults() {
   const res = R.res, set = R.set, d = Store.data; go('results'); App.mode = 'results';
   const stageInfo = R.kind === 'stage' && R.stages.length === 1 ? `STAGE ${R.stages[0] + 1} · ${stagePlace(set, R.stages[0])}` : '내 마음대로';
@@ -3087,7 +3176,7 @@ function showResults() {
       <div class="res-score" id="res-score">0</div>
       ${res.record ? '<span class="newrec">NEW RECORD!</span>' : ''}
       ${R.paceB ? `<div class="replay-note">${PACE_NAMES[R.paceI]} 속도 보너스 <b>×${R.paceB.mul}</b> 적용 (+${fmt(R.paceB.add)}점)</div>` : ''}
-      ${R.replay ? `<div class="replay-note">반복 보너스 <b>${replayLabel(R.replay.n)}</b> 적용 (+${fmt(R.replay.add)}점)</div>` : R.kind === 'stage' && R.stages.length === 1 && res.stars >= 1 ? '<div class="replay-note">다시 도전할 때마다 점수 +0.1%씩 붙어요!</div>' : ''}
+      ${R.replay ? `<div class="replay-note">반복 보너스 <b>${replayLabel(R.replay.n)}</b> 적용 (+${fmt(R.replay.add)}점)</div>` : R.kind === 'stage' && R.stages.length === 1 && res.stars >= 1 ? '<div class="replay-note">다시 도전할 때마다 점수 +0.1%, XP +3%씩 붙어요!</div>' : ''}
       ${(() => { const c = cheer(res.stars >= 2 ? 'win' : 'lose'); return c ? `<div class="res-cheer">${esc(c)}</div>` : ''; })()}
       ${R.bonusN ? `<div class="muted">보너스 스테이지 ${R.bonusOk} / ${R.bonusN} 정답</div>` : ''}
       ${res.stars === 0 ? '<div class="muted">정답이 절반보다 적었어요. 한 번 더 도전해 봐요!</div>' : `<div class="muted">별 ${res.stars}개 → 보너스 ${res.stars}번 (룰렛 또는 상자)</div>`}
@@ -3099,13 +3188,15 @@ function showResults() {
       <div class="tile"><b>+${R.coins + res.bonus}</b><span>코인</span></div>
       <div class="tile"><b>${R.bossWon ? '격파' : '-'}</b><span>보스</span></div>
     </div>
+    ${xpPanel(res)}
     ${res.rankUp ? `<div class="panel rankup">승급시험 자격 획득!<br>${insImg(rankIdx() + 1, 'up')}<br><b>${RANKS[rankIdx()].n}</b> → <b>${RANKS[rankIdx() + 1].n}</b><div class="muted" style="font-size:calc(var(--m)*2.2)">시험을 통과하면 계급이 올라요!</div><button class="btn primary pulse" data-act="examStart" style="margin-top:calc(var(--m)*1.2)">도전! 승급시험!</button></div>` : ''}
     ${res.badges.length ? `<div class="panel"><div class="sec-title">새 배지</div><div class="chips">${res.badges.map(b => `<span class="badge">★ ${esc(b.n)}</span>`).join('')}</div></div>` : ''}
-    ${(() => { const m = totalMastered(), nx = RANKS[rankIdx() + 1]; return nx && !examAvail() ? `<div class="replay-note">다음 계급 <b>${esc(nx.n)}</b>까지 단어 <b>${Math.max(0, nx.need - m)}개</b> 더 마스터 · 같은 단어를 여러 번 맞히면 돼요</div>` : ''; })()}
+    ${(() => { return ''; })()}
     ${res.newly.length ? `<div class="panel"><div class="sec-title">새로 마스터한 단어 <small>${res.newly.length}개</small></div><div class="chips">${res.newly.slice(0, 24).map(wi => `<span class="badge">${esc(set.words[wi].d)}</span>`).join('')}</div></div>` : ''}
     <div class="panel"><div class="sec-title">오늘의 헷갈린 단어 <small>${missed.length}개</small></div>${missed.length ? missed.map(w => `<div class="wrow"><span class="en">${esc(w.d)}</span><span class="ko">${esc(w.ko)}</span>${spkBtn(w.d)}</div>`).join('') : '<div class="muted">하나도 안 틀렸어요! 대단해요.</div>'}</div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" style="flex:1" data-act="replay">다시 달리기</button>${nextSi >= 0 ? `<button class="btn green" data-act="nextStage" data-si="${nextSi}">다음 스테이지</button>` : ''}<button class="btn" data-act="go" data-to="home">홈으로</button></div>`;
+  setTimeout(() => { const i = document.querySelector('.xpbar i'); if (i) i.style.width = i.dataset.to + '%'; }, 120);
   // count-up + sounds + confetti
   const el = $('#res-score'); let t0 = performance.now();
   (function tick(now) { const p = clamp((now - t0) / 1100, 0, 1); el.textContent = fmt(R && R.score ? R.score * (1 - Math.pow(1 - p, 3)) : 0); if (p < 1 && App.mode === 'results') requestAnimationFrame(tick); })(t0);
@@ -3124,21 +3215,18 @@ function fsUpdate() { const b = $('#btn-fs'); if (!b) return; const root = docum
 ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { fsUpdate(); setTimeout(onResize, 120); }));
 const pipsHTML = n => `<span class="pips" title="${n}/${MAXM}">${Array.from({ length: MAXM }, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
 function openRankHelp() {
-  const set = curSet(), m = totalMastered(), ri = rankIdx(), nx = RANKS[ri + 1];
-  let almost = 0, tricky = 0; set.words.forEach(w => { const st = wState(getStat(set, w)); if (st === 'almost') almost++; else if (st === 'tricky') tricky++; });
+  const set = curSet(), m = totalMastered(), ri = rankIdx(), nx = RANKS[ri + 1], xp = curXp(), si = recommendedStage(set), xv = xpPreview(set, si);
   $('#help-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="help" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button>
     <h3>계급은 어떻게 올라요?</h3>
-    <div class="hp-box">단어를 <b>마스터</b>하면 계급이 올라요. 지금 마스터한 단어 <b>${m}개</b>${nx ? ` · ${esc(nx.n)}까지 <b>${Math.max(0, nx.need - m)}개</b> 남았어요` : ''}</div>
-    <div class="muted">단어마다 ${MAXM}칸짜리 게이지가 있어요. 문제를 풀 때마다 칸이 차거나 줄어요.</div>
+    <div class="hp-box">스테이지를 깨면 <b>XP(경험치)</b>를 받아요. 지금 <b>${fmt(xp)} XP</b>${nx ? (examAvail() ? ` · <b>${esc(nx.n)}</b> 승급시험에 도전할 수 있어요!` : ` · ${esc(nx.n)}까지 <b>${fmt(Math.max(0, nx.need - xp))} XP</b> 남았어요`) : ''}<br>XP가 차면 <b>승급시험(예문 빈칸 ${EXAM_N}문제, ${EXAM_PASS}개 이상 정답)</b>에 도전해요!</div>
     <ul class="hp-list">
-      <li><b class="g">+2칸</b> 영어 → 뜻 문제를 맞히면 <span class="pips">${pipsHTMLInner(2)}</span></li>
-      <li><b class="g">+3칸</b> 뜻 → 영어 · 철자 문제를 맞히면 <span class="pips">${pipsHTMLInner(3)}</span></li>
-      <li><b class="g">+2~3칸</b> 스펠링을 틀리지 않고 쓰면</li>
-      <li><b class="g">+2칸</b> 보너스 빈칸 문제를 맞히면</li>
-      <li><b class="r">−2칸</b> 틀리면 (그 단어는 다시 도전!)</li>
-      <li><b>${MAXM}칸 다 차면 마스터!</b> <span class="pips">${pipsHTMLInner(MAXM)}</span></li>
+      <li><b class="g">기본</b><span>스테이지를 클리어하면 받아요. 뒤쪽 스테이지일수록 많이 줘요 <small>(지금 추천: STAGE ${si + 1} ≈ ${xv.base} XP)</small></span></li>
+      <li><b class="g">별 배율</b><span>★1개 ×0.8 · ★2개 ×1 · ★3개 ×1.2</span></li>
+      <li><b class="g">반복 보너스</b><span>같은 스테이지를 깰 때마다 <b>+3%</b>씩 (최대 +60%) · 점수도 조금씩 늘어요</span></li>
+      <li><b class="g">최고 점수 갱신</b><span>내 최고 점수를 넘기면 XP <b>+10%</b></span></li>
+      <li><b class="g">+10</b><span>보스 격파, 퍼펙트 런 · <b class="g">+3</b> 단어 하나를 새로 마스터할 때마다</span></li>
     </ul>
-    <div class="hp-box">한 번에 안 돼요. 같은 단어를 <b>여러 번 달리며 맞혀야</b> 마스터돼요(보통 2~3번). 한 스테이지를 반복할수록 점수 보너스도 쌓여요!<br>지금 <b>거의 다 찬 단어 ${almost}개</b> · 헷갈리는 단어 ${tricky}개</div>
+    <div class="hp-box">단어 마스터(6칸 게이지)는 이제 <b>계급 조건이 아니라 실력 기록</b>이에요. 단어를 새로 마스터할 때마다 XP 보너스가 붙어요. 지금 마스터한 단어 <b>${m}개</b></div>
     <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-act="rankWords" data-k="almost">거의 다 찬 단어 보기</button><button class="btn" data-act="rankWords" data-k="tricky">헷갈리는 단어 보기</button></div>`;
   $('#help').hidden = false;
 }
@@ -3405,7 +3493,7 @@ document.addEventListener('input', e => {
 });
 
 /* ============ 도전! 승급시험: 지금까지 나온 단어로 예문 빈칸 5문제 ============ */
-const EXAM_N = 5, EXAM_PASS = 4, EXAM_COIN = 20;
+const EXAM_N = 10, EXAM_PASS = 8, EXAM_COIN = 30;
 function examPool() {
   const out = [];
   for (const id in SETS) { const set = SETS[id]; if (!set.words) continue; set.words.forEach(w => { const st = getStat(set, w); if (st[1] > 0 && clozeParts(w)) out.push({ set, wi: w.i }); }); }
@@ -3418,15 +3506,15 @@ function examBuild() {
 }
 function renderExam() {
   const E = App.exam, col = $('#exam-col'); if (!E) return go('home');
-  const from = E.from, to = E.to, head = `<div class="panel ex-head"><div class="ex-pair">${insImg(from, 'ex')}<span class="arr">→</span>${insImg(to, 'ex')}</div><div class="ex-ttl"><b>승급시험</b><small>${RANKS[from].n} → ${RANKS[to].n} · ${EXAM_N}문제 중 ${EXAM_PASS}문제 이상 맞히면 통과!</small></div></div>`;
+  const from = E.from, to = E.to, head = `<div class="panel ex-head"><div class="ex-pair">${insImg(from, 'ex')}<span class="arr">→</span>${insImg(to, 'ex')}</div><div class="ex-ttl"><b>승급시험</b><small>${RANKS[from].n} → ${RANKS[to].n} · ${E.qs.length}문제 중 ${E.pass}문제 이상 맞히면 통과!</small></div></div>`;
   if (E.done) {
-    const pass = E.ok >= EXAM_PASS, miss = E.qs.filter(q => q.picked !== q.correct);
+    const pass = E.ok >= E.pass, miss = E.qs.filter(q => q.picked !== q.correct);
     if (pass) {
       const more = examAvail();
       col.innerHTML = `<div class="panel rankup ex-res">승급!<br>${insImg(to, 'up')}<br><b>${RANKS[from].n}</b> → <b>${RANKS[to].n}</b><div class="muted" style="font-size:calc(var(--m)*2.2)">${esc(RANKS[to].d)}</div><div class="ex-note">${E.ok} / ${E.qs.length} 정답 · 코인 +${EXAM_COIN} ${cheer('win') ? '· ' + esc(cheer('win')) : ''}</div>${E.badges && E.badges.length ? `<div class="chips" style="justify-content:center">${E.badges.map(b => `<span class="badge">★ ${esc(b.n)}</span>`).join('')}</div>` : ''}</div>
       <div class="ex-btns">${more ? '<button class="btn primary pulse" data-act="examStart">도전! 다음 승급시험</button>' : ''}<button class="btn ${more ? '' : 'primary'}" data-act="go" data-to="home">홈으로</button></div>`;
     } else {
-      col.innerHTML = head + `<div class="panel ex-res"><div class="ex-big">아쉬워요! ${E.ok} / ${E.qs.length}</div><div class="muted">${EXAM_PASS}문제 이상 맞히면 통과예요. 틀린 단어를 보고 다시 도전해요! ${cheer('good') ? esc(cheer('good')) : ''}</div>
+      col.innerHTML = head + `<div class="panel ex-res"><div class="ex-big">아쉬워요! ${E.ok} / ${E.qs.length}</div><div class="muted">${E.pass}문제 이상 맞히면 통과예요. 틀린 단어를 보고 다시 도전해요! ${cheer('good') ? esc(cheer('good')) : ''}</div>
       ${miss.length ? `<div class="chips ex-miss">${miss.map(q => `<span class="badge">${esc(q.w.d)} = ${esc(q.w.ko)}</span>`).join('')}</div>` : ''}</div>
       <div class="ex-btns"><button class="btn primary" data-act="examStart">다시 도전!</button><button class="btn" data-act="go" data-to="home">홈으로</button></div>`;
     }
@@ -3443,8 +3531,8 @@ function renderExam() {
 Object.assign(ACT, {
   examStart() {
     if (!examAvail()) { toast('아직 승급시험 자격이 없어요'); return; }
-    const qs = examBuild(); if (qs.length < 3) { toast('시험에 쓸 단어가 더 필요해요. 먼저 달려서 단어를 만나요!'); return; }
-    App.exam = { from: rankIdx(), to: rankIdx() + 1, qs, i: 0, ok: 0, done: false };
+    const qs = examBuild(); if (qs.length < 5) { toast('시험에 쓸 단어가 더 필요해요. 먼저 달려서 단어를 만나요!'); return; }
+    App.exam = { from: rankIdx(), to: rankIdx() + 1, qs, pass: Math.min(EXAM_PASS, Math.ceil(qs.length * 0.8)), i: 0, ok: 0, done: false };
     go('exam'); if (Store.data.settings.readMode === 'always') { const P = qs[0].P; say(P.pre + ' ... ' + P.post); }
   },
   examPick(d) {
@@ -3457,7 +3545,7 @@ Object.assign(ACT, {
     const E = App.exam; if (!E) return;
     if (E.i + 1 < E.qs.length) { E.i++; renderExam(); if (Store.data.settings.readMode === 'always') { const P = E.qs[E.i].P; say(P.pre + ' ... ' + P.post); } return; }
     E.done = true;
-    if (E.ok >= EXAM_PASS) {
+    if (E.ok >= E.pass) {
       const dd = Store.data; dd.rank = E.to; dd.coins += EXAM_COIN; E.badges = checkBadges(); Store.touch(); Store.flush();
       renderExam(); SFX.rank(); confetti(160);
     } else { SFX.bad(); renderExam(); }
