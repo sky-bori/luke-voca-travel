@@ -66,8 +66,9 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 #prompt-main{font-family:var(--f-en);font-weight:700;font-size:calc(var(--hu)*7.4);line-height:1.05;white-space:nowrap}
 #prompt-main.kor{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*6)}
 #prompt-main.long{font-size:calc(var(--hu)*4.7)}
-#banner{position:absolute;left:50%;top:calc(var(--hu)*50);transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:calc(var(--hu)*1.2) calc(var(--m)*4);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:#fff;text-align:center;max-width:92%}
+#banner{position:absolute;left:50%;top:calc(var(--hu)*50);transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:calc(var(--hu)*1.2) calc(var(--m)*4);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:#fff;text-align:center;width:max-content;max-width:92%;word-break:keep-all;overflow-wrap:break-word;text-wrap:balance}
 #banner.show{opacity:1;transform:translateX(-50%) scale(1)}
+#banner b,#banner span{word-break:keep-all;overflow-wrap:break-word}
 #banner b{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*5.6);line-height:1.1}
 #banner span{font-family:var(--f-en);font-weight:600;font-size:calc(var(--hu)*3.4)}
 #banner.ok{background:#c9f7da}#banner.ok b{color:var(--green-d)}
@@ -93,7 +94,24 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .padup b{font-size:calc(var(--m)*2.7)}.padup small{font-size:calc(var(--m)*2.2);color:var(--ink2)}
 .padup.ready{background:var(--coin);opacity:1}
 .padup:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
-#tip{position:absolute;left:50%;bottom:calc(var(--hu)*22);max-width:86%;text-align:center;transform:translateX(-50%);padding:calc(var(--hu)*1.1) calc(var(--m)*3);background:#fff;border:3px solid var(--ink);border-radius:999px;box-shadow:0 4px 0 var(--ink);font-family:var(--f-kr);font-size:calc(var(--hu)*3.2);pointer-events:none;white-space:normal;animation:bob 1s ease-in-out infinite}
+#tip{width:max-content;word-break:keep-all;position:absolute;left:50%;bottom:calc(var(--hu)*22);max-width:86%;text-align:center;transform:translateX(-50%);padding:calc(var(--hu)*1.1) calc(var(--m)*3);background:#fff;border:3px solid var(--ink);border-radius:999px;box-shadow:0 4px 0 var(--ink);font-family:var(--f-kr);font-size:calc(var(--hu)*3.2);pointer-events:none;white-space:normal;animation:bob 1s ease-in-out infinite}
+.st .wk{display:flex;align-items:center;gap:calc(var(--m)*.7);font-size:calc(var(--m)*1.8);font-weight:800;color:#7a3d00}
+.st .wk .wdot{width:calc(var(--m)*1.6);height:calc(var(--m)*1.6);border-radius:50%;border:2px solid var(--ink);flex:none}
+.replay-note.wkn{background:#e8f0ff}
+.seg button small{display:block;font-size:.66em;font-weight:700;opacity:.85;margin-top:2px}
+#cfx{position:absolute;left:50%;top:calc(var(--hu)*22);transform:translateX(-50%);pointer-events:none;z-index:6;display:flex;flex-direction:column;align-items:center;gap:calc(var(--hu)*.4);text-align:center;opacity:0;white-space:nowrap;max-width:98%}
+#cfx.show{animation:cfxIn .35s cubic-bezier(.2,1.6,.4,1) forwards}
+#cfx b{font-family:var(--f-en);font-weight:800;font-size:calc(var(--hu)*9*var(--fit,1));line-height:1;letter-spacing:.02em;color:#fff;filter:drop-shadow(3px 0 0 var(--ink)) drop-shadow(-3px 0 0 var(--ink)) drop-shadow(0 3px 0 var(--ink)) drop-shadow(0 -3px 0 var(--ink)) drop-shadow(0 7px 0 rgba(0,0,0,.25))}
+#cfx span{font-family:var(--f-en);font-weight:700;font-size:calc(var(--hu)*3.2);color:#fff;padding:0 calc(var(--m)*2);background:var(--ink);border-radius:999px}
+#cfx.good b{color:#7dff9b}
+#cfx.great b{color:#6fd0ff;font-size:calc(var(--hu)*10.5*var(--fit,1))}
+#cfx.excellent b{color:#ffd23f;font-size:calc(var(--hu)*11*var(--fit,1));animation:cfxShake .12s 6}
+#cfx.excellent span{background:#c27600}
+#cfx.perfect b{font-size:calc(var(--hu)*12.5*var(--fit,1));background:linear-gradient(90deg,#ff5f6d,#ffc371,#fff36b,#6bffb0,#6bc8ff,#c06bff,#ff5f6d);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:cfxRb .8s linear infinite}
+#cfx.perfect span{background:linear-gradient(90deg,#c06bff,#ff5f6d);}
+@keyframes cfxIn{0%{opacity:0;transform:translateX(-50%) scale(.3)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+@keyframes cfxRb{to{background-position:200% 0}}
+@keyframes cfxShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 #flash{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:4}
 #flash.go{animation:fl .5s ease-out}
 @keyframes fl{0%{opacity:1}100%{opacity:0}}
@@ -163,6 +181,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .rank-card .rs{font-size:calc(var(--m)*2.2);color:var(--ink2);font-weight:700}
 .chips{display:flex;gap:calc(var(--m)*1.2);flex-wrap:wrap}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--m)*1.6)}
+.screen#scr-home #btn-play{position:absolute;left:calc(var(--m)*2);top:calc(var(--m)*2);z-index:3;width:min(44%,calc(var(--m)*46));padding-left:calc(var(--m)*1.5);padding-right:calc(var(--m)*1.5)}
 .play-sub{font-family:var(--f-body);font-size:calc(var(--m)*2.1);font-weight:700;opacity:.8;display:block}
 .btn.stack{flex-direction:column;gap:2px;padding-top:calc(var(--m)*1);padding-bottom:calc(var(--m)*1.2)}
 
@@ -182,7 +201,10 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 /* modal */
 .modal{position:absolute;inset:0;z-index:20;display:grid;place-items:center;background:#16213a88;padding:calc(var(--m)*2)}
 .modal .panel{width:min(100%,calc(var(--m)*78));max-height:100%;overflow:auto;display:flex;flex-direction:column;gap:calc(var(--m)*1.8)}
-.modal h3{margin:0;font-family:var(--f-kr);font-weight:800;font-size:calc(var(--m)*4)}
+.modal .panel{position:relative}
+.xbtn{position:absolute;right:calc(var(--m)*1.4);top:calc(var(--m)*1.4);z-index:2}
+.xtop{position:absolute;right:calc(var(--m)*2);top:calc(var(--m)*2);z-index:5}
+.modal h3{padding-right:calc(var(--m)*7);margin:0;font-family:var(--f-kr);font-weight:800;font-size:calc(var(--m)*4)}
 
 
 
@@ -209,6 +231,10 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .dlg-tag{background:var(--red);color:#fff;font-family:var(--f-en);font-weight:800;font-size:calc(var(--m)*2.4);padding:calc(var(--m)*.8) calc(var(--m)*1.6);border-radius:10px;border:3px solid var(--ink)}
 .dlg.boss .dlg-card{background:#2a2438;color:#fbf6ea;border-color:#0e0b16;box-shadow:0 7px 0 #0e0b16}
 .dlg.boss .dlg-head small{color:#c9c0dc}
+.dlg-foot{display:flex;flex-wrap:wrap;justify-content:center;gap:calc(var(--m)*.4) calc(var(--m)*1.3);font-size:calc(var(--m)*1.75);color:var(--ink2);font-weight:600;line-height:1.4}
+.dlg-foot b{color:var(--ink);font-weight:800}
+.dlg-foot i{font-style:normal;color:#b25b00;font-weight:700}
+.dlg-foot span{white-space:nowrap}
 .dlg-text{margin:0;font-family:var(--f-kr);font-size:calc(var(--m)*3);line-height:1.5;font-weight:700;min-height:calc(var(--m)*9);word-break:keep-all}
 .dlg .btn{align-self:flex-end}
 .dlg .btn.wait{opacity:.5}
@@ -335,8 +361,6 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
 #toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
-</head><body>
-
 
 <div id="app">
   <canvas id="cv"></canvas>
@@ -356,6 +380,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
       <button class="ibtn" id="btn-say" data-act="saycur" aria-label="발음 듣기"><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#16213a"/><path d="M16 8.5a5 5 0 010 7M18.5 6a8.5 8.5 0 010 12" stroke="#16213a" stroke-width="2" fill="none" stroke-linecap="round"/></svg></button>
     </div>
     <div id="banner" hidden></div>
+    <div id="cfx" hidden></div>
     <div id="buffs" hidden></div>
     <div id="pad" hidden>
       <div class="pad-l"><button type="button" id="pad-left" class="padb" aria-label="왼쪽 길">◀</button><button type="button" id="pad-right" class="padb" aria-label="오른쪽 길">▶</button></div>
@@ -392,14 +417,14 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
           <button class="btn" data-act="go" data-to="words">내 단어</button>
           <button class="btn" data-act="go" data-to="records">기록 · 배지</button>
         </div>
-        <button class="btn sm ghost" data-act="go" data-to="settings" style="align-self:flex-start"><svg viewBox="0 0 24 24" width="1.25em" height="1.25em" aria-hidden="true" style="flex:none"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.3 7.3 0 0 0-1.69-.98l-.38-2.65A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.13.22.39.31.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg>설정</button>
+        <div class="row-sm" style="display:flex;gap:calc(var(--m)*1.2);align-items:center"><button class="btn sm ghost" data-act="go" data-to="settings"><svg viewBox="0 0 24 24" width="1.25em" height="1.25em" aria-hidden="true" style="flex:none"><path fill="currentColor" d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65a.5.5 0 0 0 .12-.64l-2-3.46a.5.5 0 0 0-.61-.22l-2.49 1a7.3 7.3 0 0 0-1.69-.98l-.38-2.65A.49.49 0 0 0 14 2h-4a.49.49 0 0 0-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1a.5.5 0 0 0-.61.22l-2 3.46a.5.5 0 0 0 .12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65a.5.5 0 0 0-.12.64l2 3.46c.13.22.39.31.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46a.5.5 0 0 0-.12-.64l-2.11-1.65zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"/></svg>설정</button><button class="btn sm ghost" id="btn-fs" data-act="fs" hidden><svg viewBox="0 0 24 24" width="1.25em" height="1.25em" aria-hidden="true" style="flex:none"><path fill="currentColor" d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z"/></svg><span id="fs-t">전체화면</span></button></div>
       </div>
     </div>
   </section>
 
   <section class="screen" id="scr-stages" hidden>
     <div class="sheet">
-      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="뒤로"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#16213a" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>스테이지</h2><div class="tabs" id="stage-tabs"></div></div>
+      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h2>스테이지</h2><div class="tabs" id="stage-tabs"></div></div>
       <div class="panel sheet-body" id="stage-body"></div>
     </div>
   </section>
@@ -408,7 +433,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
     <div class="home-wrap">
       <div class="home-spacer"></div>
       <div class="dress-col">
-        <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="뒤로"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#16213a" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>꾸미기 · 계급</h2><div class="chip"><span class="coin"></span><b id="dress-coins">0</b></div></div>
+        <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h2>꾸미기 · 계급</h2><div class="chip"><span class="coin"></span><b id="dress-coins">0</b></div></div>
         <div class="tabs" id="dress-tabs"></div>
         <div class="panel body" id="dress-body"></div>
         <div class="panel actbar" id="dress-act"></div>
@@ -418,26 +443,27 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
 
   <section class="screen" id="scr-words" hidden>
     <div class="sheet">
-      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="뒤로"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#16213a" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>내 단어</h2><div class="tabs" id="words-tabs"></div></div>
+      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h2>내 단어</h2><div class="tabs" id="words-tabs"></div></div>
       <div class="panel sheet-body" id="words-body"></div>
     </div>
   </section>
 
   <section class="screen" id="scr-records" hidden>
     <div class="sheet">
-      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="뒤로"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#16213a" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>기록 · 배지</h2></div>
+      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h2>기록 · 배지</h2></div>
       <div class="panel sheet-body" id="records-body"></div>
     </div>
   </section>
 
   <section class="screen" id="scr-settings" hidden>
     <div class="sheet">
-      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="뒤로"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="#16213a" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button><h2>설정</h2></div>
+      <div class="sheet-head"><button class="ibtn" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h2>설정</h2></div>
       <div class="panel sheet-body" id="settings-body"></div>
     </div>
   </section>
 
   <section class="screen" id="scr-exam" hidden>
+    <button class="ibtn xtop" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button>
     <div class="res-wrap">
       <div class="home-spacer"></div>
       <div class="res-col ex-col" id="exam-col"></div>
@@ -445,6 +471,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
   </section>
 
   <section class="screen" id="scr-results" hidden>
+    <button class="ibtn xtop" data-act="go" data-to="home" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button>
     <div class="res-wrap">
       <div class="home-spacer"></div>
       <div class="res-col" id="res-col"></div>
@@ -454,7 +481,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
   <div class="modal" id="prep" hidden><div class="panel" id="prep-panel"></div></div>
   <div class="modal" id="cards" hidden><div class="panel" id="cards-panel"></div></div>
   <div class="modal" id="editor" hidden><div class="panel" id="editor-panel"></div></div>
-  <div id="dlg" class="dlg" hidden><div class="dlg-card"><div class="dlg-head"></div><p class="dlg-text"></p><button class="btn primary" id="dlg-btn" data-act="dlgNext"></button></div></div>
+  <div id="dlg" class="dlg" hidden><div class="dlg-card"><div class="dlg-head"></div><p class="dlg-text"></p><button class="btn primary" id="dlg-btn" data-act="dlgNext"></button><div class="dlg-foot" hidden></div></div></div>
   <div id="count" hidden></div>
   <div class="modal" id="bonus" hidden><div class="panel" id="bonus-panel"></div></div>
   <div class="modal" id="pause" hidden>
@@ -498,7 +525,7 @@ function newSave() {
     owned: { color: ['sky'], hat: ['none'], pet: ['none'], trail: ['dust'] },
     equip: { color: 'sky', hat: 'none', pet: 'none', trail: 'dust' },
     badges: {}, daily: { date: '', runs: 0 }, streak: { last: '', count: 0 },
-    settings: { sound: true, speech: true, pace: 1, readMode: 'after', cheer: true, names: ['Luke', '우진'] },
+    settings: { sound: true, speech: true, pace: 1, readMode: 'always', readV: 2, cheer: true, names: ['Luke', '우진'] },
     stats: { bossWins: 0, maxCombo: 0, perfect: 0, correct: 0, records: 0 },
     seenTip: false, gun: 1, bonus: 0, rank: null,
   };
@@ -510,6 +537,7 @@ function mergeSave(base, src) {
     if (sv && typeof sv === 'object' && !Array.isArray(sv) && bv && typeof bv === 'object' && !Array.isArray(bv) && k !== 'sets' && k !== 'badges') base[k] = mergeSave(bv, sv);
     else base[k] = sv;
   }
+  if (src.settings && typeof src.settings === 'object' && base.settings && src.settings.readV !== 2) { base.settings.readMode = 'always'; base.settings.readV = 2; } // 기본값을 '먼저 읽기'로 변경 (1회 적용)
   return base;
 }
 const Store = {
@@ -857,10 +885,12 @@ function planRun(set, pool, nChoice = 20) {
 }
 
 /* ============ audio ============ */
+const SFX_VOL = 0.5, SFX_DUCK = 0.1; // 효과음 기본 크기 / 발음 읽는 동안 줄이는 크기
 const AU = { ctx: null, master: null };
+function duck(on) { try { if (AU.master) AU.master.gain.setTargetAtTime(on ? SFX_DUCK : SFX_VOL, AU.ctx.currentTime, 0.04); } catch (e) { } }
 function audioInit() {
   try {
-    if (!AU.ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return; AU.ctx = new C(); AU.master = AU.ctx.createGain(); AU.master.gain.value = 0.9; AU.master.connect(AU.ctx.destination); }
+    if (!AU.ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return; AU.ctx = new C(); AU.master = AU.ctx.createGain(); AU.master.gain.value = SFX_VOL; AU.master.connect(AU.ctx.destination); }
     if (AU.ctx.state === 'suspended') AU.ctx.resume();
   } catch (e) { }
 }
@@ -904,8 +934,10 @@ function say(text) {
   if (!SP.ok || !Store.data.settings.speech || !text) return;
   try {
     speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(String(text).replace(/\(.*?\)/g, ''));
-    u.lang = 'en-US'; u.rate = 0.85; if (SP.voice) u.voice = SP.voice;
+    const u = new SpeechSynthesisUtterance(String(text).replace(/\(.*?\)/g, '')), tok = SP.tok = (SP.tok || 0) + 1, done = () => { if (SP.tok === tok) duck(false); };
+    u.lang = 'en-US'; u.rate = 0.88; u.volume = 1; u.pitch = 1; if (SP.voice) u.voice = SP.voice;
+    u.onstart = () => { if (SP.tok === tok) duck(true); }; u.onend = done; u.onerror = done;
+    duck(true); setTimeout(done, Math.min(9000, 1500 + u.text.length * 130));
     speechSynthesis.speak(u);
   } catch (e) { }
 }
@@ -1495,6 +1527,23 @@ const FIG = {
   ca: { n: '무스 대왕', t: '캐나다 숲의 주인', animal: 'moose', line: '음하하! 난 캐나다 숲의 주인, 무스 대왕이다! 내 뿔을 당해 낼 수 있겠느냐?' },
   us: { n: '에이브러햄 링컨', t: '미국의 16대 대통령', line: '음하하! 난 링컨이다! 높은 모자 아래 숨은 내 힘을 이길 수 있겠느냐?', skin: '#e6bf98', robe: '#1d2030', trim: '#f2eee4', pants: '#1d2030', hair: '#16161e', beard: 'chin', hat: 'stovepipe', tall: true, x: ['bowtie'] },
 };
+/* 나라 소개 하단 정보: [인구 배수, 면적 배수, GDP 순위, 인구, 면적 km², 명목 GDP 억 달러] — 출처: IMF·World Bank 기준 대략값 */
+const FACTS = {
+  kr: [1, 1, 15, '5,170만 명', 100430, 19300], jp: [2.39, 3.76, 4, '1억 2,370만 명', 377975, 43800], cn: [27.25, 95.56, 2, '14억 900만 명', 9596961, 208500],
+  th: [1.39, 5.11, 32, '7,180만 명', 513120, 5800], in: [27.89, 32.73, 6, '14억 4,170만 명', 3287263, 41500], eg: [2.21, 9.98, 43, '1억 1,450만 명', 1002450, 4296],
+  tr: [1.66, 7.80, 16, '8,580만 명', 783562, 16400], gr: [0.20, 1.31, 52, '1,030만 명', 131957, 3076], it: [1.14, 3.00, 8, '5,870만 명', 301340, 27400],
+  fr: [1.32, 5.49, 7, '6,830만 명', 551695, 36000], es: [0.94, 5.04, 14, '4,860만 명', 505990, 20900], gb: [1.32, 2.41, 5, '6,830만 명', 242495, 42600],
+  de: [1.63, 3.55, 3, '8,450만 명', 357022, 54500], nl: [0.35, 0.42, 18, '1,790만 명', 41850, 14500], ch: [0.17, 0.41, 20, '890만 명', 41285, 11500],
+  ru: [2.79, 170.25, 9, '1억 4,400만 명', 17098242, 26600], au: [0.52, 76.59, 12, '2,680만 명', 7692024, 21200], br: [4.21, 84.79, 10, '2억 1,760만 명', 8515767, 26400],
+  mx: [2.51, 19.56, 13, '1억 2,970만 명', 1964375, 21200], pe: [0.67, 12.80, 46, '3,440만 명', 1285216, 3809], ca: [0.78, 99.42, 11, '4,010만 명', 9984670, 25100],
+  us: [6.61, 97.91, 1, '3억 4,180만 명', 9833517, 323800],
+};
+const fmtX = n => (n >= 100 ? String(Math.round(n)) : n >= 1 ? n.toFixed(1).replace(/\.0$/, '') : n.toFixed(2).replace(/0$/, '')) + '배';
+function factsHTML(code) {
+  const f = FACTS[code]; if (!f) return '';
+  const kr = code === 'kr', n = v => v.toLocaleString('en-US');
+  return `<span>인구 <b>약 ${f[3]}</b> <i>(${kr ? '기준' : '한국의 ' + fmtX(f[0])})</i></span><span>면적 <b>${n(f[4])}km²</b> <i>(${kr ? '기준' : fmtX(f[1])})</i></span><span>명목 GDP <b>약 ${n(f[5])}억 달러</b> <i>(세계 ${f[2]}위)</i></span>`;
+}
 const INTRO = {
   kr: '동아시아에 있는 우리나라예요. 경복궁 같은 멋진 궁궐, 한글, 김치, K-팝으로 유명해요.',
   jp: '동아시아의 섬나라예요. 눈 덮인 후지산, 초밥, 벚꽃, 만화와 게임으로 유명해요.',
@@ -1858,8 +1907,10 @@ function drawBackPatch(info, u, gr) {
 
 /* ============ game state & run logic ============ */
 const App = { mode: 'home', preview: {}, last: 0, paused: false, resultsOpen: false };
-const PACE = [8.6, 6.6, 4.9];
+const PACE = [10.1, 8.5, 6.4]; // 다가오는 시간(초) — 클수록 느림
 const PACE_NAMES = ['느긋하게', '보통', '빠르게'];
+const PACE_MUL = [1.0, 1.15, 1.35]; // 빠를수록 점수 배율 ↑
+const paceLabel = i => `${PACE_NAMES[i]}<small>점수 ×${PACE_MUL[i].toFixed(2).replace(/0$/, '')}</small>`;
 let R = null;
 const HUD = {};
 ['hud', 'prompt', 'prompt-label', 'prompt-main', 'btn-say', 'banner', 'score-n', 'coin-n', 'prog-fill', 'prog-txt', 'combo', 'combo-n', 'typing', 'ty-tag', 'ty-meaning', 'ty-guide', 'ty-slots', 'ty-kb', 'btn-hint', 'tap', 'tip', 'flash'].forEach(id => (HUD[id] = document.getElementById(id)));
@@ -1891,6 +1942,19 @@ function hudAll() {
   hudCombo();
 }
 function hudCombo() { const c = R.combo; HUD.combo.hidden = c < 2; HUD['combo-n'].textContent = c; if (c >= 2) { HUD.combo.classList.remove('bump'); void HUD.combo.offsetWidth; HUD.combo.classList.add('bump'); } }
+const CFX = [[20, 'PERFECT!', 'perfect'], [15, 'EXCELLENT!', 'excellent'], [7, 'GREAT!', 'great'], [3, 'GOOD!', 'good']];
+let cfxTimer = 0;
+function comboFx(prev, now) {
+  const e = CFX.find(([n]) => prev < n && now >= n); if (!e) return;
+  const el = document.getElementById('cfx'); if (!el) return;
+  el.className = 'cfx ' + e[2]; el.innerHTML = `<b>${e[1]}</b><span>${now} COMBO</span>`; el.hidden = false; el.style.setProperty('--fit', 1); { const W = (document.getElementById('app') || document.body).clientWidth, w = el.querySelector('b').scrollWidth; if (w > W * 0.86) el.style.setProperty('--fit', (W * 0.86 / w).toFixed(3)); }
+  void el.offsetWidth; el.classList.add('show');
+  clearTimeout(cfxTimer); cfxTimer = setTimeout(() => { el.hidden = true; el.classList.remove('show'); }, e[0] >= 15 ? 1700 : 1250);
+  const lv = CFX.length - CFX.indexOf(e), x = laneX(R.lane, G.yC), yy = G.yC - runnerH() * 0.6;
+  for (let k = 0; k < 6 + lv * 8; k++) addP({ kind: 'coin', x, y: yy, vx: rnd(-260, 260), vy: rnd(-460, -140), g: 700, life: rnd(0.8, 1.3), size: Math.max(6, G.laneW * 0.045) });
+  if (lv >= 3) flash(lv === 4 ? 'rgba(255,230,120,.5)' : 'rgba(255,200,120,.35)');
+  if (lv >= 2) { SFX.power(); } if (lv >= 3) SFX.win();
+}
 function flash(color) { HUD.flash.style.background = color; HUD.flash.classList.remove('go'); void HUD.flash.offsetWidth; HUD.flash.classList.add('go'); }
 
 /* ---- run lifecycle ---- */
@@ -1905,7 +1969,7 @@ function startRun(setId, stageIdxs, kind = 'stage', poolOverride = null) {
   R = {
     set, stages: stageIdxs, kind, pool, plan, pi: -1, phase: 'intro', t: 0, nQ,
     score: 0, shown: 0, combo: 0, maxCombo: 0, coins: 0, correct: 0, log: [], missed: new Map(), typed: new Set(), recallWon: 0,
-    gates: [], q: null, T: null, lane: 1, laneF: 1, scrollMul: 1, scrollTarget: 1, Tap: PACE[Store.data.settings.pace] || 6.6,
+    gates: [], q: null, T: null, lane: 1, laneF: 1, scrollMul: 1, scrollTarget: 1, Tap: PACE[Store.data.settings.pace] || 8.5, paceI: clamp(+Store.data.settings.pace, 0, 2) || 0,
     hopT: 1, petX: G.cx, trailT: 0, wait: 0, waitFn: null, bossOn: false, boss: null, bossHit: 0, bossDead: 0,
     rank0: rankIdx(), elig0: rankElig(), mastered0: new Set(pool.filter(wi => getStat(set, set.words[wi])[0] >= MAXM)), perfectTyping: 0,
     paused: false, flashT: 0, shake: 0, tipShown: !!Store.data.seenTip,
@@ -1952,16 +2016,18 @@ function judge(early = false, ln = R.lane) {
   q.judged = true; q.ok = ok; g.chosen = ln; q.judgedAt = q.t; g.life = 0; g.fadeAt = ok ? 0.5 : 1.8; R.lane = ln;
   const x = laneX(ln, G.yC), yy = G.yC - runnerH() * 0.6;
   if (ok) {
-    g.state[ln] = 1; R.combo++; R.correct++; R.maxCombo = Math.max(R.maxCombo, R.combo);
-    const mult = 1 + 0.1 * Math.min(R.combo - 1, 15), spd = early && !q.auto ? 1 + 0.5 * clamp(1 - q.t / R.Tap, 0, 1) : 1, pts = Math.round((q.mode === 'en2kr' ? 100 : q.mode === 'kr2en' ? 130 : 160) * mult * spd);
+    g.state[ln] = 1; const pc = R.combo, brk = !early && !q.auto; // 판 체력을 다 못 깎고 지나가면 콤보 끊김
+    if (brk) R.combo = 0; else R.combo++;
+    R.correct++; R.maxCombo = Math.max(R.maxCombo, R.combo);
+    const mult = 1 + 0.1 * Math.min(Math.max(R.combo - 1, 0), 15), spd = early && !q.auto ? 1 + 0.5 * clamp(1 - q.t / R.Tap, 0, 1) : 1, pts = Math.round((q.mode === 'en2kr' ? 100 : q.mode === 'kr2en' ? 130 : 160) * mult * spd);
     R.score += pts; R.coins += 1; R.hopT = 0; q.fb = 0.85;
     if (!q.auto) bumpStat(w, q.mode === 'en2kr' ? 1 : 2, 1, 0);
     SFX.ok(R.combo); SFX.coin();
     addP({ kind: 'text', text: '+' + pts, x, y: yy, vy: -90, life: 1, size: Math.max(22, G.laneW * 0.16), color: '#fff3a0' });
     for (let k = 0; k < 7; k++) addP({ kind: 'coin', x, y: yy, vx: rnd(-140, 140), vy: rnd(-300, -120), g: 700, life: rnd(0.7, 1.1), size: Math.max(6, G.laneW * 0.04) });
     addP({ kind: 'ring', x, y: yy, life: 0.5, size: G.laneW * 0.5, color: '#8fe0b5' });
-    if (R.combo === 5 || R.combo === 10 || R.combo === 15 || R.combo === 20) { showBanner(`${R.combo} 콤보!`, cheer('combo') || '점수 배수가 올라가요', 'combo', 1300); }
-    else { const ch = R.log.length - R.lastCh >= 3 && Math.random() < 0.5 ? cheer('good') : null; if (ch) R.lastCh = R.log.length; showBanner(ch || '정답!', q.mode !== 'en2kr' ? `${q.w.ko} = ${q.w.d}` : `${q.w.d} = ${q.w.ko}`, 'ok', ch ? 1200 : 900); }
+    if (brk) { if (pc >= 2) { showBanner('콤보 끊김!', `${pc}콤보 · 정답이지만 부수지 못했어요 (쏴서 체력을 다 깎아요)`, 'bad', 1700); SFX.bad(); } else showBanner('정답!', '쏴서 판을 부수면 콤보가 쌓여요', 'ok', 1300); }
+    else { comboFx(pc, R.combo); const ch = R.log.length - R.lastCh >= 3 && Math.random() < 0.5 ? cheer('good') : null; if (ch) R.lastCh = R.log.length; showBanner(ch || '정답!', q.mode !== 'en2kr' ? `${q.w.ko} = ${q.w.d}` : `${q.w.d} = ${q.w.ko}`, 'ok', ch ? 1200 : 900); }
     if (q.mode !== 'en2kr') say(w.d);
   } else {
     g.state[ln] = 2; g.state[q.correct] = 3; g.shake = 0; R.shake = 0.4; q.fb = 2.3;
@@ -2081,7 +2147,8 @@ function finalizeRun() {
   let stars = acc >= 0.9 ? 3 : acc >= 0.75 ? 2 : acc >= 0.5 ? 1 : 0;
   if (R.bossWon) stars = Math.max(1, stars);
   const perfect = total >= 8 && R.correct === total;
-  let record = false, prevBest = 0; R.replay = null;
+  let record = false, prevBest = 0; R.replay = null; R.paceB = null;
+  { const pm = PACE_MUL[R.paceI] || 1; if (pm > 1) { const base = R.score; R.score = Math.round(base * pm); R.paceB = { mul: pm, add: R.score - base }; } }
   if (R.kind === 'stage' && R.stages.length === 1) {
     const si = R.stages[0], rec = stageRec(set, si), n = stageClears(rec); prevBest = rec.best;
     if (n > 0) { const base = R.score; R.score = Math.round(base * (1 + REPLAY_BONUS * n)); R.replay = { n, add: R.score - base }; }
@@ -2202,15 +2269,21 @@ const EV_GOOD = {
 const WEAPONS = {
   base: { n: '기본총', dmg: 1, iv: 1, c: null, big: 1, k: 'bullet' },
   mg: { n: '기관총', dmg: 0.7, iv: 0.45, c: '#f3d05a', big: 0.8, k: 'bullet' },
-  bz: { n: '바주카', dmg: 4.5, iv: 2.6, c: '#ff7a4a', big: 2.2, k: 'rocket', pB: 0.62, pBoss: 0.1 },
+  bz: { n: '바주카', dmg: 4.5, iv: 2.6, c: '#ff7a4a', big: 2.2, k: 'rocket', pB: 0.62, pBoss: 0.14 },
   ls: { n: '레이저', dmg: 0.5, iv: 0.27, c: '#5fe6ff', big: 0.6, k: 'laser' },
   fl: { n: '화염방사기', dmg: 0.55, iv: 0.25, c: '#ff9a2a', big: 1.5, k: 'flame' },
 };
 const WKEYS = ['mg', 'bz', 'ls', 'fl'];
+/* 보스마다 약점 무기 1개 (바주카는 모든 보스에게 강함) */
+const WEAK_OF = ['fl', 'ls', 'ls', 'mg', 'mg', 'fl', 'ls', 'mg', 'fl', 'ls', 'mg', 'ls', 'mg', 'fl', 'fl', 'fl', 'mg', 'mg', 'ls', 'mg', 'fl', 'ls'];
+const WEAK_MUL = 1.8;
+const weakOf = wi => WEAK_OF[wi % WEAK_OF.length];
+const weakName = wi => WEAPONS[weakOf(wi)].n;
 function gunNow() {
   const g = GUNS[clamp((Store.data.gun || 1) - 1, 0, GUNS.length - 1)], W = R.weapon ? WEAPONS[R.weapon] : null;
   const pB = W && W.pB ? W.pB : 0, pBoss = W && W.pBoss ? W.pBoss : 0;
-  return { dmg: Math.max(g.dmg * (W ? W.dmg : 1), pB ? boardHp() * pB : 0), dmgBoss: Math.max(g.dmg * (W ? W.dmg : 1), pBoss && R.boss ? R.boss.phaseHp * pBoss : 0), iv: g.iv * (W ? W.iv : 1) * (R.slow ? 1.8 : 1), c: (W && W.c) || g.c, big: W ? W.big : 1, k: W ? W.k : 'bullet', lvl: Store.data.gun || 1 };
+  const wk = !!(R.weapon && R.boss && R.boss.weak === R.weapon);
+  return { weak: wk, dmg: Math.max(g.dmg * (W ? W.dmg : 1), pB ? boardHp() * pB : 0), dmgBoss: Math.max(g.dmg * (W ? W.dmg : 1) * (wk ? WEAK_MUL : 1), pBoss && R.boss ? R.boss.phaseHp * pBoss : 0), iv: g.iv * (W ? W.iv : 1) * (R.slow ? 1.8 : 1), c: (W && W.c) || g.c, big: W ? W.big : 1, k: W ? W.k : 'bullet', lvl: Store.data.gun || 1 };
 }
 function boardHp() {
   const st = R.stages && R.stages.length ? R.stages.reduce((a, b) => a + b, 0) / R.stages.length : 0;
@@ -2221,9 +2294,11 @@ function startEvent(it) {
   let items, hp = Math.round(boardHp() * 0.6), title, sub, ban;
   if (weapon) {
     const pool = WKEYS.concat(R.weapon ? ['base'] : []).filter(k => k !== R.weapon);
-    const ks = shuffle(pool).slice(0, 2), fourth = Math.random() < 0.5 ? { id: 'slow', label: '연사 느려짐', icon: 'slow', trap: true } : { id: 'rand', label: '랜덤 바꾸기', icon: 'rand' };
-    items = shuffle([...ks.map(k => ({ id: 'w_' + k, label: WEAPONS[k].n, icon: k })), { id: 'keep', label: '그대로 유지', icon: 'keep' }, fourth]);
-    hp = Math.round(boardHp() * 0.9); title = '총 바꾸기'; sub = '하나를 쏴서 골라요'; ban = ['총 바꾸기!', '새 총, 그대로, 랜덤… 하나를 쏴서 골라요'];
+    const wkK = weakOf(Wd.world); let ks = shuffle(pool).slice(0, 2);
+    if (pool.includes(wkK) && !ks.includes(wkK)) ks = [wkK, ks[0]];
+    const fourth = Math.random() < 0.5 ? { id: 'slow', label: '연사 느려짐', icon: 'slow', trap: true } : { id: 'rand', label: '랜덤 바꾸기', icon: 'rand' };
+    items = shuffle([...ks.map(k => ({ id: 'w_' + k, label: WEAPONS[k].n + (k === wkK ? '★' : ''), icon: k })), { id: 'keep', label: '그대로 유지', icon: 'keep' }, fourth]);
+    hp = Math.round(boardHp() * 0.9); title = '총 바꾸기'; sub = '하나를 쏴서 골라요'; ban = ['총 바꾸기!', `★ = 이 나라 보스의 약점 · 바주카는 모든 보스에 강해요`];
   } else {
     const good = shuffle(Object.keys(EV_GOOD)).slice(0, 3).map(k => ({ id: k, ...EV_GOOD[k] }));
     if (jack) items = [{ id: 'jack', label: '대박! 점수+500', icon: 'jack' }, ...[0, 1, 2].map(() => ({ id: 'trap', label: '함정!', icon: 'trap', trap: true }))];
@@ -2245,8 +2320,8 @@ function applyEv(item, ln) {
     case 'score': R.score += 300; say_('+300'); burst(); SFX.ok(6); break;
     case 'shield': R.shield = true; say_('보호막!', '#bfe6ff'); SFX.power(); break;
     case 'inv': R.inv++; say_('무적 정답!', '#ffe27a'); SFX.power(); break;
-    case 'combo': R.combo += 3; R.maxCombo = Math.max(R.maxCombo, R.combo); say_('콤보 +3'); SFX.ok(8); break;
-    case 'jack': R.score += 500; R.combo += 3; R.maxCombo = Math.max(R.maxCombo, R.combo); R.shield = true; R.weapon = pick(WKEYS); say_('대박! +500', '#b6f2fb'); burst(); burst(); SFX.win(); showBanner('대박!', wName() + ' 장착!', 'combo', 1300); break;
+    case 'combo': { const pc = R.combo; R.combo += 3; R.maxCombo = Math.max(R.maxCombo, R.combo); comboFx(pc, R.combo); } say_('콤보 +3'); SFX.ok(8); break;
+    case 'jack': { const pc = R.combo; R.combo += 3; R.maxCombo = Math.max(R.maxCombo, R.combo); comboFx(pc, R.combo); } R.score += 500; R.shield = true; R.weapon = pick(WKEYS); say_('대박! +500', '#b6f2fb'); burst(); burst(); SFX.win(); showBanner('대박!', wName() + ' 장착!', 'combo', 1300); break;
     case 'w_mg': case 'w_bz': case 'w_ls': case 'w_fl': case 'w_base': { const k = item.id.slice(2); R.weapon = k === 'base' ? null : k; R.slow = false; say_(wName() + '!', gunNow().c); SFX.power(); break; }
     case 'keep': say_('그대로 유지!'); SFX.ok(0); break;
     case 'slow': R.slow = true; say_('연사 느려짐…', '#ffb3b3'); SFX.bad(); break;
@@ -2353,9 +2428,9 @@ function startBoss() {
   if (words.length < 3) { const more = shuffle(R.pool.filter(wi => set.words[wi].typable && !words.includes(wi))); words = words.concat(more).slice(0, Math.max(3, Math.min(want, words.length + more.length))); }
   if (!words.length) return endRun(false);
   words = shuffle(words);
-  const st = R.stages && R.stages.length ? R.stages.reduce((a, b) => a + b, 0) / R.stages.length : 0, gl = clamp((Store.data.gun || 1) - 1, 0, GUNS.length - 1), d0 = GUNS[0].dmg / GUNS[0].iv, dps = GUNS[gl].dmg / GUNS[gl].iv, ref = d0 * (1 + 0.5 * (dps / d0 - 1)), phaseHp = Math.round(ref * (9 + 0.2 * st));
+  const st = R.stages && R.stages.length ? R.stages.reduce((a, b) => a + b, 0) / R.stages.length : 0, gl = clamp((Store.data.gun || 1) - 1, 0, GUNS.length - 1), d0 = GUNS[0].dmg / GUNS[0].iv, dps = GUNS[gl].dmg / GUNS[gl].iv, ref = d0 * (1 + 0.5 * (dps / d0 - 1)), phaseHp = Math.round(ref * (9 + 0.2 * st) * 1.25);
   R.bossOn = true;
-  R.boss = { words, n: words.length, rounds: 0, phaseHp, max: phaseHp * words.length, hp: phaseHp * words.length, bl: 1.5, t: 0, enter: 0, atk: 2.2, projs: [], state: 'intro', hits: 0 };
+  R.boss = { weak: weakOf(Wd.world), words, n: words.length, rounds: 0, phaseHp, max: phaseHp * words.length, hp: phaseHp * words.length, bl: 1.5, t: 0, enter: 0, atk: 2.2, projs: [], state: 'intro', hits: 0 };
   R.phase = 'bossIntro'; R.scrollTarget = 0.4; HUD.prompt.hidden = true; R.q = null; R.bul.length = 0; R.firing = false; hudAll();
   SFX.hit();
 }
@@ -2415,7 +2490,8 @@ function bossGunTick(dt) {
       if (Math.abs(b.lane - B.bl) < 0.66) {
         const x = laneX(b.lane, by);
         for (let k = 0; k < 3; k++) addP({ x: x + rnd(-16, 16), y: by - BOSS_SIZE() * 0.4, vx: rnd(-140, 140), vy: rnd(-220, -60), g: 600, life: 0.3, size: rnd(3, 7), color: b.c });
-        if ((R.shotN = (R.shotN || 0) + 1) % 2 === 0) addP({ kind: 'text', text: '-' + Math.round(b.dmg), x: x + rnd(-24, 24), y: by - BOSS_SIZE() * 0.95, vy: -70, life: 0.45, size: Math.max(13, G.laneW * 0.075), color: '#fff' });
+        if ((R.shotN = (R.shotN || 0) + 1) % 2 === 0) addP({ kind: 'text', text: '-' + Math.round(b.dmg), x: x + rnd(-24, 24), y: by - BOSS_SIZE() * 0.95, vy: -70, life: 0.45, size: Math.max(13, G.laneW * 0.075), color: b.wk ? '#ffe27a' : '#fff' });
+        if ((b.wk || b.bz) && (R.wkN = (R.wkN || 0) + 1) % (b.bz ? 1 : 4) === 0) addP({ kind: 'text', text: b.bz ? '강력!' : '약점!', x: x + rnd(-30, 30), y: by - BOSS_SIZE() * 1.2, vy: -90, life: 0.7, size: Math.max(18, G.laneW * 0.11), color: b.bz ? '#ff9a5a' : '#ffe27a' });
         bossDamage(b.dmg); if (B.state !== 'fight') break;
       }
     }
@@ -2423,7 +2499,7 @@ function bossGunTick(dt) {
   const gn = gunNow(); R.cd -= dt; R.flashG = Math.max(0, (R.flashG || 0) - dt);
   while (R.cd <= 0) {
     R.cd += gn.iv;
-    if (R.firing && B.state === 'fight') { R.bul.push({ lane: R.lane, y: G.yC - h * 0.62, dmg: gn.dmgBoss, c: gn.c, big: gn.big, k: gn.k }); R.flashG = 0.06; if ((R.pewN = (R.pewN || 0) + 1) % 3 === 0) SFX.pew(); }
+    if (R.firing && B.state === 'fight') { R.bul.push({ lane: R.lane, y: G.yC - h * 0.62, dmg: gn.dmgBoss, c: gn.c, big: gn.big, k: gn.k, wk: gn.weak, bz: R.weapon === 'bz' }); R.flashG = 0.06; if ((R.pewN = (R.pewN || 0) + 1) % 3 === 0) SFX.pew(); }
     if (R.cd < -0.3) R.cd = 0;
   }
 }
@@ -2612,6 +2688,7 @@ function stageUnlocked(set, si) { return set.id === 'custom' || si === 0 || stag
 
 /* ---- home ---- */
 function renderHome() {
+  fsUpdate();
   const set = curSet(), m = totalMastered(), ri = rankIdx(), rk = RANKS[ri], nx = RANKS[ri + 1], d = Store.data, ex = examAvail();
   const lg = $('#logo');
   if (!lg.firstChild) lg.innerHTML = '<small>Luke의</small>' + ['VOCA', 'TRAVEL'].map((w, wi) => `<div class="row">${[...w].map((c, i) => `<span class="t" style="background:${LANE[(i + (wi ? 2 : 0)) % 4]}">${c}</span>`).join('')}</div>`).join('') + '<small>단어를 외우며 세계 일주 · 이병에서 신까지</small>';
@@ -2621,7 +2698,7 @@ function renderHome() {
     (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 5문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 마스터 단어 ${Math.max(0, nx.need - m)}개 남았어요</div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
     `<div class="chips"><span class="chip"><span class="coin"></span>${fmt(d.coins)}</span><span class="chip">${d.streak.count || 0}일 연속</span><span class="chip">최고 ${fmt(d.bestScore)}점</span>${(d.bonus || 0) > 0 ? `<button class="chip bonus" data-act="bonusOpen">★ 보너스 ${d.bonus}번</button>` : ''}</div>`;
   const si = recommendedStage(set);
-  $('#btn-play').innerHTML = `RUN<span class="play-sub">스테이지 ${si + 1} · ${esc(stagePlace(set, si))}</span>`;
+  $('#btn-play').innerHTML = `RUN START!<span class="play-sub">스테이지 ${si + 1} · ${esc(stagePlace(set, si))}</span>`;
   $('#btn-play').dataset.si = si;
 }
 
@@ -2632,6 +2709,7 @@ function stageCard(set, si, free) {
   return `<button class="st ${lock ? 'lock' : ''} ${sel ? 'sel' : ''}" data-act="${free ? 'freeToggle' : lock ? 'stageLock' : 'stagePick'}" data-si="${si}">
     ${lock ? ICON.lock : ''}<span class="no">STAGE ${si + 1}</span><span class="pl">${flagHTML(worldIdx(set, si))}${esc(stagePlace(set, si))}</span><span class="th">${esc(st.t)}</span>
     <div class="bar thin green"><i style="width:${mc / st.idx.length * 100}%"></i></div>
+    <div class="wk"><span class="wdot" style="background:${WEAPONS[weakOf(worldIdx(set, si))].c}"></span>약점 ${esc(weakName(worldIdx(set, si)))}</div>
     <div class="meta">${stars(rec.stars)}<span>${rec.best ? fmt(rec.best) : mc + '/' + st.idx.length}${stageClears(rec) > 0 ? `<small class="rb">${replayLabel(stageClears(rec))}</small>` : ''}</span></div></button>`;
 }
 function renderStages() {
@@ -2667,15 +2745,15 @@ function openPrep(spec) {
   else { pool = spec.pool; title = spec.label || '내 마음대로'; sub = `단어 ${pool.length}개 중에서 달려요`; }
   spec.words = pool;
   const pace = Store.data.settings.pace;
-  $('#prep-panel').innerHTML = `<h3>${esc(title)}</h3><div class="muted">${esc(sub)}<br>20문제 + 체크포인트 + 보스전, 약 6분</div>${(() => { if (spec.kind !== 'stage') return ''; const rec = stageRec(set, spec.si), n = stageClears(rec); return n > 0 ? `<div class="replay-note">반복 보너스 <b>${replayLabel(n)}</b> · ${n}번 클리어${rec.best ? ` · 최고 ${fmt(rec.best)}점` : ''}</div>` : `<div class="replay-note">클리어하면 다음부터 다시 할 때마다 점수 +0.1%씩 붙어요</div>`; })()}
-    <div><div class="muted" style="margin-bottom:6px">달리는 속도</div><div class="seg">${PACE_NAMES.map((n, i) => `<button class="${i === pace ? 'on' : ''}" data-act="prepPace" data-i="${i}">${n}</button>`).join('')}</div></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="prepCards">단어 미리보기</button><button class="btn primary" style="flex:1" data-act="prepGo">출발!</button></div>
-    <button class="btn sm ghost" data-act="closeModal" data-id="prep" style="align-self:flex-start">닫기</button>`;
+  $('#prep-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="prep" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h3>${esc(title)}</h3><div class="muted">${esc(sub)}<br>20문제 + 체크포인트 + 보스전, 약 6분</div>${(() => { if (spec.kind !== 'stage') return ''; const rec = stageRec(set, spec.si), n = stageClears(rec); return n > 0 ? `<div class="replay-note">반복 보너스 <b>${replayLabel(n)}</b> · ${n}번 클리어${rec.best ? ` · 최고 ${fmt(rec.best)}점` : ''}</div>` : `<div class="replay-note">클리어하면 다음부터 다시 할 때마다 점수 +0.1%씩 붙어요</div>`; })()}
+    ${spec.kind === 'stage' ? `<div class="replay-note wkn">보스 약점 무기: <b>${esc(weakName(worldIdx(set, spec.si)))}</b> · 바주카는 모든 보스에 강해요</div>` : ''}
+    <div><div class="muted" style="margin-bottom:6px">달리는 속도 <small>(빠를수록 점수 보너스)</small></div><div class="seg">${PACE_NAMES.map((n, i) => `<button class="${i === pace ? 'on' : ''}" data-act="prepPace" data-i="${i}">${paceLabel(i)}</button>`).join('')}</div></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" data-act="prepCards">단어 미리보기</button><button class="btn primary" style="flex:1" data-act="prepGo">출발!</button></div>`;
   $('#prep').hidden = false;
 }
 function openCards() {
   const set = curSet(), pool = App.prep.words;
-  $('#cards-panel').innerHTML = `<h3>단어 미리보기</h3><div class="muted">눌러서 발음을 들어요</div><div class="cards">${pool.map(wi => { const w = set.words[wi]; return `<button class="wc" data-act="say" data-w="${esc(w.d)}"><div><b>${esc(w.d)}</b><span>${esc(w.ko)}</span></div>${ICON.spk}</button>`; }).join('')}</div><button class="btn primary" data-act="closeModal" data-id="cards">닫기</button>`;
+  $('#cards-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="cards" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h3>단어 미리보기</h3><div class="muted">눌러서 발음을 들어요</div><div class="cards">${pool.map(wi => { const w = set.words[wi]; return `<button class="wc" data-act="say" data-w="${esc(w.d)}"><div><b>${esc(w.d)}</b><span>${esc(w.ko)}</span></div>${ICON.spk}</button>`; }).join('')}</div>`;
   $('#cards').hidden = false;
 }
 
@@ -2757,7 +2835,7 @@ function renderSettings() {
     row('문제 읽어 주기', s.readMode === 'always' ? '모든 문제에서 문제가 나올 때 영어를 읽어요. 뜻→영어 문제는 정답 발음이 미리 들려요 (힌트)' : '영어→뜻 문제는 처음에, 나머지는 답을 확인한 뒤에 읽어요', `<div class="seg" style="width:calc(var(--m)*52)"><button class="${s.readMode !== 'always' ? 'on' : ''}" data-act="readMode" data-v="after">정답 확인 후</button><button class="${s.readMode === 'always' ? 'on' : ''}" data-act="readMode" data-v="always">항상 먼저</button></div>`) +
     row('응원 메시지', '아이 이름을 번갈아 불러 주며 응원해요', `<button class="tog ${s.cheer ? 'on' : ''}" data-act="tog" data-k="cheer" aria-label="응원"></button>`) +
     row('응원할 이름', '두 개까지 (한쪽만 써도 돼요)', `<div class="names"><input class="nm" data-i="0" maxlength="8" value="${esc((s.names || [])[0] || '')}" placeholder="이름 1"><input class="nm" data-i="1" maxlength="8" value="${esc((s.names || [])[1] || '')}" placeholder="이름 2"></div>`) +
-    row('기본 달리는 속도', '출발할 때 바꿀 수도 있어요', `<div class="seg" style="width:calc(var(--m)*52)">${PACE_NAMES.map((n, i) => `<button class="${i === s.pace ? 'on' : ''}" data-act="setPace" data-i="${i}">${n}</button>`).join('')}</div>`) +
+    row('기본 달리는 속도', '빠를수록 점수 보너스! 출발할 때 바꿀 수도 있어요', `<div class="seg" style="width:calc(var(--m)*52)">${PACE_NAMES.map((n, i) => `<button class="${i === s.pace ? 'on' : ''}" data-act="setPace" data-i="${i}">${paceLabel(i)}</button>`).join('')}</div>`) +
     row('단어장', `지금: ${esc(curSet().name)} (${curSet().words.length}개)`, `<div class="seg" style="width:calc(var(--m)*52)"><button class="${d.activeSet === 'base' ? 'on' : ''}" data-act="useSet" data-id="base">초등</button><button class="${d.activeSet === 'mid' ? 'on' : ''}" data-act="useSet" data-id="mid">중등</button><button class="${d.activeSet === 'custom' ? 'on' : ''}" data-act="useSet" data-id="custom">내 단어장</button></div>`) +
     row('내 단어장 만들기', cs ? `${cs.words.length}개 저장됨 · 학원 숙제 단어를 붙여 넣을 수 있어요` : '학원 숙제 단어를 붙여 넣으면 바로 게임이 돼요', '<button class="btn" data-act="editCustom">편집</button>') +
     row('저장 상태', '<span id="sync-label"></span>', '') +
@@ -2767,10 +2845,10 @@ function renderSettings() {
 function updateSyncLabel() { const el = $('#sync-label'); if (el) el.textContent = Store.cloud ? '내 계정에 저장되고 있어요 (다른 기기에서도 이어서 해요)' : '이 기기에만 저장돼요'; }
 function openEditor() {
   const t = Store.data.custom.text;
-  $('#editor-panel').innerHTML = `<h3>내 단어장</h3><div class="muted">한 줄에 하나씩, 영어 단어와 뜻을 적어요.<br>예) apple 사과 &nbsp;/&nbsp; banana, 바나나 &nbsp;/&nbsp; 3. cat - 고양이</div>
+  $('#editor-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="editor" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button><h3>내 단어장</h3><div class="muted">한 줄에 하나씩, 영어 단어와 뜻을 적어요.<br>예) apple 사과 &nbsp;/&nbsp; banana, 바나나 &nbsp;/&nbsp; 3. cat - 고양이</div>
     <textarea id="ed-text" spellcheck="false" placeholder="apple 사과&#10;banana 바나나">${esc(t)}</textarea>
     <div class="muted" id="ed-count"></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-act="edSave">저장</button><button class="btn" data-act="closeModal" data-id="editor">닫기</button></div>`;
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-act="edSave">저장</button></div>`;
   const ta = $('#ed-text'), upd = () => { const n = parseCustom(ta.value).length; $('#ed-count').textContent = n ? `읽은 단어 ${n}개` : '아직 읽은 단어가 없어요'; };
   ta.addEventListener('input', upd); upd(); $('#editor').hidden = false;
 }
@@ -2786,6 +2864,7 @@ function showResults() {
       <div class="res-stars">${[1, 2, 3].map(i => `<span class="${i <= res.stars ? 'on' : 'off'}" style="animation-delay:${0.3 + i * 0.35}s">★</span>`).join('')}</div>
       <div class="res-score" id="res-score">0</div>
       ${res.record ? '<span class="newrec">NEW RECORD!</span>' : ''}
+      ${R.paceB ? `<div class="replay-note">${PACE_NAMES[R.paceI]} 속도 보너스 <b>×${R.paceB.mul}</b> 적용 (+${fmt(R.paceB.add)}점)</div>` : ''}
       ${R.replay ? `<div class="replay-note">반복 보너스 <b>${replayLabel(R.replay.n)}</b> 적용 (+${fmt(R.replay.add)}점)</div>` : R.kind === 'stage' && R.stages.length === 1 && res.stars >= 1 ? '<div class="replay-note">다시 도전할 때마다 점수 +0.1%씩 붙어요!</div>' : ''}
       ${(() => { const c = cheer(res.stars >= 2 ? 'win' : 'lose'); return c ? `<div class="res-cheer">${esc(c)}</div>` : ''; })()}
       ${R.bonusN ? `<div class="muted">보너스 스테이지 ${R.bonusOk} / ${R.bonusN} 정답</div>` : ''}
@@ -2817,7 +2896,11 @@ function confetti(n) {
 }
 
 /* ---- actions ---- */
+const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
+function fsUpdate() { const b = $('#btn-fs'); if (!b) return; const root = document.documentElement, ok = !!(root.requestFullscreen || root.webkitRequestFullscreen); b.hidden = !ok; $('#fs-t').textContent = fsEl() ? '전체화면 끄기' : '전체화면'; }
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { fsUpdate(); setTimeout(onResize, 120); }));
 const ACT = {
+  fs() { try { const root = document.documentElement; if (fsEl()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } else { const f = root.requestFullscreen || root.webkitRequestFullscreen; if (f) { const p = f.call(root); if (p && p.catch) p.catch(() => toast('이 브라우저에서는 전체화면이 안 돼요. 브라우저 메뉴의 전체화면을 써 보세요')); } } } catch (e) { toast('이 브라우저에서는 전체화면이 안 돼요'); } },
   go(d) { go(d.to); },
   play(d, el) { const set = curSet(), si = +(el.dataset.si || 0); openPrep({ kind: 'stage', si }); },
   stagePick(d) { openPrep({ kind: 'stage', si: +d.si }); },
@@ -3028,7 +3111,7 @@ function dlgType(text) {
 function dlgFinish() { clearInterval(DLG.timer); DLG.typing = false; $('#dlg .dlg-text').textContent = DLG.full; $('#dlg-btn').classList.remove('wait'); }
 function dlgShow(o) {
   const d = $('#dlg'); d.className = 'dlg ' + (o.kind || '');
-  d.querySelector('.dlg-head').innerHTML = o.head; $('#dlg-btn').textContent = o.btn; DLG.onDone = o.onDone; DLG.open = true; d.hidden = false;
+  d.querySelector('.dlg-head').innerHTML = o.head; $('#dlg-btn').textContent = o.btn; DLG.onDone = o.onDone; DLG.open = true; d.hidden = false; { const ft = d.querySelector('.dlg-foot'); ft.innerHTML = o.foot || ''; ft.hidden = !o.foot; }
   dlgType(o.text);
 }
 function dlgClose() { clearInterval(DLG.timer); DLG.open = false; DLG.typing = false; $('#dlg').hidden = true; }
@@ -3039,7 +3122,7 @@ function openStageDlg() {
   dlgShow({
     kind: 'stage',
     head: `${flagHTML(wi)}<div><small>${single ? 'STAGE ' + (R.stages[0] + 1) + ' · ' : ''}${esc(w.region)}</small><b>${esc(w.name)}</b></div><span class="dlg-lm">${esc(w.lm)}</span>`,
-    text: `${INTRO[w.code]} 그럼 달려 볼까?`, btn: '출발!',
+    text: `${INTRO[w.code]} 그럼 달려 볼까?`, btn: '출발!', foot: factsHTML(w.code),
     onDone() { R.intro = 'count'; R.cdT = 0; R.cdK = -1; },
   });
 }
@@ -3060,7 +3143,7 @@ function openBossDlg() {
   const w = WORLDS[Wd.world], f = FIG[w.code];
   dlgShow({
     kind: 'boss',
-    head: `<span class="dlg-tag">BOSS</span><div><small>${esc(f.t)}</small><b>${esc(f.n)}</b></div>`,
+    head: `<span class="dlg-tag">BOSS</span><div><small>${esc(f.t)} · 약점 ${esc(weakName(Wd.world))} · 바주카도 강해요</small><b>${esc(f.n)}</b></div>`,
     text: f.line, btn: '도전한다!',
     onDone() { const B = R.boss; R.phase = 'boss'; B.state = 'fight'; B.atk = 1.8; R.scrollTarget = 0.4; R.cd = 0; stepBanner(); },
   });
@@ -3138,5 +3221,3 @@ init();
 window.__WR = { get R() { return R; }, App, Store, SETS, go, startRun, ACT, setLane, typeKey, judge, initWorld, WORLDS };
 
 </script>
-
-</body></html>
