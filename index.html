@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261006-231736"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
 <title>Luke의 VOCA TRAVEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,6 +33,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .btn.xl{min-height:calc(var(--m)*11.5);font-size:calc(var(--m)*4.6);border-radius:20px}
 .btn.sm{min-height:calc(var(--m)*5.2);font-size:calc(var(--m)*2.3);padding:0 calc(var(--m)*2);border-radius:12px;box-shadow:0 4px 0 var(--ink)}
 .btn[disabled]{opacity:.55;filter:saturate(.5);pointer-events:none}
+.ibtn.xs{width:calc(var(--m)*4.6);height:calc(var(--m)*4.6);box-shadow:0 3px 0 var(--ink);opacity:.9}.ibtn.xs svg{width:62%;height:62%}
 .ibtn{width:calc(var(--m)*6.4);height:calc(var(--m)*6.4);flex:none;padding:0;border:3px solid var(--ink);border-radius:50%;background:#fff;box-shadow:0 4px 0 var(--ink);display:inline-grid;place-items:center}
 .ibtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 .ibtn svg{width:58%;height:58%}
@@ -112,6 +113,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 @keyframes cfxIn{0%{opacity:0;transform:translateX(-50%) scale(.3)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
 @keyframes cfxRb{to{background-position:200% 0}}
 @keyframes cfxShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+#upd{position:absolute;left:50%;bottom:calc(var(--m)*2.4);transform:translateX(-50%);z-index:40;white-space:nowrap;animation:bob 1s ease-in-out infinite}
 #flash{position:absolute;inset:0;pointer-events:none;opacity:0;z-index:4}
 #flash.go{animation:fl .5s ease-out}
 @keyframes fl{0%{opacity:1}100%{opacity:0}}
@@ -122,7 +124,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 
 /* typing card */
 #typing{position:absolute;left:0;right:0;bottom:0;top:calc(var(--hu)*41);display:flex;justify-content:center;align-items:flex-end;padding:0 calc(var(--m)*2) calc(var(--hu)*2);pointer-events:none;z-index:6}
-.ty-card{pointer-events:auto;width:min(100%,calc(var(--m)*108));background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);padding:calc(var(--hu)*1.8) calc(var(--m)*2.2);display:flex;flex-direction:column;align-items:center;gap:calc(var(--hu)*1.1)}
+.ty-card{container-type:inline-size;pointer-events:auto;width:min(100%,calc(var(--m)*140));background:var(--paper);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);padding:calc(var(--hu)*1.8) calc(var(--m)*2.2);display:flex;flex-direction:column;align-items:center;gap:calc(var(--hu)*1.1)}
 .tag{display:inline-block;font-family:var(--f-kr);font-size:calc(var(--hu)*2.6);padding:calc(var(--hu)*.4) calc(var(--m)*2);border-radius:999px;border:3px solid var(--ink);background:var(--blue);color:#fff}
 .tag.copy{background:var(--yellow);color:var(--ink)}
 .tag.boss{background:var(--red)}
@@ -134,7 +136,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .ty-ex .en mark{background:var(--coin);color:var(--ink);border-radius:6px;padding:0 .15em}
 .ty-ex .ko{font-size:calc(var(--hu)*2.5);color:var(--ink2)}
 .ty-guide{font-family:var(--f-en);font-weight:700;font-size:calc(var(--hu)*5.4);letter-spacing:.12em;color:var(--blue);line-height:1}
-.ty-slots{--sw:min(calc(var(--hu)*8.6),calc((var(--m)*96 - var(--n)*calc(var(--m)*.9))/var(--n)));display:flex;gap:calc(var(--m)*.9);justify-content:center;flex-wrap:nowrap}
+.ty-slots{--sw:min(calc(var(--hu)*10.4),calc((100cqw - var(--m)*5.6 - var(--n)*var(--m)*.9)/var(--n)));display:flex;gap:calc(var(--m)*.9);justify-content:center;flex-wrap:nowrap}
 .slot,.sep{width:var(--sw);height:calc(var(--sw)*1.18);display:grid;place-items:center;font-family:var(--f-en);font-weight:700;font-size:calc(var(--sw)*.72);line-height:1}
 .slot{border:3px solid var(--ink);border-radius:12px;background:#fff;box-shadow:0 4px 0 var(--ink)}
 .slot.on{background:#c9f7da;color:var(--green-d)}
@@ -181,7 +183,9 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .rank-card .rs{font-size:calc(var(--m)*2.2);color:var(--ink2);font-weight:700}
 .chips{display:flex;gap:calc(var(--m)*1.2);flex-wrap:wrap}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:calc(var(--m)*1.6)}
-.screen#scr-home #btn-play{position:absolute;left:calc(var(--m)*2);top:calc(var(--m)*2);z-index:3;width:min(44%,calc(var(--m)*46));padding-left:calc(var(--m)*1.5);padding-right:calc(var(--m)*1.5)}
+.screen#scr-home #btn-play{position:absolute;left:0;right:0;margin:0 auto;top:calc(var(--m)*2);z-index:3;width:min(92%,calc(var(--m)*84));padding:calc(var(--m)*1.6) calc(var(--m)*1.5);font-size:calc(var(--m)*7.4);line-height:1.1;letter-spacing:.02em}
+@media (min-aspect-ratio:1/1){.screen#scr-home #btn-play{right:auto;left:2%;margin:0;width:40%}}
+.screen#scr-home #btn-play .play-sub{font-size:calc(var(--m)*2.8);margin-top:calc(var(--m)*.4)}
 .play-sub{font-family:var(--f-body);font-size:calc(var(--m)*2.1);font-weight:700;opacity:.8;display:block}
 .btn.stack{flex-direction:column;gap:2px;padding-top:calc(var(--m)*1);padding-bottom:calc(var(--m)*1.2)}
 
@@ -231,12 +235,14 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .dlg-tag{background:var(--red);color:#fff;font-family:var(--f-en);font-weight:800;font-size:calc(var(--m)*2.4);padding:calc(var(--m)*.8) calc(var(--m)*1.6);border-radius:10px;border:3px solid var(--ink)}
 .dlg.boss .dlg-card{background:#2a2438;color:#fbf6ea;border-color:#0e0b16;box-shadow:0 7px 0 #0e0b16}
 .dlg.boss .dlg-head small{color:#c9c0dc}
-.dlg-foot{display:flex;flex-wrap:wrap;justify-content:center;gap:calc(var(--m)*.4) calc(var(--m)*1.3);font-size:calc(var(--m)*1.75);color:var(--ink2);font-weight:600;line-height:1.4}
+.dlg-foot{display:flex;flex-direction:column;align-items:flex-start;gap:calc(var(--m)*.5);font-size:calc(var(--m)*2.3);color:var(--ink2);font-weight:600;line-height:1.4}
 .dlg-foot b{color:var(--ink);font-weight:800}
 .dlg-foot i{font-style:normal;color:#b25b00;font-weight:700}
-.dlg-foot span{white-space:nowrap}
+.dlg-foot span{white-space:nowrap;max-width:100%}
 .dlg-text{margin:0;font-family:var(--f-kr);font-size:calc(var(--m)*3);line-height:1.5;font-weight:700;min-height:calc(var(--m)*9);word-break:keep-all}
-.dlg .btn{align-self:flex-end}
+.dlg-body{display:flex;gap:calc(var(--m)*1.8);align-items:stretch}
+.dlg-main{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-between;gap:calc(var(--m)*1.1)}
+.dlg .btn{align-self:stretch;flex:none;width:calc(var(--m)*15);min-height:calc(var(--m)*14);padding:calc(var(--m)*1) calc(var(--m)*.8);font-size:calc(var(--m)*2.9);line-height:1.2;border-radius:22px;text-wrap:balance;word-break:keep-all}
 .dlg .btn.wait{opacity:.5}
 #count{position:absolute;inset:0;z-index:17;display:grid;place-items:center;pointer-events:none;font-family:var(--f-en);font-weight:800;font-size:calc(var(--hu)*30);color:#fff;-webkit-text-stroke:calc(var(--hu)*1.2) var(--ink);paint-order:stroke fill;text-shadow:0 calc(var(--hu)*1.4) 0 var(--ink)}
 #count.go{font-size:calc(var(--hu)*17);color:var(--coin)}
@@ -278,6 +284,19 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .wrow{display:flex;align-items:center;gap:calc(var(--m)*1.6);padding:calc(var(--m)*1.2) calc(var(--m)*1.4);border-bottom:2px dashed #bdb6a2}
 .wrow .en{font-family:var(--f-en);font-weight:700;font-size:calc(var(--m)*3);min-width:calc(var(--m)*20)}
 .wrow .ko{flex:1;min-width:0;font-weight:700}
+.pips{display:inline-flex;gap:3px;flex:none}.pips i{width:calc(var(--m)*1.5);height:calc(var(--m)*1.5);border-radius:50%;border:2px solid var(--ink);background:#fff;display:block}.pips i.on{background:#3ec27a}
+@media (max-width:520px){.wrow .pips{display:inline-flex}}
+.wrow.w2{flex-direction:column;align-items:stretch;gap:calc(var(--m)*.8)}
+.wl1,.wl2{display:flex;align-items:center;gap:calc(var(--m)*1.4);flex-wrap:wrap}.wl1 .en{min-width:calc(var(--m)*14)}
+.wl2 .pn{font-family:var(--f-en);font-size:calc(var(--m)*2.2);min-width:2.4em}
+.wgo{margin-left:auto;font:inherit;font-weight:700;font-size:calc(var(--m)*2.1);padding:calc(var(--m)*.7) calc(var(--m)*1.5);border:3px solid var(--ink);border-radius:12px;background:#ffe27a;cursor:pointer;box-shadow:0 3px 0 var(--ink)}.wgo.lock{background:#ddd6c3;color:#6a6454;box-shadow:none}
+.wlegend{display:flex;flex-direction:column;gap:4px;font-size:calc(var(--m)*2.1);color:#5a5445;padding:0 calc(var(--m)*1.4) calc(var(--m)*1.2)}.wlegend .pips{vertical-align:middle}
+.item .sw.pimg{padding:0;overflow:hidden;background:#fff6dc;width:calc(var(--m)*10);height:calc(var(--m)*8.4)}.item .sw.pimg img{width:100%;height:100%;object-fit:contain}
+.qbtn{margin-left:calc(var(--m)*.8);vertical-align:middle;font-family:var(--f-en);font-weight:800;font-size:calc(var(--m)*2.4);width:calc(var(--m)*3.6)!important;height:calc(var(--m)*3.6)!important}
+.hp-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:calc(var(--m)*.8);font-weight:700;font-size:calc(var(--m)*2.4)}
+.hp-list li{display:flex;gap:calc(var(--m)*1.2);align-items:center}.hp-list .pips{margin-left:auto}
+.hp-list b.g{color:var(--green-d)}.hp-list b.r{color:var(--red-d)}
+.hp-box{background:var(--paper2);border:3px solid var(--ink);border-radius:14px;padding:calc(var(--m)*1.4);font-size:calc(var(--m)*2.3);font-weight:700;line-height:1.5}
 .pill{font-size:calc(var(--m)*1.9);font-weight:700;border:2px solid var(--ink);border-radius:999px;padding:0 calc(var(--m)*1.2);white-space:nowrap}
 .pill.new{background:#fff}.pill.learn{background:#d6e6ff}.pill.tricky{background:#ffd0d3}.pill.almost{background:#fff0b0}.pill.master{background:#c9f7da}
 
@@ -288,6 +307,8 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 .item{display:flex;flex-direction:column;align-items:center;gap:calc(var(--m)*.6);padding:calc(var(--m)*1.4);background:#fff;border:3px solid var(--ink);border-radius:15px;box-shadow:0 4px 0 var(--ink);font-family:var(--f-kr);font-size:calc(var(--m)*2.3);text-align:center}
 .item .sw{width:calc(var(--m)*6);height:calc(var(--m)*6);border-radius:10px;border:3px solid var(--ink);background:var(--paper2);display:grid;place-items:center;font-family:var(--f-en);font-weight:700;font-size:calc(var(--m)*2.6)}
 .item small{font-family:var(--f-body);font-weight:700;color:var(--ink2);font-size:calc(var(--m)*1.9)}
+.item.lock{background:#e4e9f6;color:#7d86a6;border-color:#7d86a6;box-shadow:0 3px 0 #7d86a6}
+.item.lock small{color:#9a6a00}
 .item.sel{background:#fff3b0;outline:4px solid var(--blue)}
 .item.eq{background:#c9f7da}
 .rk{display:flex;align-items:center;gap:calc(var(--m)*1.6);padding:calc(var(--m)*1.4);border:3px solid var(--ink);border-radius:15px;background:#fff;margin-bottom:calc(var(--m)*1.2);text-align:left;width:100%}
@@ -373,6 +394,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
       <div id="hud-prog"><div class="bar"><i id="prog-fill"></i></div><span id="prog-txt"></span></div>
       <div class="chip"><span class="coin"></span><b id="coin-n">0</b></div>
       <div class="chip" id="hud-score"><b id="score-n">0</b></div>
+      <button class="ibtn xs" id="hud-fs" data-act="fs" aria-label="전체화면"><svg viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4V4zm10 0h6v6h-2V6h-4V4zM4 14h2v4h4v2H4v-6zm14 0h2v6h-6v-2h4v-4z" fill="#16213a"/></svg></button>
     </div>
     <div id="combo" hidden><small>COMBO</small><b id="combo-n">0</b></div>
     <div id="prompt" hidden>
@@ -480,8 +502,9 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
 
   <div class="modal" id="prep" hidden><div class="panel" id="prep-panel"></div></div>
   <div class="modal" id="cards" hidden><div class="panel" id="cards-panel"></div></div>
+  <div class="modal" id="help" hidden><div class="panel" id="help-panel"></div></div>
   <div class="modal" id="editor" hidden><div class="panel" id="editor-panel"></div></div>
-  <div id="dlg" class="dlg" hidden><div class="dlg-card"><div class="dlg-head"></div><p class="dlg-text"></p><button class="btn primary" id="dlg-btn" data-act="dlgNext"></button><div class="dlg-foot" hidden></div></div></div>
+  <div id="dlg" class="dlg" hidden><div class="dlg-card"><div class="dlg-head"></div><div class="dlg-body"><div class="dlg-main"><p class="dlg-text"></p><div class="dlg-foot" hidden></div></div><button class="btn primary" id="dlg-btn" data-act="dlgNext"></button></div></div></div>
   <div id="count" hidden></div>
   <div class="modal" id="bonus" hidden><div class="panel" id="bonus-panel"></div></div>
   <div class="modal" id="pause" hidden>
@@ -491,6 +514,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
       <button class="btn red" id="btn-quit" data-act="quit">그만하고 나가기</button>
     </div>
   </div>
+  <button class="btn primary" id="upd" data-act="reloadApp" hidden>새 버전이 나왔어요! 눌러서 업데이트</button>
   <div id="toast"></div>
 </div>
 <script>
@@ -702,53 +726,78 @@ const BASE_WORLD_OF = WORLDS.map((_, i) => i);
 function worldIdx(set, si) { return set.id === 'base' ? (BASE_WORLD_OF[si] ?? WORLDS.length - 1) : si % WORLDS.length; }
 function stagePlace(set, si) { return WORLDS[worldIdx(set, si)].name; }
 
+/* rk = 이 계급(RANKS 번호) 이상이어야 살 수 있어요. 뒤로 갈수록 비싸고 높은 계급이 필요해요. */
 const SHOP = {
   color: [
-    { id: 'sky', name: '하늘색', price: 0, c: ['#3f6fa8', '#2c5282', '#8ab9ff'] },
-    { id: 'coral', name: '산호색', price: 20, c: ['#ff6b6b', '#d44444', '#ff9c9c'] },
-    { id: 'mint', name: '민트', price: 20, c: ['#2fc9a0', '#1c9b78', '#7ee5c6'] },
-    { id: 'sun', name: '해바라기', price: 30, c: ['#ffc21f', '#d79a00', '#ffe07a'] },
-    { id: 'grape', name: '포도색', price: 30, c: ['#8f5cff', '#6a3ad6', '#bc9cff'] },
-    { id: 'pink', name: '복숭아', price: 30, c: ['#ff7ac0', '#d4509a', '#ffb0dc'] },
-    { id: 'ninja', name: '닌자 검정', price: 50, c: ['#33384f', '#1c2033', '#5b6385'] },
-    { id: 'gold', name: '황금빛', price: 90, c: ['#f4c542', '#c9951a', '#fff0a6'] },
+    { id: 'sky', name: '없음', price: 0, rk: 0, c: ['#3f6fa8', '#2c5282', '#8ab9ff'] },
+    { id: 'coral', name: '산호색', price: 60, rk: 0, c: ['#ff6b6b', '#d44444', '#ff9c9c'] },
+    { id: 'mint', name: '민트', price: 60, rk: 1, c: ['#2fc9a0', '#1c9b78', '#7ee5c6'] },
+    { id: 'sun', name: '해바라기', price: 100, rk: 2, c: ['#ffc21f', '#d79a00', '#ffe07a'] },
+    { id: 'grape', name: '포도색', price: 100, rk: 3, c: ['#8f5cff', '#6a3ad6', '#bc9cff'] },
+    { id: 'pink', name: '복숭아', price: 100, rk: 4, c: ['#ff7ac0', '#d4509a', '#ffb0dc'] },
+    { id: 'ninja', name: '닌자 검정', price: 220, rk: 7, c: ['#33384f', '#1c2033', '#5b6385'] },
+    { id: 'gold', name: '황금빛', price: 500, rk: 13, c: ['#f4c542', '#c9951a', '#fff0a6'] },
   ],
   hat: [
-    { id: 'none', name: '계급 투구', price: 0 },
-    { id: 'cap', name: '야구모자', price: 40 },
-    { id: 'beanie', name: '털모자', price: 40 },
-    { id: 'cat', name: '고양이 귀', price: 60 },
-    { id: 'bunny', name: '토끼 귀', price: 60 },
-    { id: 'party', name: '파티 모자', price: 50 },
-    { id: 'wizard', name: '마법사 모자', price: 80 },
-    { id: 'pirate', name: '해적 모자', price: 100 },
+    { id: 'none', name: '계급 투구', price: 0, rk: 0 },
+    { id: 'cap', name: '야구모자', price: 120, rk: 1 },
+    { id: 'beanie', name: '털모자', price: 120, rk: 2 },
+    { id: 'party', name: '파티 모자', price: 160, rk: 3 },
+    { id: 'cat', name: '고양이 귀', price: 200, rk: 4 },
+    { id: 'bunny', name: '토끼 귀', price: 200, rk: 6 },
+    { id: 'wizard', name: '마법사 모자', price: 350, rk: 9 },
+    { id: 'pirate', name: '해적 모자', price: 450, rk: 12 },
   ],
-  pet: [
-    { id: 'none', name: '없음', price: 0 },
-    { id: 'chick', name: '병아리', price: 60 },
-    { id: 'puppy', name: '강아지', price: 100 },
-    { id: 'kitty', name: '고양이', price: 100 },
-    { id: 'slime', name: '슬라임', price: 120 },
-    { id: 'robot', name: '꼬마 로봇', price: 150 },
-    { id: 'dragon', name: '아기 용', price: 250 },
+  pet: [ // 계급마다 새 친구가 해금돼요. pct는 보스전 보조화력(%)이 아니라 계급(rk)으로 자동 계산돼요.
+    { id: 'none', name: '없음', price: 0, rk: 0 },
+    { id: 'worm', name: '지렁이', price: 150, rk: 0 },
+    { id: 'snail', name: '달팽이', price: 250, rk: 1 },
+    { id: 'chick', name: '병아리', price: 400, rk: 2 },
+    { id: 'frog', name: '개구리', price: 500, rk: 3 },
+    { id: 'hamster', name: '햄스터', price: 600, rk: 4 },
+    { id: 'puppy', name: '강아지', price: 700, rk: 5 },
+    { id: 'kitty', name: '고양이', price: 800, rk: 6 },
+    { id: 'penguin', name: '펭귄', price: 900, rk: 7 },
+    { id: 'fox', name: '여우', price: 1000, rk: 8 },
+    { id: 'slime', name: '슬라임', price: 1100, rk: 9 },
+    { id: 'panda', name: '판다', price: 1300, rk: 10 },
+    { id: 'robot', name: '꼬마 로봇', price: 1500, rk: 11 },
+    { id: 'tiger', name: '아기 호랑이', price: 1700, rk: 12 },
+    { id: 'dragon_w', name: '화이트 아기 용', price: 2000, rk: 13 },
+    { id: 'dragon', name: '초록 아기 용', price: 2000, rk: 13 },
+    { id: 'dragon_r', name: '레드 아기 용', price: 2400, rk: 14 },
+    { id: 'dragon_b', name: '블루 아기 용', price: 2800, rk: 15 },
+    { id: 'dragon_k', name: '블랙 아기 용', price: 3200, rk: 16 },
+    { id: 'dragon_g', name: '골드 아기 용', price: 3800, rk: 16 },
+    { id: 'unicorn', name: '유니콘', price: 3400, rk: 17 },
+    { id: 'haetae', name: '해태', price: 3800, rk: 18 },
+    { id: 'phoenix', name: '봉황', price: 4300, rk: 19 },
+    { id: 'kumiho', name: '구미호', price: 4800, rk: 20 },
+    { id: 'firebird', name: '불새', price: 5400, rk: 21 },
+    { id: 'pegasus', name: '페가수스', price: 5800, rk: 21 },
+    { id: 'griffin', name: '그리핀', price: 6800, rk: 22 },
+    { id: 'lion', name: '황금 사자', price: 7800, rk: 23 },
+    { id: 'angel', name: '아기 천사', price: 10000, rk: 24 },
   ],
   trail: [
-    { id: 'dust', name: '먼지', price: 0 },
-    { id: 'petal', name: '꽃잎', price: 60 },
-    { id: 'star', name: '별가루', price: 80 },
-    { id: 'bolt', name: '번개', price: 80 },
-    { id: 'fire', name: '불꽃', price: 100 },
-    { id: 'rainbow', name: '무지개', price: 120 },
+    { id: 'dust', name: '먼지', price: 0, rk: 0 },
+    { id: 'petal', name: '꽃잎', price: 200, rk: 2 },
+    { id: 'star', name: '별가루', price: 280, rk: 4 },
+    { id: 'bolt', name: '번개', price: 280, rk: 6 },
+    { id: 'fire', name: '불꽃', price: 380, rk: 9 },
+    { id: 'rainbow', name: '무지개', price: 500, rk: 13 },
   ],
 };
 const GUNS = [
-  { n: '장난감 총', dmg: 10, iv: 0.14, price: 0, c: '#9aa6b8', d: '처음 받는 기본 총' },
-  { n: '쾌속 총', dmg: 13, iv: 0.12, price: 60, c: '#4f86c6', d: '더 빠르고 조금 더 세요' },
-  { n: '레이저 총', dmg: 17, iv: 0.11, price: 160, c: '#3fb27f', d: '초록 레이저가 나가요' },
-  { n: '플라즈마 총', dmg: 22, iv: 0.10, price: 320, c: '#8a63d2', d: '보라색 에너지탄' },
-  { n: '황금 대포', dmg: 30, iv: 0.09, price: 600, c: '#e0b23c', d: '가장 강한 황금 총' },
+  { n: '장난감 총', dmg: 10, iv: 0.14, price: 0, rk: 0, c: '#9aa6b8', d: '처음 받는 기본 총' },
+  { n: '쾌속 총', dmg: 13, iv: 0.12, price: 200, rk: 2, c: '#4f86c6', d: '더 빠르고 조금 더 세요' },
+  { n: '레이저 총', dmg: 17, iv: 0.11, price: 500, rk: 5, c: '#3fb27f', d: '초록 레이저가 나가요' },
+  { n: '플라즈마 총', dmg: 22, iv: 0.10, price: 1000, rk: 9, c: '#8a63d2', d: '보라색 에너지탄' },
+  { n: '황금 대포', dmg: 30, iv: 0.09, price: 2000, rk: 14, c: '#e0b23c', d: '가장 강한 황금 총' },
 ];
-const SHOP_TABS = [['color', '몸 색'], ['hat', '모자'], ['pet', '펫'], ['trail', '꼬리 효과']];
+const SHOP_TABS = [['color', '목도리 색'], ['hat', '모자'], ['pet', '펫'], ['trail', '꼬리 효과']];
+/* 펫 보조화력: 보스전에서 계급이 높은 펫일수록 도와줘요 (5% ~ 20%) */
+const petAssist = id => { const it = SHOP.pet.find(x => x.id === id); return !it || id === 'none' ? 0 : 0.05 + 0.15 * it.rk / 24; };
 const shopItem = (cat, id) => SHOP[cat].find(x => x.id === id) || SHOP[cat][0];
 
 /* ============ badges ============ */
@@ -930,6 +979,20 @@ function pickVoice() {
   } catch (e) { }
 }
 if (SP.ok) { try { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; } catch (e) { } }
+/* 한국어 읽어주기 (나라 소개·보스 대사). boss=true면 낮고 굵은 목소리 */
+function sayKo(text, boss) {
+  if (!SP.ok || !Store.data.settings.speech || !text) return;
+  try {
+    speechSynthesis.cancel();
+    const vs = speechSynthesis.getVoices() || [], v = vs.find(x => /^ko/i.test(x.lang) && /google|samsung|yuna|sun-hi|heami/i.test(x.name)) || vs.find(x => /^ko/i.test(x.lang));
+    const u = new SpeechSynthesisUtterance(String(text)), tok = SP.tok = (SP.tok || 0) + 1, done = () => { if (SP.tok === tok) duck(false); };
+    u.lang = 'ko-KR'; if (v) u.voice = v; u.volume = 1; u.rate = boss ? 0.82 : 0.95; u.pitch = boss ? 0.15 : 1.1;
+    u.onstart = () => { if (SP.tok === tok) duck(true); }; u.onend = done; u.onerror = done;
+    duck(true); setTimeout(done, Math.min(20000, 2500 + u.text.length * 260));
+    speechSynthesis.speak(u);
+  } catch (e) { }
+}
+function stopSay() { try { if (SP.ok) { speechSynthesis.cancel(); SP.tok = (SP.tok || 0) + 1; duck(false); } } catch (e) { } }
 function say(text) {
   if (!SP.ok || !Store.data.settings.speech || !text) return;
   try {
@@ -967,7 +1030,7 @@ function cheer(kind) {
 function callName() { if (!Store.data.settings.cheer) return ''; const c = cheerName(); return c ? c.V : ''; }
 
 /* ============ canvas drawing ============ */
-const cv = $('#cv'), ctx = cv.getContext('2d');
+const cv = $("#cv"); let ctx = cv.getContext("2d");
 const G = { W: 0, H: 0, dpr: 1, laneW: 0, cx: 0, roadTop: 0, yC: 0, spawnY: 0, sTop: 0.6 };
 const LANE = ['#b84a52', '#3f6fa8', '#2f8f6b', '#d9ac3e'];
 const LANE_DK = ['#8c333a', '#2c5282', '#1f6b4f', '#9c7421'];
@@ -1316,6 +1379,16 @@ function drawRunner(x, y, h, o) {
     ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = 0.3 * u; ctx.strokeStyle = '#ffd966'; ctx.stroke(); circ(0, -4.6 * u, 0.55 * u, '#ffd966');
   }
   drawBackPatch(info, u, gr);
+  // 목도리 (상점 '목도리 색')
+  if (look.color && look.color !== 'sky') {
+    const sc = SHOP.color.find(c => c.id === look.color); if (sc) {
+      const sw2 = Math.sin(t * 7) * 0.45 * u * (0.4 + mv);
+      ctx.fillStyle = sc.c[0]; rr(-1.5 * u, -6.75 * u, 3 * u, 0.85 * u, 0.3 * u); ctx.fill();
+      ctx.fillStyle = sc.c[2]; ctx.globalAlpha = 0.55; ctx.fillRect(-1.3 * u, -6.7 * u, 2.6 * u, 0.22 * u); ctx.globalAlpha = 1;
+      ctx.fillStyle = sc.c[1]; ctx.beginPath(); ctx.moveTo(0.5 * u, -6.0 * u); ctx.lineTo(1.5 * u, -6.0 * u); ctx.quadraticCurveTo(1.9 * u + sw2, -4.7 * u, 1.3 * u + sw2 * 1.4, -3.5 * u); ctx.lineTo(0.35 * u + sw2 * 1.2, -3.7 * u); ctx.quadraticCurveTo(0.7 * u + sw2 * 0.6, -4.9 * u, 0.5 * u, -6.0 * u); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = sc.c[0]; ctx.fillRect(0.5 * u + sw2 * 0.9, -4.6 * u, 1.0 * u, 0.3 * u);
+    }
+  }
   // head
   const hx = lean * 0.18 * u;
   ctx.fillStyle = '#ffcf9f'; ctx.fillRect(hx - 0.7 * u, -6.8 * u, 1.4 * u, 0.6 * u);
@@ -1330,7 +1403,7 @@ function drawRunner(x, y, h, o) {
 }
 
 /* ---- pets ---- */
-function drawPet(id, x, y, u, t, moving = 1) {
+function drawPetOld(id, x, y, u, t, moving = 1) {
   if (!id || id === 'none') return;
   const b = moving ? Math.abs(Math.sin(t * 9)) * 0.55 * u : Math.sin(t * 3) * 0.1 * u;
   ctx.save(); ctx.translate(x, y - b);
@@ -1538,7 +1611,7 @@ const FACTS = {
   mx: [2.51, 19.56, 13, '1억 2,970만 명', 1964375, 21200], pe: [0.67, 12.80, 46, '3,440만 명', 1285216, 3809], ca: [0.78, 99.42, 11, '4,010만 명', 9984670, 25100],
   us: [6.61, 97.91, 1, '3억 4,180만 명', 9833517, 323800],
 };
-const fmtX = n => (n >= 100 ? String(Math.round(n)) : n >= 1 ? n.toFixed(1).replace(/\.0$/, '') : n.toFixed(2).replace(/0$/, '')) + '배';
+const fmtX = n => n >= 0.95 ? Math.round(n) + '배' : (k => k >= 2 ? '1/' + k : '1배')(Math.round(1 / n));
 function factsHTML(code) {
   const f = FACTS[code]; if (!f) return '';
   const kr = code === 'kr', n = v => v.toLocaleString('en-US');
@@ -1698,8 +1771,8 @@ const GEAR = [
   /* 3 영관   */ { jk: ['#2f5141', '#223d30', '#41694f'], helm: 'peak2', pad: 'gold', belt: 1, braid: 1, pants: ['#27382e', '#161f1a'] },
   /* 4 장성   */ { jk: ['#27423a', '#1b3029', '#35584c'], helm: 'peak3', pad: 'gold', belt: 1, braid: 1, pants: ['#1f322b', '#121b17'], cape: ['#8f2030', '#5d1220', 5.2], trim: true, aura: ['#ffd35a', 0.16] },
   /* 5 귀족   */ { jk: ['#5d2c5c', '#431e42', '#7b3d79'], helm: 'coronet', pad: 'gold', pants: ['#2c2140', '#171026'], cape: ['#3f2c80', '#2a1d5a', 6.4], trim: true },
-  /* 6 왕     */ { helm: 'crown', pad: 'gold', cape: ['#c21d3b', '#8c1229', 7.4], back: 'sword2', armor: 'gold', trim: true, fur: true, aura: ['#ffd35a', 0.36] },
-  /* 7 황제   */ { helm: 'grand', pad: 'gold', cape: ['#f2b61c', '#c98a05', 8], back: null, armor: 'gold', trim: true, wings: true, aura: ['#ffe27a', 0.5], sparkle: 1 },
+  /* 6 왕     */ { jk: ['#2c3e7a', '#1f2d5c', '#3d52a0'], pants: ['#1f2d5c', '#121b3a'], helm: 'crown', pad: 'gold', cape: ['#c21d3b', '#8c1229', 7.4], back: 'sword2', armor: 'gold', trim: true, fur: true, aura: ['#ffd35a', 0.36] },
+  /* 7 황제   */ { jk: ['#8c1229', '#5f0b1c', '#b02440'], pants: ['#5f0b1c', '#3a0612'], helm: 'grand', pad: 'gold', cape: ['#f2b61c', '#c98a05', 8], back: null, armor: 'gold', trim: true, wings: true, aura: ['#ffe27a', 0.5], sparkle: 1 },
   /* 8 신     */ { jk: ['#fbf7ea', '#e3dbbf', '#ffffff'], helm: 'halo', pad: 'white', pants: ['#f1ead0', '#cfc7a6'], cape: ['#fffbe8', '#f2df97', 8.8], trim: true, wings: 'white', aura: ['#ffffff', 0.62], sparkle: 1 },
 ];
 
@@ -1905,6 +1978,121 @@ function drawBackPatch(info, u, gr) {
   ctx.save(); ctx.globalAlpha = 0.97; insigDraw(ctx, info.ins, 0, y, s); ctx.restore();
 }
 
+/* ============ 펫 28종: 계급마다 해금 · 보스전 보조화력 ============ */
+const PS = {
+  worm: { k: 'worm', c: '#e58fa0', c2: '#f7c3cd' },
+  snail: { k: 'snail', c: '#d9bd8e', shell: '#8f6bd0', shell2: '#b79af0' },
+  frog: { k: 'crit', body: '#5fc65f', belly: '#c8f0a0', legs: '#4aa84a', eyes: 'top', mouth: 1, wide: 1.1 },
+  hamster: { k: 'crit', body: '#e2b27a', belly: '#fff1d6', ear: 'round', cheeks: '#ffb3a0' },
+  penguin: { k: 'crit', body: '#2b3350', belly: '#ffffff', tall: 1.25, beak: '#ffa21f', legs: '#ffa21f', bellyBig: 1 },
+  fox: { k: 'crit', body: '#f08a3c', belly: '#fff4e6', ear: 'point', earIn: '#3b2a24', tail: 'bush', tailC: '#f08a3c', tip: '#ffffff' },
+  panda: { k: 'crit', body: '#fafafa', belly: '#fafafa', ear: 'round', earC: '#222', patch: '#222', legs: '#222' },
+  tiger: { k: 'crit', body: '#f2a03a', belly: '#fff0d0', ear: 'round', stripes: '#3b2a24', tail: 'stick', tailC: '#f2a03a' },
+  dragon_w: { k: 'crit', body: '#f4f6ff', belly: '#cfd8ff', wings: '#aebcff', horns: '#ffd36a', spike: '#aebcff', tail: 'stick', tailC: '#f4f6ff', snout: 1 },
+  dragon_r: { k: 'crit', body: '#e2433f', belly: '#ffb27a', wings: '#ff8f5a', horns: '#ffe3a0', spike: '#ffb27a', tail: 'stick', tailC: '#e2433f', snout: 1 },
+  dragon_b: { k: 'crit', body: '#3f7fe0', belly: '#a8d4ff', wings: '#7ab6ff', horns: '#e8f3ff', spike: '#a8d4ff', tail: 'stick', tailC: '#3f7fe0', snout: 1 },
+  dragon_k: { k: 'crit', body: '#33384f', belly: '#6c7390', wings: '#7a4fd1', horns: '#e8d27a', spike: '#7a4fd1', tail: 'stick', tailC: '#33384f', snout: 1 },
+  dragon_g: { k: 'crit', body: '#f4c542', belly: '#fff0a6', wings: '#ffe07a', horns: '#fff', spike: '#d79a00', tail: 'stick', tailC: '#f4c542', snout: 1, glow: '#ffe27a' },
+  unicorn: { k: 'crit', body: '#ffffff', belly: '#f1e6ff', ear: 'point', earIn: '#ffb3d9', horn: '#ffd24a', mane: ['#ff8fc0', '#9ad0ff'], tail: 'bush', tailC: '#ff8fc0', cheeks: '#ffc2dd' },
+  haetae: { k: 'crit', body: '#8fb0c8', belly: '#d6e6f0', ear: 'round', horn: '#e8c24a', mane: ['#ff7a3a', '#ffcf5a'], tail: 'bush', tailC: '#ff7a3a', tip: '#ffcf5a', stripes: '#5f86a6' },
+  kumiho: { k: 'crit', body: '#ffffff', belly: '#ffe6ee', ear: 'point', earIn: '#ffb3c8', tail: 'bush', tails: 9, tailC: '#ffffff', tip: '#7ad0ff', mark: '#ff5f6d', glow: '#9fe3ff' },
+  pegasus: { k: 'crit', body: '#ffffff', belly: '#e8f2ff', ear: 'point', earIn: '#bfe0ff', wings: '#d8ecff', mane: ['#6fb8ff'], tail: 'bush', tailC: '#6fb8ff' },
+  griffin: { k: 'crit', body: '#d8a43a', head: '#fffdf0', belly: '#f2d489', ear: 'point', earIn: '#d8a43a', wings: '#e8c07a', beak: '#ffb02e', tail: 'stick', tailC: '#d8a43a' },
+  lion: { k: 'crit', body: '#f2c14e', belly: '#fff0c0', ear: 'round', mane: ['#b8641a', '#d9871f'], tail: 'stick', tailC: '#f2c14e', tip: '#b8641a', glow: '#ffe27a' },
+  phoenix: { k: 'bird', body: '#e8433f', belly: '#ffd27a', wing: '#f6c445', crest: ['#f6c445', '#3fb6a8', '#e8433f'], tails: ['#e8433f', '#f6c445', '#3fb6a8', '#5b7be0'] },
+  firebird: { k: 'bird', body: '#ff7a1f', belly: '#ffe27a', wing: '#ffb02e', crest: ['#ffe27a', '#ff7a1f', '#e8433f'], tails: ['#ffe27a', '#ff7a1f', '#e8433f'], glow: '#ffb02e' },
+  angel: { k: 'angel' },
+};
+const PET_OLD = new Set(['chick', 'puppy', 'kitty', 'slime', 'robot', 'dragon']);
+
+function drawCrit(s, u, t, mv) {
+  const tl = s.tall || 1, hop = mv ? Math.sin(t * 9) : 0, w = (s.wide || 1) * 2.8 * u;
+  if (s.glow) { const g = ctx.createRadialGradient(0, -2.2 * u, 0.3 * u, 0, -2.2 * u, 3.4 * u); g.addColorStop(0, hexA(s.glow, 0.45)); g.addColorStop(1, hexA(s.glow, 0)); ctx.fillStyle = g; ctx.fillRect(-3.4 * u, -5.6 * u, 6.8 * u, 6.8 * u); }
+  if (s.wings) { const fl = Math.sin(t * 12) * 0.35; [-1, 1].forEach(sd => { ctx.save(); ctx.translate(sd * 1.1 * u, -2.0 * u); ctx.rotate(sd * (0.65 + fl)); ctx.fillStyle = s.wings; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(sd * 2.1 * u, -0.5 * u); ctx.lineTo(sd * 0.5 * u, -2.2 * u); ctx.closePath(); ctx.fill(); ctx.restore(); }); }
+  if (s.mane) { const m = s.mane; ctx.fillStyle = m[0]; ctx.beginPath(); ctx.arc(0, -2.7 * u * tl, 1.75 * u, 0, 6.3); ctx.fill(); if (m[1]) { ctx.fillStyle = m[1]; ctx.beginPath(); ctx.arc(0, -2.7 * u * tl, 1.3 * u, 0, 6.3); ctx.fill(); } }
+  if (s.tail && s.tail !== 'none') {
+    const n = s.tails || 1;
+    for (let i = 0; i < n; i++) {
+      const a = n === 1 ? 0.7 : -0.9 + (i / (n - 1)) * 2.2 + Math.sin(t * 5 + i) * 0.06;
+      ctx.save(); ctx.translate(n === 1 ? 1.2 * u : 0.4 * u, -1.1 * u); ctx.rotate(n === 1 ? a + Math.sin(t * 9) * 0.15 : a);
+      ctx.fillStyle = s.tailC || s.body;
+      if (s.tail === 'stick') { ctx.fillRect(-0.18 * u, -1.9 * u, 0.36 * u, 1.9 * u); if (s.tip) { ctx.fillStyle = s.tip; ctx.fillRect(-0.34 * u, -2.2 * u, 0.68 * u, 0.5 * u); } else if (s.snout) { ctx.fillStyle = s.spike; ctx.beginPath(); ctx.moveTo(-0.4 * u, -1.8 * u); ctx.lineTo(0.4 * u, -1.8 * u); ctx.lineTo(0, -2.5 * u); ctx.fill(); } }
+      else { ctx.beginPath(); ctx.ellipse(0, -1.0 * u, 0.5 * u, 1.1 * u, 0, 0, 6.3); ctx.fill(); if (s.tip) { ctx.fillStyle = s.tip; ctx.beginPath(); ctx.ellipse(0, -1.8 * u, 0.4 * u, 0.5 * u, 0, 0, 6.3); ctx.fill(); } }
+      ctx.restore();
+    }
+  }
+  const lg = s.legs || s.body;
+  box(-0.85 * u, hop > 0 ? -0.35 * u * hop : 0, 0.75 * u, 0.85 * u, lg); box(0.85 * u, hop < 0 ? 0.35 * u * hop : 0, 0.75 * u, 0.85 * u, lg);
+  if (s.beak) { ctx.fillStyle = s.legs || s.beak; ctx.fillRect(-1.2 * u, -0.15 * u, 0.9 * u, 0.2 * u); ctx.fillRect(0.3 * u, -0.15 * u, 0.9 * u, 0.2 * u); }
+  box(0, -0.55 * u, w, 1.7 * u * tl, s.body);
+  if (s.belly) { ctx.fillStyle = s.belly; const bw = s.bellyBig ? w * 0.72 : w * 0.55; ctx.fillRect(-bw / 2, -0.6 * u * tl - 0.2 * u, bw, 1.0 * u * tl + (s.bellyBig ? 0.6 * u : 0)); }
+  if (s.stripes) { ctx.fillStyle = s.stripes; [-1.0, -0.35, 0.35, 1.0].forEach(px => ctx.fillRect(px * u - 0.08 * u, -2.1 * u * tl, 0.16 * u, 0.7 * u)); }
+  if (s.spike) { ctx.fillStyle = s.spike; [-0.9, 0, 0.9].forEach(px => { ctx.beginPath(); ctx.moveTo(px * u - 0.3 * u, -0.55 * u - 1.7 * u * tl); ctx.lineTo(px * u + 0.3 * u, -0.55 * u - 1.7 * u * tl); ctx.lineTo(px * u, -0.55 * u - 2.2 * u * tl); ctx.fill(); }); }
+  const hy = -0.55 * u - 1.2 * u * tl, hc = s.head || s.body;
+  if (s.ear === 'point') { [-1, 1].forEach(sd => { ctx.beginPath(); ctx.moveTo(sd * 0.3 * u, hy - 1.8 * u); ctx.lineTo(sd * 1.05 * u, hy - 1.8 * u); ctx.lineTo(sd * 0.95 * u, hy - 2.75 * u); ctx.fillStyle = s.earC || hc; ctx.fill(); if (s.earIn) { ctx.beginPath(); ctx.moveTo(sd * 0.55 * u, hy - 1.8 * u); ctx.lineTo(sd * 0.95 * u, hy - 1.8 * u); ctx.lineTo(sd * 0.92 * u, hy - 2.3 * u); ctx.fillStyle = s.earIn; ctx.fill(); } }); }
+  if (s.ear === 'round') { [-1, 1].forEach(sd => box(sd * 0.95 * u, hy - 1.6 * u, 0.7 * u, 0.7 * u, s.earC || hc)); }
+  if (s.horns) { ctx.fillStyle = s.horns; [-1, 1].forEach(sd => { ctx.beginPath(); ctx.moveTo(sd * 0.45 * u, hy - 1.8 * u); ctx.lineTo(sd * 0.95 * u, hy - 1.8 * u); ctx.lineTo(sd * 0.85 * u, hy - 2.7 * u); ctx.fill(); }); }
+  if (s.horn) { ctx.fillStyle = s.horn; ctx.beginPath(); ctx.moveTo(-0.28 * u, hy - 1.8 * u); ctx.lineTo(0.28 * u, hy - 1.8 * u); ctx.lineTo(0, hy - 3.1 * u); ctx.fill(); }
+  box(0, hy, 2.2 * u * (s.wide ? 1.05 : 1), 1.8 * u, hc);
+  if (s.patch) { ctx.fillStyle = s.patch; [-1, 1].forEach(sd => { ctx.beginPath(); ctx.ellipse(sd * 0.55 * u, hy - 0.95 * u, 0.4 * u, 0.5 * u, sd * 0.3, 0, 6.3); ctx.fill(); }); }
+  if (s.stripes) { ctx.fillStyle = s.stripes; ctx.fillRect(-0.08 * u, hy - 1.8 * u, 0.16 * u, 0.5 * u); [-1, 1].forEach(sd => ctx.fillRect(sd * 1.0 * u - 0.1 * u, hy - 1.2 * u, 0.2 * u, 0.5 * u)); }
+  if (s.snout) { box(0, hy - 0.1 * u, 1.2 * u, 0.7 * u, s.belly); ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(-0.35 * u, hy - 0.45 * u, 0.14 * u, 0.14 * u); ctx.fillRect(0.21 * u, hy - 0.45 * u, 0.14 * u, 0.14 * u); }
+  if (s.beak) { ctx.fillStyle = s.beak; ctx.beginPath(); ctx.moveTo(-0.4 * u, hy - 0.75 * u); ctx.lineTo(0.4 * u, hy - 0.75 * u); ctx.lineTo(0, hy - 0.05 * u); ctx.fill(); }
+  if (s.mark) { circ(0, hy - 1.55 * u, 0.2 * u, s.mark); }
+  if (s.eyes === 'top') { [-1, 1].forEach(sd => { circ(sd * 0.65 * u, hy - 1.75 * u, 0.55 * u, s.body); circ(sd * 0.65 * u, hy - 1.8 * u, 0.4 * u, '#fff'); circ(sd * 0.65 * u, hy - 1.75 * u, 0.2 * u, '#16213a'); }); }
+  else { [-1, 1].forEach(sd => { ctx.fillStyle = '#16213a'; ctx.fillRect(sd * 0.55 * u - 0.14 * u, hy - 1.15 * u, 0.28 * u, 0.36 * u); ctx.fillStyle = '#fff'; ctx.fillRect(sd * 0.55 * u - 0.02 * u, hy - 1.15 * u, 0.1 * u, 0.1 * u); }); }
+  if (s.cheeks) { ctx.fillStyle = s.cheeks; [-1, 1].forEach(sd => ctx.fillRect(sd * 0.95 * u - 0.25 * u, hy - 0.65 * u, 0.5 * u, 0.3 * u)); }
+  if (s.mouth) { ctx.fillStyle = '#2a6a3a'; ctx.fillRect(-0.8 * u, hy - 0.45 * u, 1.6 * u, 0.14 * u); }
+  if (!s.beak && !s.snout && !s.mouth) { ctx.fillStyle = s.patch ? '#222' : 'rgba(0,0,0,.55)'; ctx.fillRect(-0.18 * u, hy - 0.7 * u, 0.36 * u, 0.26 * u); }
+}
+function drawWorm(s, u, t) {
+  for (let i = 0; i < 6; i++) { const x = (i - 2.5) * 0.62 * u, y = -0.6 * u - Math.abs(Math.sin(t * 7 - i * 0.8)) * 0.55 * u; circ(x, y, 0.62 * u, i % 2 ? s.c2 : s.c); }
+  const hx = 2.5 * 0.62 * u + 0.1 * u, hy = -0.8 * u - Math.abs(Math.sin(t * 7 - 5 * 0.8)) * 0.55 * u; ctx.fillStyle = '#16213a'; ctx.fillRect(hx - 0.2 * u, hy - 0.4 * u, 0.18 * u, 0.28 * u); ctx.fillRect(hx + 0.12 * u, hy - 0.4 * u, 0.18 * u, 0.28 * u);
+}
+function drawSnail(s, u, t) {
+  ctx.fillStyle = s.c; rr(-1.6 * u, -0.9 * u, 3.2 * u, 0.9 * u, 0.45 * u); ctx.fill(); rr(0.9 * u, -2.0 * u, 0.9 * u, 1.4 * u, 0.4 * u); ctx.fill();
+  const w = Math.sin(t * 6) * 0.15 * u; ctx.strokeStyle = s.c; ctx.lineWidth = 0.18 * u; [1.15, 1.6].forEach(px => { ctx.beginPath(); ctx.moveTo(px * u, -1.9 * u); ctx.lineTo(px * u + w, -2.8 * u); ctx.stroke(); circ(px * u + w, -2.85 * u, 0.2 * u, '#16213a'); });
+  circ(-0.3 * u, -1.9 * u, 1.35 * u, s.shell); circ(-0.3 * u, -1.9 * u, 0.9 * u, s.shell2); circ(-0.3 * u, -1.9 * u, 0.45 * u, s.shell);
+}
+function drawBird(s, u, t) {
+  if (s.glow) { const g = ctx.createRadialGradient(0, -2.4 * u, 0.3 * u, 0, -2.4 * u, 3.6 * u); g.addColorStop(0, hexA(s.glow, 0.5)); g.addColorStop(1, hexA(s.glow, 0)); ctx.fillStyle = g; ctx.fillRect(-3.6 * u, -6 * u, 7.2 * u, 7.2 * u); }
+  s.tails.forEach((c, i) => { const a = (i - (s.tails.length - 1) / 2) * 0.5 + Math.sin(t * 6 + i) * 0.1; ctx.save(); ctx.translate(0, -1.6 * u); ctx.rotate(a); ctx.fillStyle = c; ctx.beginPath(); ctx.ellipse(0, -2.0 * u, 0.4 * u, 2.2 * u, 0, 0, 6.3); ctx.fill(); ctx.restore(); });
+  const fl = Math.sin(t * 12) * 0.4;
+  [-1, 1].forEach(sd => { ctx.save(); ctx.translate(sd * 1.1 * u, -1.9 * u); ctx.rotate(sd * (0.7 + fl)); ctx.fillStyle = s.wing; ctx.beginPath(); ctx.ellipse(sd * 0.9 * u, 0, 1.2 * u, 0.55 * u, 0, 0, 6.3); ctx.fill(); ctx.restore(); });
+  ctx.fillStyle = '#e0a02a'; ctx.fillRect(-0.7 * u, -0.5 * u, 0.2 * u, 0.5 * u); ctx.fillRect(0.5 * u, -0.5 * u, 0.2 * u, 0.5 * u);
+  ctx.fillStyle = s.body; ctx.beginPath(); ctx.ellipse(0, -1.5 * u, 1.35 * u, 1.2 * u, 0, 0, 6.3); ctx.fill(); ctx.fillStyle = s.belly; ctx.beginPath(); ctx.ellipse(0, -1.2 * u, 0.8 * u, 0.8 * u, 0, 0, 6.3); ctx.fill();
+  s.crest.forEach((c, i) => { ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo((i - 1) * 0.35 * u - 0.2 * u, -3.5 * u); ctx.lineTo((i - 1) * 0.35 * u + 0.2 * u, -3.5 * u); ctx.lineTo((i - 1) * 0.6 * u, -4.4 * u - Math.sin(t * 8 + i) * 0.12 * u); ctx.fill(); });
+  circ(0, -3.0 * u, 0.95 * u, s.body); ctx.fillStyle = '#ffb02e'; ctx.beginPath(); ctx.moveTo(-0.3 * u, -2.85 * u); ctx.lineTo(0.3 * u, -2.85 * u); ctx.lineTo(0, -2.35 * u); ctx.fill();
+  ctx.fillStyle = '#16213a'; ctx.fillRect(-0.5 * u, -3.3 * u, 0.24 * u, 0.3 * u); ctx.fillRect(0.26 * u, -3.3 * u, 0.24 * u, 0.3 * u);
+}
+function drawAngel(u, t) {
+  const fl = Math.sin(t * 10) * 0.3;
+  [-1, 1].forEach(sd => { ctx.save(); ctx.translate(sd * 0.9 * u, -1.9 * u); ctx.rotate(sd * (0.5 + fl)); ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.ellipse(sd * 0.9 * u, -0.3 * u, 1.25 * u, 0.6 * u, sd * 0.4, 0, 6.3); ctx.fill(); ctx.fillStyle = '#e8f0ff'; ctx.beginPath(); ctx.ellipse(sd * 0.9 * u, 0.1 * u, 0.9 * u, 0.35 * u, sd * 0.4, 0, 6.3); ctx.fill(); ctx.restore(); });
+  ctx.fillStyle = 'rgba(255,240,170,.35)'; ctx.beginPath(); ctx.arc(0, -2.2 * u, 2.8 * u, 0, 6.3); ctx.fill();
+  ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.ellipse(0, -1.1 * u, 1.15 * u, 1.1 * u, 0, 0, 6.3); ctx.fill(); ctx.fillStyle = '#ffd9b0'; ctx.fillRect(-0.85 * u, -0.25 * u, 0.55 * u, 0.3 * u); ctx.fillRect(0.3 * u, -0.25 * u, 0.55 * u, 0.3 * u);
+  circ(0, -2.7 * u, 1.0 * u, '#ffd9b0'); ctx.fillStyle = '#f6c445'; ctx.beginPath(); ctx.arc(0, -2.95 * u, 1.0 * u, Math.PI, 0); ctx.fill();
+  ctx.fillStyle = '#16213a'; ctx.fillRect(-0.5 * u, -2.7 * u, 0.22 * u, 0.3 * u); ctx.fillRect(0.28 * u, -2.7 * u, 0.22 * u, 0.3 * u); ctx.fillStyle = '#ffa0b0'; ctx.fillRect(-0.85 * u, -2.3 * u, 0.4 * u, 0.22 * u); ctx.fillRect(0.45 * u, -2.3 * u, 0.4 * u, 0.22 * u);
+  ctx.strokeStyle = '#ffd24a'; ctx.lineWidth = 0.28 * u; ctx.beginPath(); ctx.ellipse(0, -4.15 * u + Math.sin(t * 4) * 0.1 * u, 0.9 * u, 0.28 * u, 0, 0, 6.3); ctx.stroke();
+}
+function drawPet(id, x, y, u, t, moving = 1) {
+  if (!id || id === 'none') return;
+  const s = PS[id]; if (!s) return drawPetOld(id, x, y, u, t, moving);
+  const b = moving ? Math.abs(Math.sin(t * 9)) * 0.55 * u : Math.sin(t * 3) * 0.1 * u;
+  ctx.save(); ctx.translate(x, y - b);
+  ctx.fillStyle = 'rgba(0,0,0,.22)'; ctx.beginPath(); ctx.ellipse(0, b + 0.05 * u, 1.9 * u, 0.5 * u, 0, 0, 6.3); ctx.fill();
+  if (s.k === 'worm') drawWorm(s, u, t); else if (s.k === 'snail') drawSnail(s, u, t); else if (s.k === 'bird') drawBird(s, u, t); else if (s.k === 'angel') drawAngel(u, t); else drawCrit(s, u, t, moving);
+  ctx.restore();
+}
+const PET_CACHE = {};
+function petURL(id) {
+  if (PET_CACHE[id]) return PET_CACHE[id];
+  const cvs = document.createElement('canvas'), k = 2; cvs.width = 120 * k; cvs.height = 100 * k;
+  const keep = ctx; ctx = cvs.getContext('2d'); ctx.scale(k, k);
+  try { drawPet(id, 60, 90, 11, 0.4, 0); } catch (e) { }
+  ctx = keep;
+  return (PET_CACHE[id] = cvs.toDataURL('image/png'));
+}
+
 /* ============ game state & run logic ============ */
 const App = { mode: 'home', preview: {}, last: 0, paused: false, resultsOpen: false };
 const PACE = [10.1, 8.5, 6.4]; // 다가오는 시간(초) — 클수록 느림
@@ -2021,7 +2209,7 @@ function judge(early = false, ln = R.lane) {
     R.correct++; R.maxCombo = Math.max(R.maxCombo, R.combo);
     const mult = 1 + 0.1 * Math.min(Math.max(R.combo - 1, 0), 15), spd = early && !q.auto ? 1 + 0.5 * clamp(1 - q.t / R.Tap, 0, 1) : 1, pts = Math.round((q.mode === 'en2kr' ? 100 : q.mode === 'kr2en' ? 130 : 160) * mult * spd);
     R.score += pts; R.coins += 1; R.hopT = 0; q.fb = 0.85;
-    if (!q.auto) bumpStat(w, q.mode === 'en2kr' ? 1 : 2, 1, 0);
+    if (!q.auto) bumpStat(w, q.mode === 'en2kr' ? 2 : 3, 1, 0);
     SFX.ok(R.combo); SFX.coin();
     addP({ kind: 'text', text: '+' + pts, x, y: yy, vy: -90, life: 1, size: Math.max(22, G.laneW * 0.16), color: '#fff3a0' });
     for (let k = 0; k < 7; k++) addP({ kind: 'coin', x, y: yy, vx: rnd(-140, 140), vy: rnd(-300, -120), g: 700, life: rnd(0.7, 1.1), size: Math.max(6, G.laneW * 0.04) });
@@ -2115,9 +2303,9 @@ function typingDone() {
   const T = R.T; T.done = true; const w = T.w, perfect = T.errs === 0 && T.hints === 0;
   R.typed.add(T.wi);
   let gain = T.tag === 'boss' ? (perfect ? 300 : 180) : T.tag === 'copy' ? 60 : (perfect ? 200 : 100);
-  if (T.mode === 'bossw') { if (perfect) bumpStat(w, 2, 0, 0); else if (T.errs <= 2 && T.hints === 0) bumpStat(w, 1, 0, 0); else if (T.errs >= 4) bumpStat(w, -1, 0, 1); }
+  if (T.mode === 'bossw') { if (perfect) bumpStat(w, 3, 0, 0); else if (T.errs <= 2 && T.hints === 0) bumpStat(w, 2, 0, 0); else if (T.errs >= 4) bumpStat(w, -1, 0, 1); }
   if (T.mode === 'recall') {
-    if (perfect) { bumpStat(w, 2, 0, 0); R.perfectTyping++; } else if (T.errs <= 1 && T.hints === 0) bumpStat(w, 1, 0, 0); else if (T.errs >= 3) bumpStat(w, -1, 0, 1);
+    if (perfect) { bumpStat(w, 3, 0, 0); R.perfectTyping++; } else if (T.errs <= 1 && T.hints === 0) bumpStat(w, 2, 0, 0); else if (T.errs >= 3) bumpStat(w, -1, 0, 1);
   }
   R.score += gain; R.coins += perfect ? 2 : 1; SFX.ok(6); SFX.coin();
   const x = G.cx, y = G.H * 0.3;
@@ -2218,7 +2406,7 @@ function renderRun() {
     drawPet(look.pet, R.petX - h * 0.5, G.yC + h * 0.02, h / 9.8 * 0.7, R.t, R.scrollMul);
     drawRunner(x, G.yC, h, { t: R.t, moving: clamp(R.scrollMul, 0, 1), rank, look, hop, lean: clamp(R.lane - R.laneF, -1, 1), pose: R.phase === 'outro' || R.phase === 'bossDead' ? 'cheer' : 'run' });
     if (R.phase === 'run' || R.phase === 'boss') drawGunOnRunner(x, G.yC, h, hop);
-    drawBuffAura(x, G.yC - hop, h); drawBullets();
+    drawBuffAura(x, G.yC - hop, h); drawBullets(); drawPetShots();
   } else {
     const wd = WORLDS[Wd.world], isBoss = R.bossOn, h2 = G.H * 0.2;
     const rx = isBoss ? G.W * 0.22 : G.cx, ry = G.H * 0.38;
@@ -2496,11 +2684,41 @@ function bossGunTick(dt) {
       }
     }
   }
+  petAssistTick(dt, gunNow());
   const gn = gunNow(); R.cd -= dt; R.flashG = Math.max(0, (R.flashG || 0) - dt);
   while (R.cd <= 0) {
     R.cd += gn.iv;
     if (R.firing && B.state === 'fight') { R.bul.push({ lane: R.lane, y: G.yC - h * 0.62, dmg: gn.dmgBoss, c: gn.c, big: gn.big, k: gn.k, wk: gn.weak, bz: R.weapon === 'bz' }); R.flashG = 0.06; if ((R.pewN = (R.pewN || 0) + 1) % 3 === 0) SFX.pew(); }
     if (R.cd < -0.3) R.cd = 0;
+  }
+}
+/* 펫 보조화력: 보스전에서만. 내 총 화력의 (5~20%)를 0.7초마다 한 방씩 */
+const PET_IV = 0.7, PET_COL = { dragon: '#6ae07a', dragon_w: '#e8f4ff', dragon_r: '#ff6a4a', dragon_b: '#4aa8ff', dragon_k: '#a08ac8', dragon_g: '#ffd24a', phoenix: '#ff9a3a', firebird: '#ff5a3a', angel: '#fff2a8', unicorn: '#f6a8ff', kumiho: '#c8f0ff' };
+function petAssistTick(dt, gn) {
+  const B = R.boss, pa = petAssist(lookOf().pet); R.pb = R.pb || [];
+  if (pa > 0 && B.state === 'fight') {
+    R.pcd = (R.pcd == null ? 0.3 : R.pcd) - dt;
+    if (R.pcd <= 0) {
+      R.pcd += PET_IV; const h = runnerH(), [bx, by] = bossXY();
+      R.pb.push({ x: R.petX - h * 0.5, y: G.yC - h * 0.1, tx: bx, ty: by, t: 0, T: 0.42, dmg: pa * (gn.dmgBoss / gn.iv) * PET_IV, c: PET_COL[lookOf().pet] || '#9be7ff' });
+    }
+  }
+  for (let i = R.pb.length - 1; i >= 0; i--) {
+    const b = R.pb[i]; b.t += dt;
+    if (B.state !== 'fight') { R.pb.splice(i, 1); continue; }
+    if (b.t >= b.T) {
+      R.pb.splice(i, 1);
+      for (let k = 0; k < 4; k++) addP({ x: b.tx + rnd(-14, 14), y: b.ty - BOSS_SIZE() * 0.2, vx: rnd(-120, 120), vy: rnd(-180, -40), g: 600, life: 0.3, size: rnd(3, 6), color: b.c });
+      if ((R.pbN = (R.pbN || 0) + 1) % 3 === 0) addP({ kind: 'text', text: '펫 -' + Math.round(b.dmg), x: b.tx + rnd(-30, 30), y: b.ty - BOSS_SIZE() * 0.75, vy: -60, life: 0.45, size: Math.max(11, G.laneW * 0.06), color: b.c });
+      bossDamage(b.dmg); if (B.state !== 'fight') break;
+    }
+  }
+}
+function drawPetShots() {
+  if (!R.pb) return;
+  for (const b of R.pb) {
+    const k = b.t / b.T, x = b.x + (b.tx - b.x) * k, y = b.y + (b.ty - b.y) * k - Math.sin(Math.PI * k) * G.H * 0.07, r = Math.max(4, G.laneW * 0.05);
+    ctx.save(); ctx.globalAlpha = 0.35; ctx.fillStyle = b.c; ctx.beginPath(); ctx.arc(x, y, r * 2, 0, 7); ctx.fill(); ctx.globalAlpha = 1; ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.fill(); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, r * 0.45, 0, 7); ctx.fill(); ctx.restore();
   }
 }
 function updateBoss(dt) {
@@ -2515,7 +2733,7 @@ function updateBoss(dt) {
   HUD['prog-fill'].style.width = (B.hp / B.max * 100) + '%'; HUD['prog-txt'].textContent = 'BOSS';
 }
 function bossThrowLetter() {
-  const B = R.boss; B.state = 'throw'; B.projs.length = 0; R.bul.length = 0; R.firing = false; R.phase = 'bossThrow';
+  const B = R.boss; B.state = 'throw'; B.projs.length = 0; R.bul.length = 0; R.pb = []; R.firing = false; R.phase = 'bossThrow';
   const wi = B.words[B.rounds], w = R.set.words[wi], ch = [...w.d].find(c => /[A-Za-z]/.test(c)) || '?';
   R.letter = { ch: ch.toUpperCase(), t: 0 };
   R.bossHit = 0.6; R.shake = 0.35; SFX.hit();
@@ -2646,7 +2864,7 @@ function judgeCloze(early, ln) {
   const x = laneX(ln, G.yC), yy = G.yC - runnerH() * 0.6;
   if (ok) {
     g.state[ln] = 1; R.bonus.ok++; const pts = 200; R.score += pts; R.coins += 3; R.hopT = 0; q.fb = 2.2;
-    bumpStat(w, 1, 0, 0); SFX.ok(6); SFX.coin();
+    bumpStat(w, 2, 0, 0); SFX.ok(6); SFX.coin();
     addP({ kind: 'text', text: '+' + pts, x, y: yy, vy: -90, life: 1, size: Math.max(22, G.laneW * 0.16), color: '#fff3a0' });
     for (let k = 0; k < 8; k++) addP({ kind: 'coin', x, y: yy, vx: rnd(-140, 140), vy: rnd(-300, -120), g: 700, life: rnd(0.7, 1.1), size: Math.max(6, G.laneW * 0.04) });
     showBanner('정답!', `${w.d} = ${w.ko}`, 'ok', 1200);
@@ -2677,7 +2895,7 @@ function closeAllScreens() { dlgClose(); $('#count').hidden = true; $$('.screen'
 function go(name) {
   if (R && R.finished === true && name !== 'results') R = null;
   closeAllScreens(); App.screen = name; App.preview = {}; App.mode = name === 'results' ? 'results' : 'home';
-  $('#scr-' + name).hidden = false; $('#scr-' + name).scrollTop = 0;
+  $('#scr-' + name).hidden = false; $('#scr-' + name).scrollTop = 0; { const u = $('#upd'); if (u) u.hidden = !(App.updReady && name === 'home'); }
   ({ home: renderHome, exam: renderExam, stages: renderStages, dress: renderDress, words: renderWords, records: renderRecords, settings: renderSettings }[name] || (() => { }))();
 }
 function recommendedStage(set) {
@@ -2695,7 +2913,7 @@ function renderHome() {
   const pct = nx ? clamp((m - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100;
   const hi = cheer('greet');
   $('#home-rank').innerHTML = (hi ? `<div class="hi">${esc(hi)}</div>` : '') + `<div class="seg lvl">${[['base', '초등'], ['mid', '중등']].concat(SETS.custom ? [['custom', '내 단어장']] : []).map(([id, n]) => `<button class="${d.activeSet === id ? 'on' : ''}" data-act="useSet" data-id="${id}">${n}</button>`).join('')}</div><div class="top">${insImg(ri, 'hm')}<span class="rn">${rk.n}</span><span class="grp">${RANK_GROUPS[rk.g]}</span><span class="rs">마스터한 단어 ${m}개 · ${esc(set.name)}</span></div>` +
-    (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 5문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 마스터 단어 ${Math.max(0, nx.need - m)}개 남았어요</div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
+    (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 5문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 단어 <b>${Math.max(0, nx.need - m)}개</b> 더 마스터!<button class="ibtn qbtn" data-act="rankHelp" aria-label="계급 올리는 방법">?</button></div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
     `<div class="chips"><span class="chip"><span class="coin"></span>${fmt(d.coins)}</span><span class="chip">${d.streak.count || 0}일 연속</span><span class="chip">최고 ${fmt(d.bestScore)}점</span>${(d.bonus || 0) > 0 ? `<button class="chip bonus" data-act="bonusOpen">★ 보너스 ${d.bonus}번</button>` : ''}</div>`;
   const si = recommendedStage(set);
   $('#btn-play').innerHTML = `RUN START!<span class="play-sub">스테이지 ${si + 1} · ${esc(stagePlace(set, si))}</span>`;
@@ -2776,26 +2994,28 @@ function renderDress() {
   } else if (App.dressTab === 'gun') {
     const lv = d.gun || 1;
     body.innerHTML = GUNS.map((g, i) => {
-      const n = i + 1, st = n === lv ? '지금 쓰는 총' : n < lv ? '보유' : n === lv + 1 ? g.price + ' 코인' : '잠김';
+      const n = i + 1, st = n === lv ? '지금 쓰는 총' : n < lv ? '보유' : n === lv + 1 ? (rankIdx() < g.rk ? RANKS[g.rk].n + '부터' : g.price + ' 코인') : '잠김';
       return `<div class="rk ${n === lv ? 'cur' : n > lv ? 'lock' : ''}"><span class="n" style="color:${g.c}">Lv.${n}</span><span class="d"><b>${esc(g.n)}</b>공격력 ${g.dmg} · 연사 ${(1 / g.iv).toFixed(1)}발/초 · ${esc(g.d)}</span><span class="pill ${n === lv ? 'master' : ''}">${st}</span></div>`;
     }).join('');
     const nx = GUNS[lv];
-    act.innerHTML = nx ? `<div class="info">${esc(GUNS[lv - 1].n)} → ${esc(nx.n)}<small>정답판 HP를 더 빨리 깎아요. 뒤쪽 나라일수록 정답판 HP가 커져요.</small></div>` + (d.coins >= nx.price ? `<button class="btn primary" data-act="gunBuy">${nx.price} 코인으로 업그레이드</button>` : `<button class="btn" disabled>코인 ${nx.price - d.coins}개 부족</button>`) : `<div class="info">최고 단계예요!<small>황금 대포로 모든 정답판을 시원하게 날려요.</small></div>`;
+    act.innerHTML = nx ? `<div class="info">${esc(GUNS[lv - 1].n)} → ${esc(nx.n)}<small>정답판 HP를 더 빨리 깎아요. 뒤쪽 나라일수록 정답판 HP가 커져요.</small></div>` + (rankIdx() < nx.rk ? `<button class="btn" disabled>${esc(RANKS[nx.rk].n)} 계급부터 살 수 있어요</button>` : d.coins >= nx.price ? `<button class="btn primary" data-act="gunBuy">${nx.price} 코인으로 업그레이드</button>` : `<button class="btn" disabled>코인 ${nx.price - d.coins}개 부족</button>`) : `<div class="info">최고 단계예요!<small>황금 대포로 모든 정답판을 시원하게 날려요.</small></div>`;
   } else {
     const cat = App.dressTab, items = SHOP[cat], eq = d.equip[cat], owned = d.owned[cat];
     const sel = App.preview[cat] || eq;
     body.innerHTML = `<div class="grid">${items.map(it => {
       const own = owned.includes(it.id);
-      const sw = cat === 'color' ? `<div class="sw" style="background:${it.c[0]}"></div>` : `<div class="sw">${ICON[cat]}</div>`;
-      return `<button class="item ${it.id === sel ? 'sel' : ''} ${it.id === eq ? 'eq' : ''}" data-act="itemPick" data-id="${it.id}">${sw}${esc(it.name)}<small>${it.id === eq ? '장착 중' : own ? '보유' : it.price + ' 코인'}</small></button>`;
+      const sw = cat === 'color' ? `<div class="sw" style="background:${it.id === 'sky' ? '#e8e2cf' : it.c[0]}"></div>` : cat === 'pet' && it.id !== 'none' ? `<div class="sw pimg"><img src="${petURL(it.id)}" alt=""></div>` : `<div class="sw">${ICON[cat]}</div>`;
+      return `<button class="item ${it.id === sel ? 'sel' : ''} ${it.id === eq ? 'eq' : ''} ${!own && rankIdx() < it.rk ? 'lock' : ''}" data-act="itemPick" data-id="${it.id}">${sw}${esc(it.name)}<small>${it.id === eq ? '장착 중' : own ? '보유' : rankIdx() < it.rk ? RANKS[it.rk].n + '부터' : it.price + ' 코인'}</small></button>`;
     }).join('')}</div>`;
     const it = shopItem(cat, sel), own = owned.includes(it.id);
     let btn = '';
     if (it.id === eq) btn = '<button class="btn" disabled>장착 중</button>';
     else if (own) btn = '<button class="btn green" data-act="itemEquip">장착하기</button>';
+    else if (rankIdx() < it.rk) btn = `<button class="btn" disabled>${esc(RANKS[it.rk].n)} 계급부터 살 수 있어요</button>`;
     else if (d.coins >= it.price) btn = `<button class="btn primary" data-act="itemBuy">${it.price} 코인으로 사기</button>`;
     else btn = `<button class="btn" disabled>코인 ${it.price - d.coins}개 부족</button>`;
-    act.innerHTML = `<div class="info">${esc(it.name)}<small>${own ? '가지고 있어요' : it.price + ' 코인'}</small></div>${btn}`;
+    const pa = cat === 'pet' ? petAssist(it.id) : 0, pn = pa ? ` · 보스전 지원 +${Math.round(pa * 100)}%` : '';
+    act.innerHTML = `<div class="info">${esc(it.name)}<small>${own ? '가지고 있어요' : rankIdx() < it.rk ? RANKS[it.rk].n + ' 계급부터 살 수 있어요 · ' + it.price + ' 코인' : it.price + ' 코인'}${pn}</small></div>${btn}`;
   }
 }
 
@@ -2809,7 +3029,9 @@ function renderWords() {
   const opts = `<option value="-1">모든 스테이지</option>` + set.stages.map((s, si) => `<option value="${si}" ${App.wStage === si ? 'selected' : ''}>STAGE ${si + 1} · ${esc(stagePlace(set, si))}</option>`).join('');
   const shown = list.slice(0, App.wMax);
   $('#words-body').innerHTML = `<div class="chips" style="margin-bottom:12px;align-items:center"><select id="wsel" style="font:inherit;padding:8px 12px;border:3px solid var(--ink);border-radius:12px;background:#fff">${opts}</select>${['master', 'almost', 'learn', 'tricky', 'new'].map(k => `<span class="pill ${k}">${WSTATE_LABEL[k]} ${counts[k] || 0}</span>`).join('')}</div>` +
-    (shown.length ? shown.map(w => `<div class="wrow"><span class="en">${esc(w.d)}</span><span class="ko">${esc(w.ko)}</span><span class="pill ${wState(getStat(set, w))}">${WSTATE_LABEL[wState(getStat(set, w))]}</span>${spkBtn(w.d)}</div>`).join('') : '<div class="muted" style="padding:20px">이 조건에 맞는 단어가 아직 없어요.</div>') +
+    `<div class="wlegend"><span>숙련도 <span class="pips">${pipsHTMLInner(0)}</span> → <span class="pips">${pipsHTMLInner(MAXM)}</span> 6칸이 다 차면 마스터!</span><span>단어 오른쪽 <b>STAGE 버튼</b>을 누르면 그 단어가 나오는 곳으로 바로 가요</span></div>` +
+    (shown.length ? shown.map(w => { const st = getStat(set, w), ws = wState(st), ok = stageUnlocked(set, w.si), mk = ws === 'master';
+      return `<div class="wrow w2"><div class="wl1"><span class="en">${esc(w.d)}</span><span class="ko">${esc(w.ko)}</span>${spkBtn(w.d)}</div><div class="wl2">${pipsHTML(st[0])}<b class="pn">${st[0]}/${MAXM}</b><span class="pill ${ws}">${WSTATE_LABEL[ws]}</span>${mk ? '' : `<button class="wgo ${ok ? '' : 'lock'}" data-act="${ok ? 'wGo' : 'stageLock'}" data-si="${w.si}">STAGE ${w.si + 1} · ${esc(stagePlace(set, w.si))} ${ok ? '▶' : '🔒'}</button>`}</div></div>`; }).join('') : '<div class="muted" style="padding:20px">이 조건에 맞는 단어가 아직 없어요.</div>') +
     (list.length > shown.length ? `<div style="text-align:center;padding:14px"><button class="btn" data-act="wMore">더 보기 (${list.length - shown.length}개 남음)</button></div>` : '');
   const sel = $('#wsel'); if (sel) sel.onchange = () => { App.wStage = +sel.value; App.wMax = 150; renderWords(); };
 }
@@ -2879,6 +3101,7 @@ function showResults() {
     </div>
     ${res.rankUp ? `<div class="panel rankup">승급시험 자격 획득!<br>${insImg(rankIdx() + 1, 'up')}<br><b>${RANKS[rankIdx()].n}</b> → <b>${RANKS[rankIdx() + 1].n}</b><div class="muted" style="font-size:calc(var(--m)*2.2)">시험을 통과하면 계급이 올라요!</div><button class="btn primary pulse" data-act="examStart" style="margin-top:calc(var(--m)*1.2)">도전! 승급시험!</button></div>` : ''}
     ${res.badges.length ? `<div class="panel"><div class="sec-title">새 배지</div><div class="chips">${res.badges.map(b => `<span class="badge">★ ${esc(b.n)}</span>`).join('')}</div></div>` : ''}
+    ${(() => { const m = totalMastered(), nx = RANKS[rankIdx() + 1]; return nx && !examAvail() ? `<div class="replay-note">다음 계급 <b>${esc(nx.n)}</b>까지 단어 <b>${Math.max(0, nx.need - m)}개</b> 더 마스터 · 같은 단어를 여러 번 맞히면 돼요</div>` : ''; })()}
     ${res.newly.length ? `<div class="panel"><div class="sec-title">새로 마스터한 단어 <small>${res.newly.length}개</small></div><div class="chips">${res.newly.slice(0, 24).map(wi => `<span class="badge">${esc(set.words[wi].d)}</span>`).join('')}</div></div>` : ''}
     <div class="panel"><div class="sec-title">오늘의 헷갈린 단어 <small>${missed.length}개</small></div>${missed.length ? missed.map(w => `<div class="wrow"><span class="en">${esc(w.d)}</span><span class="ko">${esc(w.ko)}</span>${spkBtn(w.d)}</div>`).join('') : '<div class="muted">하나도 안 틀렸어요! 대단해요.</div>'}</div>
     </div>
@@ -2897,9 +3120,32 @@ function confetti(n) {
 
 /* ---- actions ---- */
 const fsEl = () => document.fullscreenElement || document.webkitFullscreenElement;
-function fsUpdate() { const b = $('#btn-fs'); if (!b) return; const root = document.documentElement, ok = !!(root.requestFullscreen || root.webkitRequestFullscreen); b.hidden = !ok; $('#fs-t').textContent = fsEl() ? '전체화면 끄기' : '전체화면'; }
+function fsUpdate() { const b = $('#btn-fs'); if (!b) return; const root = document.documentElement, ok = !!(root.requestFullscreen || root.webkitRequestFullscreen); b.hidden = !ok; { const h = $('#hud-fs'); if (h) h.hidden = !ok; } $('#fs-t').textContent = fsEl() ? '전체화면 끄기' : '전체화면'; }
 ['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { fsUpdate(); setTimeout(onResize, 120); }));
+const pipsHTML = n => `<span class="pips" title="${n}/${MAXM}">${Array.from({ length: MAXM }, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('')}</span>`;
+function openRankHelp() {
+  const set = curSet(), m = totalMastered(), ri = rankIdx(), nx = RANKS[ri + 1];
+  let almost = 0, tricky = 0; set.words.forEach(w => { const st = wState(getStat(set, w)); if (st === 'almost') almost++; else if (st === 'tricky') tricky++; });
+  $('#help-panel').innerHTML = `<button class="ibtn xbtn" data-act="closeModal" data-id="help" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button>
+    <h3>계급은 어떻게 올라요?</h3>
+    <div class="hp-box">단어를 <b>마스터</b>하면 계급이 올라요. 지금 마스터한 단어 <b>${m}개</b>${nx ? ` · ${esc(nx.n)}까지 <b>${Math.max(0, nx.need - m)}개</b> 남았어요` : ''}</div>
+    <div class="muted">단어마다 ${MAXM}칸짜리 게이지가 있어요. 문제를 풀 때마다 칸이 차거나 줄어요.</div>
+    <ul class="hp-list">
+      <li><b class="g">+2칸</b> 영어 → 뜻 문제를 맞히면 <span class="pips">${pipsHTMLInner(2)}</span></li>
+      <li><b class="g">+3칸</b> 뜻 → 영어 · 철자 문제를 맞히면 <span class="pips">${pipsHTMLInner(3)}</span></li>
+      <li><b class="g">+2~3칸</b> 스펠링을 틀리지 않고 쓰면</li>
+      <li><b class="g">+2칸</b> 보너스 빈칸 문제를 맞히면</li>
+      <li><b class="r">−2칸</b> 틀리면 (그 단어는 다시 도전!)</li>
+      <li><b>${MAXM}칸 다 차면 마스터!</b> <span class="pips">${pipsHTMLInner(MAXM)}</span></li>
+    </ul>
+    <div class="hp-box">한 번에 안 돼요. 같은 단어를 <b>여러 번 달리며 맞혀야</b> 마스터돼요(보통 2~3번). 한 스테이지를 반복할수록 점수 보너스도 쌓여요!<br>지금 <b>거의 다 찬 단어 ${almost}개</b> · 헷갈리는 단어 ${tricky}개</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" data-act="rankWords" data-k="almost">거의 다 찬 단어 보기</button><button class="btn" data-act="rankWords" data-k="tricky">헷갈리는 단어 보기</button></div>`;
+  $('#help').hidden = false;
+}
+const pipsHTMLInner = n => Array.from({ length: MAXM }, (_, i) => `<i class="${i < n ? 'on' : ''}"></i>`).join('');
 const ACT = {
+  rankHelp() { openRankHelp(); },
+  rankWords(d) { App.wFilter = d.k; App.wStage = -1; App.wMax = 150; $('#help').hidden = true; go('words'); },
   fs() { try { const root = document.documentElement; if (fsEl()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } else { const f = root.requestFullscreen || root.webkitRequestFullscreen; if (f) { const p = f.call(root); if (p && p.catch) p.catch(() => toast('이 브라우저에서는 전체화면이 안 돼요. 브라우저 메뉴의 전체화면을 써 보세요')); } } } catch (e) { toast('이 브라우저에서는 전체화면이 안 돼요'); } },
   go(d) { go(d.to); },
   play(d, el) { const set = curSet(), si = +(el.dataset.si || 0); openPrep({ kind: 'stage', si }); },
@@ -2938,10 +3184,11 @@ const ACT = {
   itemEquip() { const c = App.dressTab, id = App.preview[c] || Store.data.equip[c]; Store.data.equip[c] = id; delete App.preview[c]; Store.touch(); SFX.ok(0); renderDress(); },
   itemBuy() {
     const c = App.dressTab, id = App.preview[c], it = shopItem(c, id), d = Store.data;
-    if (!it || d.coins < it.price || d.owned[c].includes(id)) return;
+    if (!it || d.coins < it.price || rankIdx() < it.rk || d.owned[c].includes(id)) return;
     d.coins -= it.price; d.owned[c].push(id); d.equip[c] = id; delete App.preview[c]; Store.touch(); Store.flush(); SFX.rank(); toast(it.name + ' 장착!'); renderDress();
   },
   wFilter(d) { App.wFilter = d.k; App.wMax = 150; renderWords(); },
+  wGo(d) { openPrep({ kind: 'stage', si: +d.si }); },
   wMore() { App.wMax += 200; const y = $('#words-body').scrollTop; renderWords(); $('#words-body').scrollTop = y; },
   tog(d) { const s = Store.data.settings; s[d.k] = !s[d.k]; Store.touch(); if (d.k === 'sound' && s.sound) { audioInit(); SFX.ok(0); } renderSettings(); },
   setPace(d) { Store.data.settings.pace = +d.i; Store.touch(); renderSettings(); },
@@ -2958,7 +3205,7 @@ const ACT = {
   },
   replay() { const sp = R; if (sp.kind === 'stage') startRun(sp.set.id, sp.stages, 'stage'); else startRun(sp.set.id, sp.stages, 'free', sp.pool); },
   readMode(d) { Store.data.settings.readMode = d.v; Store.touch(); renderSettings(); if (d.v === 'always') { audioInit(); say('Ready to run'); } },
-  gunBuy() { const d = Store.data, nx = GUNS[d.gun || 1]; if (!nx || d.coins < nx.price) return; d.coins -= nx.price; d.gun = (d.gun || 1) + 1; Store.touch(); SFX.rank(); toast(nx.n + '으로 업그레이드!'); renderDress(); },
+  gunBuy() { const d = Store.data, nx = GUNS[d.gun || 1]; if (!nx || d.coins < nx.price || rankIdx() < nx.rk) return; d.coins -= nx.price; d.gun = (d.gun || 1) + 1; Store.touch(); SFX.rank(); toast(nx.n + '으로 업그레이드!'); renderDress(); },
   nextStage(d) { go('stages'); openPrep({ kind: 'stage', si: +d.si }); },
 };
 document.addEventListener('click', e => {
@@ -3112,9 +3359,9 @@ function dlgFinish() { clearInterval(DLG.timer); DLG.typing = false; $('#dlg .dl
 function dlgShow(o) {
   const d = $('#dlg'); d.className = 'dlg ' + (o.kind || '');
   d.querySelector('.dlg-head').innerHTML = o.head; $('#dlg-btn').textContent = o.btn; DLG.onDone = o.onDone; DLG.open = true; d.hidden = false; { const ft = d.querySelector('.dlg-foot'); ft.innerHTML = o.foot || ''; ft.hidden = !o.foot; }
-  dlgType(o.text);
+  dlgType(o.text); if (o.voice) setTimeout(() => { if (DLG.open) sayKo(o.voice.t, o.voice.boss); }, 250);
 }
-function dlgClose() { clearInterval(DLG.timer); DLG.open = false; DLG.typing = false; $('#dlg').hidden = true; }
+function dlgClose() { stopSay(); clearInterval(DLG.timer); DLG.open = false; DLG.typing = false; $('#dlg').hidden = true; }
 
 /* 스테이지 시작: 나라 소개 → 3·2·1 */
 function openStageDlg() {
@@ -3122,7 +3369,7 @@ function openStageDlg() {
   dlgShow({
     kind: 'stage',
     head: `${flagHTML(wi)}<div><small>${single ? 'STAGE ' + (R.stages[0] + 1) + ' · ' : ''}${esc(w.region)}</small><b>${esc(w.name)}</b></div><span class="dlg-lm">${esc(w.lm)}</span>`,
-    text: `${INTRO[w.code]} 그럼 달려 볼까?`, btn: '출발!', foot: factsHTML(w.code),
+    text: `${INTRO[w.code]} 그럼 달려 볼까?`, btn: '출발!', foot: factsHTML(w.code), voice: { t: INTRO[w.code] },
     onDone() { R.intro = 'count'; R.cdT = 0; R.cdK = -1; },
   });
 }
@@ -3144,7 +3391,7 @@ function openBossDlg() {
   dlgShow({
     kind: 'boss',
     head: `<span class="dlg-tag">BOSS</span><div><small>${esc(f.t)} · 약점 ${esc(weakName(Wd.world))} · 바주카도 강해요</small><b>${esc(f.n)}</b></div>`,
-    text: f.line, btn: '도전한다!',
+    text: f.line, btn: '도전한다!', voice: { t: f.line, boss: 1 },
     onDone() { const B = R.boss; R.phase = 'boss'; B.state = 'fight'; B.atk = 1.8; R.scrollTarget = 0.4; R.cd = 0; stepBanner(); },
   });
 }
@@ -3218,6 +3465,22 @@ Object.assign(ACT, {
 });
 
 init();
+/* ---- 새 버전 자동 확인 (GitHub Pages 등 직접 올린 주소에서만 동작) ---- */
+const BUILD = ((document.querySelector('meta[name="app-build"]') || {}).content) || '';
+async function checkUpdate(auto) {
+  if (!BUILD || !/^https?:$/.test(location.protocol) || !navigator.onLine) return;
+  try {
+    const r = await fetch(location.pathname + '?_=' + Date.now(), { cache: 'no-store' }); if (!r.ok) return;
+    const m = /name="app-build" content="([^"]+)"/.exec(await r.text()); if (!m || m[1] === BUILD) return;
+    let tried = ''; try { tried = sessionStorage.getItem('wr.upd') || ''; } catch (e) { }
+    if (auto && tried !== m[1] && App.mode === 'home') { try { sessionStorage.setItem('wr.upd', m[1]); } catch (e) { } return location.reload(); }
+    App.updReady = true; $('#upd').hidden = !(App.mode === 'home' && App.screen === 'home');
+  } catch (e) { }
+}
+Object.assign(ACT, { reloadApp() { location.reload(); } });
+setTimeout(() => checkUpdate(true), 1500);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(true); });
+setInterval(() => checkUpdate(false), 5 * 60 * 1000);
 window.__WR = { get R() { return R; }, App, Store, SETS, go, startRun, ACT, setLane, typeKey, judge, initWorld, WORLDS };
 
 </script>
