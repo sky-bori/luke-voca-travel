@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261008-175800"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261009-100003"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
 <title>Luke의 VOCA TRAVEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,14 +64,17 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 #prompt.pop{animation:pop .28s ease-out}
 #prompt .pl{display:flex;flex-direction:column;align-items:center;gap:0;min-width:0}
 #prompt-label{font-size:calc(var(--hu)*2.3);color:var(--ink2);font-weight:700;line-height:1.1}
+#prompt.lc{height:auto;padding-top:calc(var(--hu)*1);padding-bottom:calc(var(--hu)*1.1)}
+#prompt-label.chip{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*2.5);line-height:1;color:#fff;background:var(--ink);border-radius:calc(var(--hu)*1);padding:calc(var(--hu)*.7) calc(var(--hu)*1.6);margin-bottom:calc(var(--hu)*.5);letter-spacing:.04em}
+#prompt-label.chip.sp{background:#d8352f;box-shadow:0 2px 0 #8f1f1b}
 #prompt-main{font-family:var(--f-en);font-weight:700;font-size:calc(var(--hu)*7.4);line-height:1.05;white-space:nowrap}
 #prompt-main.kor{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*6)}
 #prompt-main.long{font-size:calc(var(--hu)*4.7)}
-#banner{position:absolute;left:50%;top:calc(var(--hu)*50);transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:calc(var(--hu)*1.2) calc(var(--m)*4);border:3px solid var(--ink);border-radius:22px;box-shadow:0 6px 0 var(--ink);background:#fff;text-align:center;width:max-content;max-width:92%;word-break:keep-all;overflow-wrap:break-word;text-wrap:balance}
+#banner{position:absolute;left:50%;top:calc(var(--hu)*50);transform:translateX(-50%) scale(.8);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:calc(var(--hu)*.9) calc(var(--m)*3.2);border:3px solid var(--ink);border-radius:18px;box-shadow:0 5px 0 var(--ink);background:#fff;text-align:center;width:max-content;max-width:92%;word-break:keep-all;overflow-wrap:break-word;text-wrap:balance}
 #banner.show{opacity:1;transform:translateX(-50%) scale(1)}
 #banner b,#banner span{word-break:keep-all;overflow-wrap:break-word}
-#banner b{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*5.6);line-height:1.1}
-#banner span{font-family:var(--f-en);font-weight:600;font-size:calc(var(--hu)*3.4)}
+#banner b{font-family:var(--f-kr);font-weight:800;font-size:calc(var(--hu)*4.2);line-height:1.1}
+#banner span{font-family:var(--f-en);font-weight:600;font-size:calc(var(--hu)*2.7)}
 #banner.ok{background:#c9f7da}#banner.ok b{color:var(--green-d)}
 #banner.bad{background:#ffd9db}#banner.bad b{color:var(--red-d)}
 #banner.combo{background:#fff0b0}#banner.combo b{color:#c27600}
@@ -82,6 +85,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid #fff;outline-off
 #combo.bump{animation:pop .3s ease-out}
 #tap{position:absolute;inset:0;z-index:2;touch-action:none}
 #buffs{position:absolute;left:calc(var(--m)*2.4);top:calc(var(--hu)*24);display:flex;flex-direction:column;gap:calc(var(--hu)*.8);align-items:flex-start;pointer-events:none}
+#buffs span.wi{padding:0;width:calc(var(--hu)*7.2);height:calc(var(--hu)*7.2);border-radius:50%;display:grid;place-items:center;line-height:1}#buffs span.wi img{width:82%;height:82%}
 #buffs span{font-family:var(--f-kr);font-size:calc(var(--hu)*2.7);background:var(--paper);border:3px solid var(--ink);border-radius:999px;padding:0 calc(var(--m)*2);box-shadow:0 3px 0 var(--ink);line-height:1.7}
 #hud>#pad{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;align-items:flex-end;padding:0 calc(var(--m)*2.4) calc(var(--hu)*2.6);pointer-events:none;z-index:6}
 #pad button{pointer-events:auto;touch-action:none;-webkit-user-select:none;user-select:none;cursor:pointer}
@@ -261,6 +265,12 @@ svg.wmap{width:100%;display:block;background:#e4e6ea;touch-action:pan-x pan-y}
 .seg.lvl button:disabled{background:#e4e8f2;color:#8a93ad;border-color:#8a93ad;box-shadow:0 4px 0 #8a93ad;opacity:.85;cursor:not-allowed}
 .seg.lvl button .lk{width:1.15em;height:1.15em;vertical-align:-.18em;margin-right:.3em}
 .rank-card .chip.bonus{margin-left:auto}
+#home-rank .bar{position:relative;height:calc(var(--m)*3.9);background:#e7e1cf;box-shadow:inset 0 3px 0 rgba(0,0,0,.13)}
+#home-rank .bar>i{position:relative;border-radius:999px 0 0 999px;overflow:hidden;background:linear-gradient(180deg,#ffe36a 0%,#ffb62b 55%,#ff8a1f 100%)}
+#home-rank .bar>i::before{content:"";position:absolute;left:0;right:0;top:8%;height:36%;background:linear-gradient(rgba(255,255,255,.75),rgba(255,255,255,.1));border-radius:999px}
+#home-rank .bar>i::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.28) 0 9px,transparent 9px 22px);background-size:44px 100%;animation:xpstripe 1.2s linear infinite}
+@keyframes xpstripe{to{background-position:44px 0}}
+@media (prefers-reduced-motion:reduce){#home-rank .bar>i::after{animation:none}}
 .screen#scr-home #btn-play .play-sub{font-family:var(--f-kr);font-weight:700;font-size:calc(var(--m)*2.8);margin-top:calc(var(--m)*.4);color:#7a5210;text-shadow:0 1px 0 #ffffff88;letter-spacing:0}
 .play-sub{font-family:var(--f-body);font-size:calc(var(--m)*2.1);font-weight:700;opacity:.8;display:block}
 .btn.stack{flex-direction:column;gap:2px;padding-top:calc(var(--m)*1);padding-bottom:calc(var(--m)*1.2)}
@@ -842,30 +852,30 @@ function stageMastered(set, si) { let n = 0; for (const wi of set.stages[si].idx
 /* ============ ranks, worlds, shop ============ */
 const RANKS = [
   { n: '이등병', need: 0, g: 0, ins: { t: 'bar', n: 1 }, d: '막대 1개 · 이제 막 입대했어요' },
-  { n: '일병', need: 120, g: 0, ins: { t: 'bar', n: 2 }, d: '막대 2개 · 씩씩하게 적응 중!' },
-  { n: '상병', need: 330, g: 0, ins: { t: 'bar', n: 3 }, d: '막대 3개 · 이제 제법 든든해요' },
-  { n: '병장', need: 630, g: 0, ins: { t: 'bar', n: 4 }, d: '막대 4개 · 병사의 최고 계급!' },
-  { n: '하사', need: 1020, g: 1, ins: { t: 'chev', n: 1 }, d: '금색 갈매기 1개 · 부사관이 됐어요' },
-  { n: '중사', need: 1500, g: 1, ins: { t: 'chev', n: 2 }, d: '금색 갈매기 2개' },
-  { n: '상사', need: 2070, g: 1, ins: { t: 'chev', n: 3 }, d: '금색 갈매기 3개' },
-  { n: '소위', need: 2730, g: 2, ins: { t: 'dia', n: 1 }, d: '금빛 마름모 1개 · 장교가 됐어요' },
-  { n: '중위', need: 3480, g: 2, ins: { t: 'dia', n: 2 }, d: '금빛 마름모 2개' },
-  { n: '대위', need: 4320, g: 2, ins: { t: 'dia', n: 3 }, d: '금빛 마름모 3개' },
-  { n: '소령', need: 5250, g: 3, ins: { t: 'rose', n: 1 }, d: '은빛 무궁화 1송이 · 모자챙 금장' },
-  { n: '중령', need: 6270, g: 3, ins: { t: 'rose', n: 2 }, d: '은빛 무궁화 2송이' },
-  { n: '대령', need: 7380, g: 3, ins: { t: 'rose', n: 3 }, d: '은빛 무궁화 3송이' },
-  { n: '준장', need: 8580, g: 4, ins: { t: 'star', n: 1 }, d: '별 1개 · 장군이 됐어요' },
-  { n: '소장', need: 9870, g: 4, ins: { t: 'star', n: 2 }, d: '별 2개' },
-  { n: '중장', need: 11250, g: 4, ins: { t: 'star', n: 3 }, d: '별 3개' },
-  { n: '대장', need: 12720, g: 4, ins: { t: 'star', n: 4 }, d: '별 4개 · 군의 최고 계급!' },
-  { n: '남작', need: 14280, g: 5, ins: { t: 'noble', n: 1 }, d: '귀족이 됐어요 · 작은 관' },
-  { n: '자작', need: 15930, g: 5, ins: { t: 'noble', n: 2 }, d: '진주 달린 관' },
-  { n: '백작', need: 17670, g: 5, ins: { t: 'noble', n: 3 }, d: '진주 뾰족관 · 붉은 보석' },
-  { n: '후작', need: 19500, g: 5, ins: { t: 'noble', n: 4 }, d: '잎사귀와 진주 관 · 모피 망토' },
-  { n: '공작', need: 21420, g: 5, ins: { t: 'noble', n: 5 }, d: '귀족 중 으뜸 · 보라 보석 관' },
-  { n: '왕', need: 23430, g: 6, ins: { t: 'king', n: 1 }, d: '왕관과 모피 망토' },
-  { n: '황제', need: 25530, g: 7, ins: { t: 'emp', n: 1 }, d: '큰 왕관, 황금 망토, 빛나는 날개' },
-  { n: '신', need: 27720, g: 8, ins: { t: 'god', n: 1 }, d: '머리 위에 후광, 하얀 날개… 전설이 됐어요' },
+  { n: '일병', need: 200, g: 0, ins: { t: 'bar', n: 2 }, d: '막대 2개 · 씩씩하게 적응 중!' },
+  { n: '상병', need: 530, g: 0, ins: { t: 'bar', n: 3 }, d: '막대 3개 · 이제 제법 든든해요' },
+  { n: '병장', need: 990, g: 0, ins: { t: 'bar', n: 4 }, d: '막대 4개 · 병사의 최고 계급!' },
+  { n: '하사', need: 1580, g: 1, ins: { t: 'chev', n: 1 }, d: '금색 갈매기 1개 · 부사관이 됐어요' },
+  { n: '중사', need: 2300, g: 1, ins: { t: 'chev', n: 2 }, d: '금색 갈매기 2개' },
+  { n: '상사', need: 3150, g: 1, ins: { t: 'chev', n: 3 }, d: '금색 갈매기 3개' },
+  { n: '소위', need: 4130, g: 2, ins: { t: 'dia', n: 1 }, d: '금빛 마름모 1개 · 장교가 됐어요' },
+  { n: '중위', need: 5240, g: 2, ins: { t: 'dia', n: 2 }, d: '금빛 마름모 2개' },
+  { n: '대위', need: 6480, g: 2, ins: { t: 'dia', n: 3 }, d: '금빛 마름모 3개' },
+  { n: '소령', need: 7850, g: 3, ins: { t: 'rose', n: 1 }, d: '은빛 무궁화 1송이 · 모자챙 금장' },
+  { n: '중령', need: 9350, g: 3, ins: { t: 'rose', n: 2 }, d: '은빛 무궁화 2송이' },
+  { n: '대령', need: 10980, g: 3, ins: { t: 'rose', n: 3 }, d: '은빛 무궁화 3송이' },
+  { n: '준장', need: 12740, g: 4, ins: { t: 'star', n: 1 }, d: '별 1개 · 장군이 됐어요' },
+  { n: '소장', need: 14630, g: 4, ins: { t: 'star', n: 2 }, d: '별 2개' },
+  { n: '중장', need: 16650, g: 4, ins: { t: 'star', n: 3 }, d: '별 3개' },
+  { n: '대장', need: 18800, g: 4, ins: { t: 'star', n: 4 }, d: '별 4개 · 군의 최고 계급!' },
+  { n: '남작', need: 21080, g: 5, ins: { t: 'noble', n: 1 }, d: '귀족이 됐어요 · 작은 관' },
+  { n: '자작', need: 23490, g: 5, ins: { t: 'noble', n: 2 }, d: '진주 달린 관' },
+  { n: '백작', need: 26030, g: 5, ins: { t: 'noble', n: 3 }, d: '진주 뾰족관 · 붉은 보석' },
+  { n: '후작', need: 28700, g: 5, ins: { t: 'noble', n: 4 }, d: '잎사귀와 진주 관 · 모피 망토' },
+  { n: '공작', need: 31500, g: 5, ins: { t: 'noble', n: 5 }, d: '귀족 중 으뜸 · 보라 보석 관' },
+  { n: '왕', need: 34430, g: 6, ins: { t: 'king', n: 1 }, d: '왕관과 모피 망토' },
+  { n: '황제', need: 37490, g: 7, ins: { t: 'emp', n: 1 }, d: '큰 왕관, 황금 망토, 빛나는 날개' },
+  { n: '신', need: 40680, g: 8, ins: { t: 'god', n: 1 }, d: '머리 위에 후광, 하얀 날개… 전설이 됐어요' },
 ];
 const RANK_GROUPS = ['병사', '부사관', '위관 장교', '영관 장교', '장성', '귀족', '왕', '황제', '신'];
 // 계급은 XP(경험치)로 정해져요. 스테이지를 깰 때마다 XP를 받고, XP가 차면 승급시험(10문제)에 도전해요.
@@ -2646,8 +2656,9 @@ function rankShown() { return App.preview.rank != null ? App.preview.rank : rank
 function runnerH() { return Math.min(G.laneW * 0.8, G.H * 0.27); }
 
 /* ---- HUD ---- */
-function setPrompt(label, main, sayable) {
-  HUD['prompt-main'].classList.remove('sent'); HUD.prompt.classList.remove('sent');
+function setPrompt(label, main, sayable, kind) {
+  HUD['prompt-main'].classList.remove('sent'); HUD.prompt.classList.remove('sent'); HUD.prompt.classList.toggle('lc', !!kind);
+  HUD['prompt-label'].className = kind ? 'chip ' + kind : '';
   HUD['prompt-label'].textContent = label; HUD['prompt-main'].textContent = main;
   HUD['prompt-main'].classList.toggle('kor', /[가-힣]/.test(main));
   HUD['prompt-main'].style.fontSize = '';
@@ -2722,8 +2733,8 @@ function startQuestion(it) {
   q.t = 0; q.judged = false; q.fb = 0; q.gate = makeGate(q.opts, q.correct, boardHp()); q.w = R.set.words[it.wi];
   if (R.inv > 0) { R.inv--; q.auto = true; showBanner('무적 정답!', '자동으로 정답을 맞혀요', 'combo', 1300); buffsHud(); }
   R.q = q; R.gates.push(q.gate); R.phase = 'run'; R.scrollTarget = 1;
-  if (q.mode === 'en2kr') { setPrompt('뜻을 찾아 달려요', q.w.d, true); say(q.w.d); }
-  else { setPrompt(q.mode === 'kr2en' ? '알맞은 영어 단어로 달려요' : '철자가 맞는 단어로 달려요', q.w.ko, false); if (Store.data.settings.readMode === 'always') say(q.w.d); }
+  if (q.mode === 'en2kr') { setPrompt('뜻', q.w.d, true, 'k'); say(q.w.d); }
+  else { setPrompt(q.mode === 'kr2en' ? '영단어' : '철자', q.w.ko, false, q.mode === 'kr2en' ? 'k' : 'sp'); if (Store.data.settings.readMode === 'always') say(q.w.d); }
   hudAll();
   if (!R.tipShown && R.log.length === 0) { HUD.tip.hidden = false; setTimeout(() => (HUD.tip.hidden = true), 4800); R.tipShown = true; Store.data.seenTip = true; }
 }
@@ -3124,13 +3135,19 @@ function judgeEv(ln, early) {
   else if (item.id !== 'jack') showBanner(item.trap ? '함정!' : '획득!', item.label, item.trap ? 'bad' : 'ok', 1000);
   hudAll(); buffsHud();
 }
+const _wIc = {};
+function wIconURL(k) { // 무기 아이콘을 작은 이미지로 만들어 HUD 칩에 써요
+  if (_wIc[k]) return _wIc[k];
+  const c = document.createElement('canvas'); c.width = c.height = 120; const o = ctx; ctx = c.getContext('2d'); try { drawIcon(k, 58, 62, 52); } finally { ctx = o; }
+  return (_wIc[k] = c.toDataURL());
+}
 function buffsHud() {
   const el = $('#buffs'); if (!el) return; const b = R.buff, a = [];
-  if (R.weapon) a.push(WEAPONS[R.weapon].n + ' 장착');
+  if (R.weapon) a.push(`<img class="wic" alt="${WEAPONS[R.weapon].n}" src="${wIconURL(R.weapon)}">`);
   if (R.slow) a.push('연사 느려짐');
   if (R.shield) a.push('보호막');
   if (R.inv > 0) a.push('무적 정답 ' + R.inv);
-  el.innerHTML = a.map(t => `<span>${t}</span>`).join(''); el.hidden = !a.length;
+  el.innerHTML = a.map(t => `<span${t.startsWith('<img') ? ' class="wi"' : ''}>${t}</span>`).join(''); el.hidden = !a.length;
 }
 function tickBuff() { if (R.buff.left > 0 && --R.buff.left <= 0) R.buff = { dmg: 1, rate: 1, left: 0 }; buffsHud(); }
 
@@ -3658,7 +3675,7 @@ function renderHome() {
     lg.innerHTML = `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="pen" x="-5%" y="-10%" width="110%" height="130%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -0.9 1.5" result="a"/><feComposite in="SourceGraphic" in2="a" operator="in" result="g"/><feTurbulence type="turbulence" baseFrequency="0.035" numOctaves="2" seed="2" result="w"/><feDisplacementMap in="g" in2="w" scale="3"/></filter></svg>`
       + `<div class="main"><div class="luke"><span class="bk">Luke의</span><span class="fr">Luke의</span><svg viewBox="0 0 200 14" preserveAspectRatio="none"><path d="M4 8 C 40 2, 70 13, 110 6 S 170 4, 196 9" fill="none" stroke="#f2b632" stroke-width="5" stroke-linecap="round" opacity=".9"/></svg></div><div class="boxes">${tiles('VOCA', 0)}${tiles('TRAVEL', 1)}</div></div><div class="tag">영단어로 세계일주, 신까지 레벨업!</div>`; }
   const xp = curXp(), pct = nx ? clamp((xp - rk.need) / (nx.need - rk.need), 0, 1) * 100 : 100;
-  $('#home-rank').innerHTML = `<div class="seg lvl">${[['base', '초등 800'], ['mid', '중등 1400']].concat(SETS.custom ? [['custom', '내 단어장']] : []).map(([id, n]) => `<button class="${d.activeSet === id ? 'on' : ''}" data-act="useSet" data-id="${id}">${n}</button>`).join('')}<button disabled aria-label="Voca 1500 (준비 중)"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5" fill="#9aa3bd" stroke="#16213a" stroke-width="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="#16213a" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="15.5" r="1.5" fill="#16213a"/></svg>Voca 1500</button></div><div class="top">${insImg(ri, 'hm')}<span class="rn">${rk.n}</span><span class="grp">${RANK_GROUPS[rk.g]}</span><span class="rs">${xpLabel(xp)} · 마스터 단어 ${m}개</span></div>` +
+  $('#home-rank').innerHTML = `<div class="seg lvl">${[['base', '초등 800'], ['mid', '중등 1800']].concat(SETS.custom ? [['custom', '내 단어장']] : []).map(([id, n]) => `<button class="${d.activeSet === id ? 'on' : ''}" data-act="useSet" data-id="${id}">${n}</button>`).join('')}<button disabled aria-label="Voca 1500 (준비 중)"><svg class="lk" viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10.5" rx="2.5" fill="#9aa3bd" stroke="#16213a" stroke-width="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" fill="none" stroke="#16213a" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="15.5" r="1.5" fill="#16213a"/></svg>Voca 1500</button></div><div class="top">${insImg(ri, 'hm')}<span class="rn">${rk.n}</span><span class="grp">${RANK_GROUPS[rk.g]}</span><span class="rs">${xpLabel(xp)} · 마스터 단어 ${m}개</span></div>` +
     (ex ? `<button class="btn exam pulse" data-act="examStart"><span class="ex-ic">${insImg(ri + 1, 'ex')}</span><span class="ex-tx">도전! 승급시험!<small>${nx.n} 승급 자격을 얻었어요 · 예문 빈칸 ${EXAM_N}문제</small></span></button>` : nx ? `<div class="bar"><i style="width:${pct}%"></i></div><div class="rs">다음 계급 <b>${nx.n}</b>까지 <b>${fmt(Math.max(0, nx.need - xp))} XP</b> 더!<button class="ibtn qbtn" data-act="rankHelp" aria-label="계급 올리는 방법">?</button></div>` : '<div class="rs">가장 높은 계급이에요!</div>') +
     `<div class="chips"><span class="chip"><span class="coin"></span>${fmt(d.coins)}</span><span class="chip">최고 ${fmt(d.bestScore)}점</span>${(d.bonus || 0) > 0 ? `<button class="chip bonus" data-act="bonusOpen">★ 보너스 ${d.bonus}번</button>` : ''}</div>`;
   const si = recommendedStage(set);
