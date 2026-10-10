@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261010-182838"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261010-204709"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
 <title>Luke의 VOCA TRAVEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -314,6 +314,14 @@ svg.wmap{width:100%;display:block;background:#e4e6ea;touch-action:pan-x pan-y}
 .modal .panel{position:relative}
 .xbtn{position:absolute;right:calc(var(--m)*1.4);top:calc(var(--m)*1.4);z-index:2}
 .xtop{position:absolute;right:calc(var(--m)*2);top:calc(var(--m)*2);z-index:5}
+.xf-box{display:flex;flex-direction:column;gap:calc(var(--m)*1);padding:calc(var(--m)*1.6);border:3px solid var(--ink);border-radius:15px;background:var(--paper)}
+.xf-box>b{font-size:calc(var(--m)*2.8)}.xf-box small{font-weight:700;color:var(--mute,#586D8C);font-size:calc(var(--m)*2.1)}
+.xf-row{display:flex;gap:calc(var(--m)*1.2);flex-wrap:wrap}
+#xfer textarea{width:100%;min-height:calc(var(--m)*9);border:3px solid var(--ink);border-radius:12px;padding:calc(var(--m)*1);font:600 calc(var(--m)*2) ui-monospace,Menlo,Consolas,monospace;background:#fff;color:var(--ink);-webkit-user-select:text;user-select:text;resize:vertical}
+.xf-cmp{display:flex;gap:calc(var(--m)*1);align-items:stretch}.xf-cmp>span{align-self:center;font-weight:900}
+.xf-col{flex:1;min-width:0;background:#fff;border:3px solid var(--ink);border-radius:12px;padding:calc(var(--m)*1);font-size:calc(var(--m)*2.2);line-height:1.5}
+.xf-col b{display:block;font-size:calc(var(--m)*2.5)}
+.xf-mode{width:100%}
 .modal h3{padding-right:calc(var(--m)*7);margin:0;font-family:var(--f-kr);font-weight:800;font-size:calc(var(--m)*4)}
 
 /* ---- Boss Rush · Spell test ---- */
@@ -331,12 +339,12 @@ svg.wmap{width:100%;display:block;background:#e4e6ea;touch-action:pan-x pan-y}
 .rush-left .rh{max-width:calc(var(--m)*4.2)}
 .rush-v{display:inline-block;color:#fff;border:3px solid var(--ink);border-radius:12px;padding:calc(var(--m)*.6) calc(var(--m)*3);font-family:var(--f-en);font-weight:800;font-size:calc(var(--m)*4.2);box-shadow:0 4px 0 var(--ink)}
 .rush-v.win{background:#2e9e5b}.rush-v.lose{background:#e8453c}
-.mg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(var(--m)*1.6)}
+.mg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:calc(var(--m)*1.6)}
 #mini-panel{width:min(100%,calc(var(--m)*118))}
 @media (max-aspect-ratio:1/1){.mg-grid{grid-template-columns:1fr}}
 .mg{appearance:none;font:inherit;cursor:pointer;color:#fff;border:4px solid var(--ink);border-radius:18px;box-shadow:0 5px 0 var(--ink);padding:calc(var(--m)*1.8) calc(var(--m)*1.2);display:flex;flex-direction:column;align-items:center;gap:calc(var(--m)*.6);text-align:center}
 .mg:active{transform:translateY(3px);box-shadow:0 2px 0 var(--ink)}
-.mg.cross{background:#7a5cff}.mg.rush{background:#e8453c}.mg.spell{background:#1f9e8a}
+.mg.cross{background:#7a5cff}.mg.rush{background:#e8453c}.mg.spell{background:#1f9e8a}.mg.snake{background:#2e9e69}
 .mg.lock{filter:grayscale(.65) brightness(.92)}
 .mg-i{font-size:calc(var(--m)*6.4);line-height:1.1}
 .mg b{font-family:var(--f-kr);font-size:calc(var(--m)*3.6)}
@@ -745,6 +753,7 @@ textarea{width:100%;min-height:calc(var(--m)*34);border:3px solid var(--ink);bor
   <div class="modal" id="mini" hidden><div class="panel" id="mini-panel"></div></div>
   <div class="modal" id="help" hidden><div class="panel" id="help-panel"></div></div>
   <div class="modal" id="editor" hidden><div class="panel" id="editor-panel"></div></div>
+  <div class="modal" id="xfer" hidden><div class="panel" id="xfer-panel"></div></div>
   <div id="dlg" class="dlg" hidden><div class="dlg-card"><div class="dlg-prev" id="dlg-prev" hidden></div><div class="dlg-head"></div><div class="dlg-body"><div class="dlg-main"><p class="dlg-text"></p><div class="dlg-foot" hidden></div></div><button class="btn primary" id="dlg-btn" data-act="dlgNext"></button></div></div></div>
   <div id="count" hidden></div>
   <div class="modal" id="bonus" hidden><div class="panel" id="bonus-panel"></div></div>
@@ -821,7 +830,7 @@ function newSave() {
     badges: {}, daily: { date: '', runs: 0 }, streak: { last: '', count: 0 },
     settings: { sound: true, speech: true, pace: 1, readMode: 'always', readV: 2, cheer: true, names: ['Luke', '우진'] },
     stats: { bossWins: 0, maxCombo: 0, perfect: 0, correct: 0, records: 0 },
-    maxDay: '', gemV: 1, seenTip: false, gun: 1, bonus: 0, rank: null, xp: 0, xpV: 0, sp: {}, spSel: 'missile', hint: 5, petLv: {}, pcard: 0, stV: 2, nkV: 1, hatV: 1, xpFrac: 0, hatFrac: 0, cross: { c: 0, p: 0 }, cxDay: { d: '', n: 0 }, rushDay: { d: '', n: 0 }, rush: { b: 0, r: 0, c: 0 }, spell: { r: 0, b: 0 }, night: false, spLoad: null,
+    maxDay: '', gemV: 1, seenTip: false, gun: 1, bonus: 0, rank: null, xp: 0, xpV: 0, sp: {}, spSel: 'missile', hint: 5, petLv: {}, pcard: 0, stV: 2, nkV: 1, hatV: 1, xpFrac: 0, hatFrac: 0, cross: { c: 0, p: 0 }, cxDay: { d: '', n: 0 }, rushDay: { d: '', n: 0 }, snakeDay: { d: '', n: 0 }, snake: { r: 0, b: 0 }, rush: { b: 0, r: 0, c: 0 }, spell: { r: 0, b: 0 }, night: false, spLoad: null,
     hw: { unit: 23, due: '2026-10-15', on: true, days: [1, 2, 3] },
   };
 }
@@ -4296,6 +4305,7 @@ function renderSettings() {
     row('숙제 보너스 요일', '이 요일에 숙제 Unit을 깨면 ' + XPI + ' 50% 추가!', `<div class="seg hwdays" style="width:calc(var(--m)*58)">${[1, 2, 3, 4, 5, 6, 0].map(i => `<button class="${(d.hw.days || []).includes(i) ? 'on' : ''}" data-act="hwDay" data-i="${i}">${DOW_KO[i]}</button>`).join('')}</div>`) +
     row('내 단어장 만들기', cs ? `${cs.words.length}개 저장됨 · 학원 숙제 단어를 붙여 넣을 수 있어요` : '학원 숙제 단어를 붙여 넣으면 바로 게임이 돼요', '<button class="btn" data-act="editCustom">편집</button>') +
     row('저장 상태', '<span id="sync-label"></span>', '') +
+    row('기록 옮기기', '다른 태블릿으로 기록을 보내거나 받아요 (파일·코드)', '<button class="btn" data-act="openXfer">열기</button>') +
     row('처음부터 다시 시작', '코인, 계급, 단어 기록이 모두 지워져요', `<button class="btn red sm" data-act="resetAsk" id="btn-reset">진행 지우기</button>`);
   updateSyncLabel();
 }
@@ -4348,6 +4358,7 @@ function renderMini() {
       <button class="mg cross" data-act="crossOpen"><span class="mg-i">🧩</span><b>Cross word</b><span class="mg-d">단어 십자말 맞추기<br>완성하면 코인 · ${XPI}, 퍼펙트는 더!</span><span class="mg-s">완성 ${cx.c || 0} · 퍼펙트 ${cx.p || 0}</span></button>
       <button class="mg rush${rOpen ? '' : ' lock'}" data-act="rushOpen"><span class="mg-i">👹</span><b>Boss Rush</b><span class="mg-d">깬 스테이지 보스 ${RUSH_N}마리 연속 도전!<br>보스마다 점점 빨라져요!<br>♥ ${RUSH_HP}개가 다 닳으면 게임 오버</span><span class="mg-s">${!ok ? '스테이지를 하나 깨면 열려요' : rLeft <= 0 ? '오늘 도전은 끝! 내일 또 만나요' : `오늘 남은 도전 ${rLeft} / ${RUSH_DAY} · 올 클리어 ${rs.c || 0}번`}</span></button>
       <button class="mg spell" data-act="spellOpen"><span class="mg-i">⌨️</span><b>Spell test</b><span class="mg-d">뜻을 보고 스펠링 치기 · ${SPELL_N}단어<br>발음 듣기로 도움을 받아요</span><span class="mg-s">최고 안 틀린 단어 ${sp.b || 0}개 · 코인·${XPI}</span></button>
+      <button class="mg snake" data-act="snakeOpen"><span class="mg-i">🐍</span><b>Snake</b><span class="mg-d">뜻에 맞는 단어를 먹고 뱀 키우기 · 7라운드<br>처음 ${SNAKE_XPDAY}판은 ${XPI}·코인, 그 뒤엔 코인만</span><span class="mg-s">오늘 ${snakeDayUsed()}판${snakeDayUsed() < SNAKE_XPDAY ? ' · ' + XPI + ' ' + (SNAKE_XPDAY - snakeDayUsed()) + '번 남음' : ' · 코인만'} · 최고 길이 ${(d.snake && d.snake.b) || 0}</span></button>
     </div>`;
 }
 function showResults() {
@@ -4937,6 +4948,133 @@ Object.assign(ACT, {
   bqSay() { const B = R && R.bonus; if (!B || R.phase !== 'bonusQ') return; const q = B.qs[B.i]; say(q.picked >= 0 ? q.P.full : q.P.pre + ' ... ' + q.P.post); },
   bqNext() { const B = R && R.bonus; if (!B || R.phase !== 'bonusQ' || B.qs[B.i].picked < 0) return; B.i++; if (B.i >= B.n) bqSummary(); else bqRender(); },
   bqDone() { if (!R || R.phase !== 'bonusEnd') return; $('#scr-bq').hidden = true; endRun(true); },
+});
+
+/* ============ 기록 옮기기: 다른 태블릿으로 내보내기 / 가져오기 (서버 없이 파일·코드로) ============ */
+const XFER_FMT = 'LukeVocaTravel-save', XFER_BAK = SAVE_KEY + '.bak';
+const XF = { got: null, mode: 'merge', code: '' };
+const xfB64 = u8 => { let s = ''; for (let i = 0; i < u8.length; i += 0x8000) s += String.fromCharCode.apply(null, u8.subarray(i, i + 0x8000)); return btoa(s); };
+const xfUn64 = t => { const s = atob(t.replace(/\s+/g, '')), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return u; };
+const xferPack = () => ({ app: XFER_FMT, fmt: 1, at: Date.now(), data: clone(Store.data) });
+async function xferEncode(obj) {
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  if (typeof CompressionStream !== 'undefined') { try { return 'LVT1:' + xfB64(new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'))).arrayBuffer())); } catch (e) { } }
+  return 'LVT0:' + xfB64(bytes);
+}
+async function xferDecode(text) {
+  text = String(text || '').trim(); let obj;
+  if (text[0] === '{') obj = JSON.parse(text);
+  else {
+    const m = /^LVT([01]):/.exec(text); if (!m) throw new Error('형식');
+    let bytes = xfUn64(text.slice(5));
+    if (m[1] === '1') bytes = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+    obj = JSON.parse(new TextDecoder().decode(bytes));
+  }
+  if (!obj || obj.app !== XFER_FMT || !obj.data || typeof obj.data !== 'object') throw new Error('형식');
+  return obj;
+}
+function xferSummary(d) {
+  let st = 0, wd = 0; Object.values(d.sets || {}).forEach(s => { Object.values((s && s.stages) || {}).forEach(r => { if (r && r.stars >= 1) st++; }); Object.values((s && s.words) || {}).forEach(w => { if (w && w[0] > 0) wd++; }); });
+  return { at: d.savedAt || 0, coins: d.coins | 0, xp: Math.round(d.xp || 0), stages: st, words: wd };
+}
+const xfWhen = t => t ? new Date(t).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : '기록 없음';
+/* 합치기: 숫자는 큰 값, 스테이지 기록은 더 좋은 쪽, 단어는 더 익힌 쪽, 모은 것(배지·아이템)은 합집합, 오늘 기록·장착·숙제 같은 건 더 최근 저장 쪽 */
+const XF_NEWER = new Set(['equip', 'activeSet', 'streak', 'daily', 'cxDay', 'rushDay', 'snakeDay', 'hw', 'custom', 'night', 'spLoad', 'spSel']);
+function xferMerge(a, b) {
+  const newerB = (b.savedAt || 0) > (a.savedAt || 0), isO = v => v && typeof v === 'object' && !Array.isArray(v);
+  const pickWord = (x, y) => (x[0] > y[0] ? x : y[0] > x[0] ? y : (x[1] >= y[1] ? x : y));
+  const mg = (x, y, path) => {
+    if (x == null) return y; if (y == null) return x;
+    if (typeof x === 'number' && typeof y === 'number') return Math.max(x, y);
+    if (Array.isArray(x) && Array.isArray(y)) {
+      if (path.length === 4 && path[0] === 'sets' && path[2] === 'words') return pickWord(x, y);
+      if (x.every(v => typeof v !== 'object') && y.every(v => typeof v !== 'object')) return [...x, ...y.filter(v => !x.includes(v))];
+      return newerB ? y : x;
+    }
+    if (isO(x) && isO(y)) {
+      const o = {}; new Set([...Object.keys(x), ...Object.keys(y)]).forEach(k => { o[k] = mg(x[k], y[k], path.concat(k)); }); return o;
+    }
+    return newerB ? y : x;
+  };
+  const out = {};
+  new Set([...Object.keys(a), ...Object.keys(b)]).forEach(k => {
+    if (k === 'settings') out[k] = a[k]; // 소리·읽기 설정은 이 기기 것 그대로
+    else if (XF_NEWER.has(k)) out[k] = newerB ? (b[k] != null ? b[k] : a[k]) : (a[k] != null ? a[k] : b[k]);
+    else out[k] = mg(a[k], b[k], [k]);
+  });
+  if ((b.xp || 0) > (a.xp || 0)) out.xpFrac = b.xpFrac; else out.xpFrac = a.xpFrac; // 경험치와 소수점은 같은 쪽에서
+  out.maxDay = [a.maxDay || '', b.maxDay || ''].sort().pop();
+  out.savedAt = Date.now();
+  return out;
+}
+function xferApply(imp, mode) {
+  try { localStorage.setItem(XFER_BAK, JSON.stringify(Store.data)); } catch (e) { }
+  const cur = clone(Store.data), inc = clone(imp.data);
+  let nd;
+  if (mode === 'replace') { nd = mergeSave(newSave(), inc); nd.settings = cur.settings; }
+  else nd = mergeSave(newSave(), xferMerge(cur, mergeSave(newSave(), inc)));
+  nd.savedAt = Date.now(); Store.data = nd; Store.touch(); rebuildSets();
+}
+function xferUndo() {
+  let raw = null; try { raw = localStorage.getItem(XFER_BAK); } catch (e) { }
+  if (!raw) { toast('되돌릴 기록이 없어요'); return; }
+  Store.data = mergeSave(newSave(), JSON.parse(raw)); Store.data.savedAt = Date.now(); Store.touch(); rebuildSets();
+  try { localStorage.removeItem(XFER_BAK); } catch (e) { }
+}
+function xferHasBak() { try { return !!localStorage.getItem(XFER_BAK); } catch (e) { return false; } }
+const XF_X = '<button class="ibtn xbtn" data-act="closeModal" data-id="xfer" aria-label="닫기"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" stroke="#16213a" stroke-width="3.4" fill="none" stroke-linecap="round"/></svg></button>';
+function openXfer() {
+  const me = xferSummary(Store.data), g = XF.got;
+  const tbl = (s, t) => `<div class="xf-col"><b>${t}</b><div>저장 ${xfWhen(s.at)}</div><div>${COINI || ''} ${fmt(s.coins)}</div><div>${XPI || ''} ${fmt(s.xp)}</div><div>클리어 스테이지 ${fmt(s.stages)}</div><div>익힌 단어 ${fmt(s.words)}</div></div>`;
+  $('#xfer-panel').innerHTML = XF_X + `<h3>기록 옮기기</h3>
+    <div class="muted">서버 없이 파일이나 코드로 다른 태블릿에 기록을 옮겨요.</div>
+    <div class="xf-box"><b>① 보내기 <small>(이 기기 → 다른 태블릿)</small></b>
+      <div class="xf-row"><button class="btn primary" data-act="xfSave">파일로 저장</button><button class="btn" data-act="xfCopy">코드 복사</button></div>
+      <textarea id="xf-out" readonly spellcheck="false" hidden></textarea>
+      <div class="muted" id="xf-outmsg">${xfWhen(me.at)} 저장 기준 · 파일을 카톡·드라이브 등으로 보내거나 코드를 붙여 넣어요.</div></div>
+    <div class="xf-box"><b>② 받기 <small>(다른 태블릿 → 이 기기)</small></b>
+      <div class="xf-row"><button class="btn" data-act="xfPick">파일 고르기</button><input type="file" id="xf-file" accept=".json,.txt,application/json,text/plain" hidden></div>
+      <textarea id="xf-in" spellcheck="false" placeholder="또는 복사한 코드를 여기에 붙여 넣어요 (LVT1:...)"></textarea>
+      <div class="xf-row"><button class="btn" data-act="xfRead">코드 읽기</button></div>
+      <div id="xf-prev">${g ? xfPrev(me, g) : ''}</div></div>
+    ${xferHasBak() ? '<div class="xf-box"><b>되돌리기</b><div class="muted">가져오기 직전 상태로 돌아가요 (1번만 저장돼요).</div><div class="xf-row"><button class="btn red sm" data-act="xfUndo">직전으로 되돌리기</button></div></div>' : ''}`;
+  $('#xf-file').addEventListener('change', async e => { const f = e.target.files && e.target.files[0]; if (!f) return; xfLoad(await f.text()); });
+  $('#xfer').hidden = false;
+}
+function xfPrev(me, g) {
+  const sm = xferSummary(g.data), tbl = (s, t) => `<div class="xf-col"><b>${t}</b><div>저장 ${xfWhen(s.at)}</div><div>${XPI} ${fmt(s.xp)}</div><div>${COINI} ${fmt(s.coins)}</div><div>스테이지 ${fmt(s.stages)}</div><div>단어 ${fmt(s.words)}</div></div>`;
+  return `<div class="xf-cmp">${tbl(me, '이 기기')}<span>⇄</span>${tbl(sm, '가져온 기록')}</div>
+    <div class="seg xf-mode"><button class="${XF.mode === 'merge' ? 'on' : ''}" data-act="xfMode" data-m="merge">합치기 (추천)</button><button class="${XF.mode === 'replace' ? 'on' : ''}" data-act="xfMode" data-m="replace">통째로 바꾸기</button></div>
+    <div class="muted">${XF.mode === 'merge' ? '코인·XP는 둘 중 큰 값, 스테이지는 더 좋은 기록, 단어는 더 익힌 쪽으로 합쳐요. 소리 설정은 이 기기 것 그대로예요.' : '이 기기의 기록을 가져온 기록으로 완전히 바꿔요. (소리 설정은 그대로)'}</div>
+    <div class="xf-row"><button class="btn primary" data-act="xfGo">가져오기</button></div>`;
+}
+async function xfLoad(text) {
+  const pv = $('#xf-prev');
+  try { XF.got = await xferDecode(text); XF.mode = 'merge'; pv.innerHTML = xfPrev(xferSummary(Store.data), XF.got); }
+  catch (e) { XF.got = null; pv.innerHTML = '<div class="muted" style="color:#b84a52">이 기록을 읽을 수 없어요. 파일이나 코드가 맞는지 확인해 주세요.</div>'; }
+}
+Object.assign(ACT, {
+  openXfer() { XF.got = null; XF.mode = 'merge'; openXfer(); },
+  async xfSave() {
+    const p = xferPack(), d = new Date(), z = n => String(n).padStart(2, '0');
+    const name = `LukeVoca-save-${d.getFullYear()}${z(d.getMonth() + 1)}${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}.json`;
+    try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(p)], { type: 'application/json' })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800); toast('파일로 저장했어요'); }
+    catch (e) { toast('저장하지 못했어요. 코드 복사를 써 보세요'); }
+  },
+  async xfCopy() {
+    const t = await xferEncode(xferPack()), ta = $('#xf-out'); ta.hidden = false; ta.value = t; ta.focus(); ta.select();
+    let ok = false; try { await navigator.clipboard.writeText(t); ok = true; } catch (e) { try { ok = document.execCommand('copy'); } catch (e2) { } }
+    $('#xf-outmsg').textContent = ok ? '코드를 복사했어요. 다른 태블릿에서 ② 받기에 붙여 넣어요.' : '아래 코드를 길게 눌러 전체 복사해 주세요.';
+    toast(ok ? '코드를 복사했어요' : '코드를 직접 복사해 주세요');
+  },
+  xfPick() { $('#xf-file').click(); },
+  xfRead() { xfLoad($('#xf-in').value); },
+  xfMode(d) { XF.mode = d.m; $('#xf-prev').innerHTML = xfPrev(xferSummary(Store.data), XF.got); },
+  xfGo() {
+    if (!XF.got) return; xferApply(XF.got, XF.mode); const m = XF.mode; XF.got = null; $('#xfer').hidden = true;
+    go('home'); toast(m === 'merge' ? '기록을 합쳤어요' : '기록을 가져왔어요');
+  },
+  xfUndo() { xferUndo(); $('#xfer').hidden = true; go('home'); toast('가져오기 전으로 되돌렸어요'); },
 });
 
 /* ===== 미니게임: Luke의 VOCA Cross word =====
@@ -5785,7 +5923,7 @@ function leaveCross() { if (CX.api) CX.api.leave(); }
 
 /* ============ Snake! 미니게임 (보너스 길 Snake! 판) — snake_src.html을 앱에 맞게 옮긴 것 (build_snake.py가 생성) ============ */
 const SNK_CSS = "\n/* 레이아웃: 한 화면 앱. 위에 진행 막대와 문제 카드, 나머지는 모눈종이 보드(캔버스). 노트 위에서 노는 뱀. */\n/* 게임 화면이라 밝은 한 가지 모습으로 고정하고, 배경과 글자색은 모두 명시한다. */\n.snk{\n  --paper:#E4EFF7; --grid:#F8FBFE; --grid-line:#D5E7F3; --card:#FFFFFF;\n  --ink:#1D3557; --ink-soft:#586D8C;\n  --sun:#FFC83D; --good:#2FB57A; --good-soft:#BDEFD5; --bad:#FF6B5B; --bad-soft:#FFD2CB;\n  --snake-a:#43C183; --snake-b:#2E9E69;\n  --b1:#FFE49A; --b2:#FFC6D3; --b3:#BDE3FF; --b4:#C8F0D6;\n  --veil:rgba(248,251,254,.86); --shade:rgba(29,53,87,.22);\n  --font-display:'Jua','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-mono:ui-monospace,Menlo,Consolas,monospace;\n}\n.snk,.snk *{box-sizing:border-box}\n.snk{position:absolute;inset:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;-webkit-user-select:none;user-select:none;touch-action:none}\n:host{position:fixed;inset:0;z-index:60;display:block}\n:host([hidden]){display:none}\nbutton{font-family:inherit;color:inherit}\n:focus-visible{outline:3px solid var(--ink);outline-offset:2px}\n\n#app{height:100%;display:flex;flex-direction:column;gap:10px;max-width:560px;margin-inline:auto;padding-inline:16px;padding-block:12px}\n@media (min-aspect-ratio:11/10) and (min-width:700px){#app{max-width:min(100%,1040px);padding-inline:28px}.q-ko{font-size:clamp(34px,5vw,56px)}}\n\n.top{display:flex;align-items:center;gap:10px}\n.icon{width:44px;height:44px;flex:none;padding:0;display:grid;place-items:center;border:3px solid var(--ink);border-radius:14px;background:var(--card);box-shadow:3px 3px 0 var(--ink);cursor:pointer}\n.icon:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}\n#pips{flex:1;min-width:0;display:flex;gap:4px}\n.pip{flex:1;min-width:0;height:12px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);transition:background .2s}\n.pip.ok{background:var(--good)}\n.pip.miss{background:var(--bad)}\n.pip.cur{background:var(--sun)}\n.round{min-width:3.4em;text-align:right;font-family:var(--font-display);font-size:18px;font-variant-numeric:tabular-nums}\n\n.qcard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px 12px;background:var(--card);border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink)}\n.q-label{font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.q-ko{font-family:var(--font-display);font-size:clamp(34px,11vw,50px);line-height:1.1;overflow-wrap:anywhere}\n.q-ko.m{font-size:clamp(26px,8vw,38px)}.q-ko.l{font-size:clamp(21px,6.2vw,30px)}\n.stats{display:flex;gap:14px}\n.stat{display:flex;flex-direction:column;align-items:flex-end}\n.stat span{font-size:12px;color:var(--ink-soft)}\n.stat b{font-family:var(--font-display);font-size:24px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}\n\n#board{position:relative;flex:1;min-height:0;overflow:hidden;border:3px solid var(--ink);border-radius:20px;background-color:var(--grid)}\n#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}\n\n.fb{position:absolute;top:10px;left:50%;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 16px;border:3px solid var(--ink);border-radius:99px;background:var(--card);font-family:var(--font-display);font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transition:opacity .18s;z-index:2}\n.fb.show{opacity:1}\n.fb.ok{background:var(--good-soft)}\n.fb.no{background:var(--bad-soft)}\n.combo{position:absolute;left:12px;bottom:12px;padding:5px 14px;border:3px solid var(--ink);border-radius:99px;background:var(--sun);font-family:var(--font-display);font-size:18px;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transform:scale(.8);transition:opacity .15s,transform .2s;z-index:2}\n.combo.show{opacity:1;transform:none}\n.tip{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 14px;border-radius:99px;background:var(--ink);color:#fff;font-size:14px;text-align:center;pointer-events:none;z-index:2}\n\n.ov{position:absolute;inset:0;display:flex;overflow:auto;padding:14px;background:var(--veil);z-index:3}\n.panel{width:min(100%,380px);margin:auto;display:flex;flex-direction:column;gap:14px;padding:18px 18px 16px;background:var(--card);border:3px solid var(--ink);border-radius:20px;box-shadow:5px 5px 0 var(--ink)}\n.title{margin:0;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.1;text-wrap:balance}\n.lead{margin:0;color:var(--ink-soft);line-height:1.55}\n.flabel{margin-bottom:6px;font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{min-height:44px;padding:6px 14px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);font-size:15px;cursor:pointer}\n.chip[aria-pressed=\"true\"]{background:var(--sun);box-shadow:2px 2px 0 var(--ink)}\n.cta{min-height:54px;border:3px solid var(--ink);border-radius:16px;background:var(--sun);font-family:var(--font-display);font-size:22px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}\n.cta:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}\n.ghost{min-height:46px;border:3px solid var(--ink);border-radius:14px;background:var(--card);font-size:16px;cursor:pointer}\n.ghost:active{background:var(--paper)}\n.note{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.5}\n\n.stars{display:flex;gap:6px}\n.stars svg{width:44px;height:44px}\n.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}\n.rtile{padding:8px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--grid)}\n.rtile span{display:block;font-size:12px;color:var(--ink-soft)}\n.rtile b{font-family:var(--font-display);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums}\n.wl{list-style:none;margin:0;padding:0;display:grid;gap:6px}\n.wl li{display:flex;align-items:center;gap:10px;min-width:0;padding:4px 6px 4px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--bad-soft)}\n.wl .en{font-family:var(--font-display);font-size:20px}\n.wl .ko{flex:1;min-width:0;color:var(--ink-soft);overflow-wrap:anywhere}\n.spk{width:40px;height:40px;flex:none;padding:0;display:grid;place-items:center;border:2.5px solid var(--ink);border-radius:50%;background:var(--card);cursor:pointer}\n.good-note{margin:0;padding:10px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--good-soft)}\n.dev summary{min-height:32px;cursor:pointer;font-size:14px;color:var(--ink-soft)}\n.dev pre{margin:8px 0 0;padding:10px;border-radius:10px;background:var(--paper);font:12px/1.5 var(--font-mono);white-space:pre;overflow-x:auto}\n\n.pop{animation:pop .28s cubic-bezier(.3,1.6,.5,1)}\n@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n\n[hidden]{display:none!important}\n#board{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}\n.band{position:absolute;left:0;top:0;pointer-events:none;z-index:3;border-block:5px solid #1D3557;background:repeating-linear-gradient(90deg,#43C183 0 26px,#2E9E69 26px 52px);box-shadow:0 8px 0 rgba(29,53,87,.28);will-change:transform}\n.band::after{content:\"\";position:absolute;right:-2px;top:50%;width:46px;height:46px;border-radius:50%;transform:translate(60%,-50%);background:#43C183;border:5px solid #1D3557}\n.stxt{position:absolute;left:50%;top:42%;z-index:4;pointer-events:none;transform:translate(-50%,-50%) rotate(-4deg);padding:10px 20px;background:#fff;border:4px solid #1D3557;border-radius:18px;box-shadow:0 6px 0 #1D3557;text-align:center;white-space:nowrap;color:#1D3557}\n.stxt small{display:block;font-size:13px;color:#586D8C}.stxt b{display:block;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.15}\n.cd{position:absolute;left:50%;top:44%;z-index:5;pointer-events:none;transform:translate(-50%,-50%);font-family:var(--font-display);font-size:clamp(90px,26vw,150px);color:#fff;-webkit-text-stroke:7px #1D3557;paint-order:stroke fill;text-shadow:0 8px 0 #1D3557;animation:pop .32s cubic-bezier(.3,1.6,.5,1)}\n.cd.go{color:#FFC83D}\n.rnote{margin:0;text-align:center;font-size:13px;color:var(--ink-soft)}\n";
-const SNK_HTML = "<div class=\"snk\" id=\"snk\"><div id=\"app\">\n  <header class=\"top\">\n    <button class=\"icon\" id=\"btnPause\" type=\"button\" aria-label=\"일시정지\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" aria-hidden=\"true\"><rect x=\"3\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/><rect x=\"11\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/></svg>\n    </button>\n    <div id=\"pips\" role=\"img\" aria-label=\"진행 상황\"></div>\n    <div class=\"round\" id=\"roundTxt\">0/7</div>\n  </header>\n\n  <section class=\"qcard\" aria-live=\"polite\">\n    <div>\n      <div class=\"q-label\" id=\"qLabel\">뜻을 보고 영단어를 먹어요</div>\n      <div class=\"q-ko\" id=\"qKo\">준비!</div>\n    </div>\n    <div class=\"stats\">\n      <div class=\"stat\"><span>코인</span><b id=\"coins\">0</b></div>\n      <div class=\"stat\"><span>길이</span><b id=\"len\">8</b></div>\n    </div>\n  </section>\n\n  <main id=\"board\">\n    <canvas id=\"cv\"></canvas>\n    <div class=\"fb\" id=\"fb\" role=\"status\"></div>\n    <div class=\"combo\" id=\"combo\"></div>\n    <div class=\"tip\" id=\"tip\" hidden>화면을 손가락으로 끌어서 방향을 바꿔요</div>\n\n\n    <section class=\"ov\" id=\"result\" hidden>\n      <div class=\"panel\">\n        <div class=\"stars\" id=\"stars\" role=\"img\"></div>\n        <h2 class=\"title\" id=\"resTitle\">잘했어요!</h2>\n        <div class=\"rgrid\">\n          <div class=\"rtile\"><span>한 번에 맞힌 단어</span><b id=\"rOk\">0</b></div>\n          <div class=\"rtile\"><span>뱀 길이</span><b id=\"rLen\">0</b></div>\n          <div class=\"rtile\"><span>XP</span><b id=\"rXp\">0</b></div>\n          <div class=\"rtile\"><span>코인</span><b id=\"rCoin\">0</b></div>\n        </div>\n        <div id=\"wrongBox\">\n          <div class=\"flabel\">다시 볼 단어</div>\n          <ul class=\"wl\" id=\"wrongList\"></ul>\n          <p class=\"good-note\" id=\"allGood\" hidden>모든 단어를 한 번에 맞혔어요!</p>\n        </div>\n        <p class=\"rnote\">보상은 이번 스테이지 결과에 더해져요</p>\n        <button class=\"cta\" id=\"btnDone\" type=\"button\">스테이지로 돌아가기</button>\n      </div>\n    </section>\n\n    <section class=\"ov\" id=\"pause\" hidden>\n      <div class=\"panel\">\n        <h2 class=\"title\">잠깐 멈춤</h2>\n        <button class=\"cta\" id=\"btnResume\" type=\"button\">계속하기</button>\n        <button class=\"ghost\" id=\"btnQuit\" type=\"button\">여기서 끝내기</button>\n      </div>\n    </section>\n  </main>\n</div><div class=\"cd\" id=\"cd\" hidden></div></div><div class=\"band\" id=\"band\" hidden></div><div class=\"stxt\" id=\"stxt\" hidden><small>단어 뱀 키우기 · 7라운드</small><b>SNAKE TIME!</b></div>";
+const SNK_HTML = "<div class=\"snk\" id=\"snk\"><div id=\"app\">\n  <header class=\"top\">\n    <button class=\"icon\" id=\"btnPause\" type=\"button\" aria-label=\"일시정지\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" aria-hidden=\"true\"><rect x=\"3\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/><rect x=\"11\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/></svg>\n    </button>\n    <div id=\"pips\" role=\"img\" aria-label=\"진행 상황\"></div>\n    <div class=\"round\" id=\"roundTxt\">0/7</div>\n  </header>\n\n  <section class=\"qcard\" aria-live=\"polite\">\n    <div>\n      <div class=\"q-label\" id=\"qLabel\">뜻을 보고 영단어를 먹어요</div>\n      <div class=\"q-ko\" id=\"qKo\">준비!</div>\n    </div>\n    <div class=\"stats\">\n      <div class=\"stat\"><span>코인</span><b id=\"coins\">0</b></div>\n      <div class=\"stat\"><span>길이</span><b id=\"len\">8</b></div>\n    </div>\n  </section>\n\n  <main id=\"board\">\n    <canvas id=\"cv\"></canvas>\n    <div class=\"fb\" id=\"fb\" role=\"status\"></div>\n    <div class=\"combo\" id=\"combo\"></div>\n    <div class=\"tip\" id=\"tip\" hidden>화면을 손가락으로 끌어서 방향을 바꿔요</div>\n\n\n    <section class=\"ov\" id=\"result\" hidden>\n      <div class=\"panel\">\n        <div class=\"stars\" id=\"stars\" role=\"img\"></div>\n        <h2 class=\"title\" id=\"resTitle\">잘했어요!</h2>\n        <div class=\"rgrid\">\n          <div class=\"rtile\"><span>한 번에 맞힌 단어</span><b id=\"rOk\">0</b></div>\n          <div class=\"rtile\"><span>뱀 길이</span><b id=\"rLen\">0</b></div>\n          <div class=\"rtile\"><span>XP</span><b id=\"rXp\">0</b></div>\n          <div class=\"rtile\"><span>코인</span><b id=\"rCoin\">0</b></div>\n        </div>\n        <div id=\"wrongBox\">\n          <div class=\"flabel\">다시 볼 단어</div>\n          <ul class=\"wl\" id=\"wrongList\"></ul>\n          <p class=\"good-note\" id=\"allGood\" hidden>모든 단어를 한 번에 맞혔어요!</p>\n        </div>\n        <p class=\"rnote\" id=\"rnote\">보상은 이번 스테이지 결과에 더해져요</p>\n        <button class=\"cta\" id=\"btnDone\" type=\"button\">스테이지로 돌아가기</button>\n      </div>\n    </section>\n\n    <section class=\"ov\" id=\"pause\" hidden>\n      <div class=\"panel\">\n        <h2 class=\"title\">잠깐 멈춤</h2>\n        <button class=\"cta\" id=\"btnResume\" type=\"button\">계속하기</button>\n        <button class=\"ghost\" id=\"btnQuit\" type=\"button\">여기서 끝내기</button>\n      </div>\n    </section>\n  </main>\n</div><div class=\"cd\" id=\"cd\" hidden></div></div><div class=\"band\" id=\"band\" hidden></div><div class=\"stxt\" id=\"stxt\" hidden><small>단어 뱀 키우기 · 7라운드</small><b>SNAKE TIME!</b></div>";
 function snakeBuild(host){
 const SR=host.attachShadow({mode:'open'});
 SR.innerHTML='<style>'+SNK_CSS+'</style>'+SNK_HTML;
@@ -5972,7 +6110,7 @@ function finish(reason){
   var acc=ok/n,stars=acc>=0.9?3:acc>=0.6?2:1;
   var dur=Math.round((performance.now()-S.t0)/1000);
   var wrongs=Array.from(S.wrongMap.values());
-  var len=snake.segs.length,xp=Math.min(len,10),coins=Math.max(0,len-10);
+  var len=snake.segs.length,rw=(conf&&conf.reward)?conf.reward(len):{xp:Math.min(len,10),coins:Math.max(0,len-10)},xp=rw.xp,coins=rw.coins;
   var star='<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,2 15,9 22,9.5 16.5,14 18.5,21 12,17 5.5,21 7.5,14 2,9.5 9,9" fill="FILL" stroke="'+col.ink+'" stroke-width="1.8" stroke-linejoin="round"/></svg>';
   var sh='';for(var i=0;i<3;i++)sh+=star.replace('FILL',i<stars?col.sun:'#fff');
   $('#stars').innerHTML=sh;$('#stars').setAttribute('aria-label','별 '+stars+'개');
@@ -6384,7 +6522,7 @@ function leave(){
 resize();
 var api={
   open:function(c){
-    conf=c;WORDS=c.pool||[];cfg.count=c.count||7;lastPayload=null;clearIntro();
+    conf=c;$('#rnote').textContent=c.note||'보상은 이번 스테이지 결과에 더해져요';$('#btnDone').textContent=c.doneLabel||'스테이지로 돌아가기';WORDS=c.pool||[];cfg.count=c.count||7;lastPayload=null;clearIntro();
     S.run++;timers=[];parts=[];floats=[];S.mode='intro';S.qs=[];S.qi=0;S.bubbles=[];S.marks=[];S.combo=0;S.paused=false;
     show('#result',false);show('#pause',false);hideFb();$('#tip').hidden=true;cdEl.hidden=true;
     $('#qKo').textContent='준비!';$('#qKo').className='q-ko';$('#qLabel').textContent='뜻을 보고 영단어를 먹어요';
@@ -6405,9 +6543,10 @@ return api;
 const SNAKE_P = 0.5, SNAKE_Q = 7, SNAKE_MAXLEN = 10, SNAKE_KOMAX = 14;
 const SNK = { api: null, host: null, font: false };
 /* 이번 스테이지 단어(R.pool)로 문제를 만들어요: 영어 글자수 제한·공백/기호 없는 단어만 (긴 단어는 말풍선에 안 들어가요) */
-function snakePlan() {
-  if (!R || !R.set || !R.pool) return null;
-  const mk = (maxLen) => R.pool.map(i => R.set.words[i]).filter(w => w && /^[A-Za-z]{2,}$/.test(w.w) && w.w.length <= maxLen && String(w.kb || w.ko || '').length <= SNAKE_KOMAX && String(w.kb || w.ko || '').length > 0);
+function snakePlan(set, idxs) {
+  set = set || (R && R.set); idxs = idxs || (R && R.pool);
+  if (!set || !idxs) return null;
+  const mk = (maxLen) => idxs.map(i => set.words[i]).filter(w => w && /^[A-Za-z]{2,}$/.test(w.w) && w.w.length <= maxLen && String(w.kb || w.ko || '').length <= SNAKE_KOMAX && String(w.kb || w.ko || '').length > 0);
   let el = mk(SNAKE_MAXLEN); if (el.length < SNAKE_Q + 3) el = mk(12);
   if (el.length < SNAKE_Q + 3) return null;
   el = shuffle(el.slice());
@@ -6433,9 +6572,7 @@ function snakeEnter() {
   const plan = snakePlan(), run = R;
   if (!plan) { R.coins += 8; hudAll(); showBanner('코인 +8', '뱀을 부를 단어가 모자라 코인으로 바꿨어요', 'ok', 1500); return; }
   R.paused = true; R.firing = false; stopSay();
-  if (!SNK.font) { SNK.font = true; try { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap'; document.head.appendChild(l); } catch (e) { } }
-  if (!SNK.host) { SNK.host = document.createElement('div'); SNK.host.id = 'scr-snake'; SNK.host.hidden = true; document.body.appendChild(SNK.host); }
-  if (!SNK.api) SNK.api = snakeBuild(SNK.host);
+  snakeApi();
   SNK.api.open(Object.assign(plan, { onDone: pl => snakeDone(run, pl) }));
 }
 /* 돌아올 때: 보상 배너 → 3·2·1 → 이어서 달려요 (학습 기록은 건드리지 않고 보상만) */
@@ -6454,6 +6591,43 @@ function snakeDone(run, pl) {
   };
   setTimeout(tick, 1350);
 }
+
+function snakeApi() {
+  if (!SNK.font) { SNK.font = true; try { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap'; document.head.appendChild(l); } catch (e) { } }
+  if (!SNK.host) { SNK.host = document.createElement('div'); SNK.host.id = 'scr-snake'; SNK.host.hidden = true; document.body.appendChild(SNK.host); }
+  if (!SNK.api) SNK.api = snakeBuild(SNK.host);
+  return SNK.api;
+}
+/* ---- 미니게임 Snake: 처음 3판은 XP(길이 최대 10)+코인(10 넘는 길이), 4판째부터는 길이만큼 코인만 (하루 기준) ---- */
+const SNAKE_XPDAY = 3;
+function snakeDayUsed() { const d = Store.data, t = effDay(); return d.snakeDay && d.snakeDay.d === t ? (d.snakeDay.n | 0) : 0; }
+const snakeRw = (len, used) => used < SNAKE_XPDAY ? { xp: Math.min(len, 10), coins: Math.max(0, len - 10) } : { xp: 0, coins: len };
+/* 단어 범위: 수능 5000은 이번 주 6일치(크로스퍼즐과 같아요), 나머지는 깬 스테이지 (아직 없으면 첫 스테이지) */
+function snakeMiniStages(set) {
+  if (set.id === 'su') { const w = suWeek(set.stages.length), a = []; for (let i = w.from; i <= w.to; i++) a.push(i); return a; }
+  const a = set.stages.map((s, i) => i).filter(i => dayRec(set, i).stars >= 1); return a.length ? a : [0];
+}
+function snakeMiniDone(pl, used, e0) {
+  const d = Store.data, rw = (pl && pl.reward) || { xp: 0, coins: 0 }, len = (pl && pl.snakeLength) | 0;
+  d.xp = curXp() + rw.xp; d.coins += rw.coins; d.snakeDay = { d: effDay(), n: used + 1 };
+  const st = d.snake = d.snake || { r: 0, b: 0 }; st.r++; st.b = Math.max(st.b | 0, len);
+  Store.touch(); Store.flush(); go('home');
+  if (rw.xp && examAvail() && rankElig() > e0) toast('승급시험 자격 획득! 계급 화면에서 도전해요');
+  ACT.miniOpen();
+}
+Object.assign(ACT, {
+  snakeOpen() {
+    const set = curSet(), idxs = [...new Set(snakeMiniStages(set).flatMap(si => set.stages[si].idx))], plan = snakePlan(set, idxs);
+    if (!plan) { toast('뱀을 키울 단어가 모자라요. 스테이지를 더 깨 봐요'); return; }
+    const used = snakeDayUsed(), e0 = rankElig();
+    $('#mini').hidden = true; stopSay();
+    snakeApi().open(Object.assign(plan, {
+      reward: len => snakeRw(len, used), doneLabel: '미니게임으로 돌아가기',
+      note: used < SNAKE_XPDAY ? `오늘 ${used + 1}번째 · XP 보상은 하루 ${SNAKE_XPDAY}번까지예요 (그 뒤엔 길이만큼 코인만)` : `오늘 ${used + 1}번째 · 오늘 XP는 끝! 길이만큼 코인만 받아요`,
+      onDone: pl => snakeMiniDone(pl, used, e0),
+    }));
+  },
+});
 
 init();
 /* ---- 새 버전 자동 확인 (GitHub Pages 등 직접 올린 주소에서만 동작) ---- */
