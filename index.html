@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261010-204709"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="VOCA TRAVEL"><meta name="app-build" content="20261011-121215"><meta name="theme-color" content="#16213a"><style>html,body{margin:0;padding:0;height:100%;overflow:hidden}</style>
 <title>Luke의 VOCA TRAVEL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -828,7 +828,7 @@ function newSave() {
     owned: { color: ['sky'], hat: ['none'], pet: ['none'], trail: ['dust'] },
     equip: { color: 'sky', hat: 'none', pet: 'none', pet2: 'none', pet3: 'none', trail: 'dust' },
     badges: {}, daily: { date: '', runs: 0 }, streak: { last: '', count: 0 },
-    settings: { sound: true, speech: true, pace: 1, readMode: 'always', readV: 2, cheer: true, names: ['Luke', '우진'] },
+    settings: { sound: true, bgm: true, speech: true, pace: 1, readMode: 'always', readV: 2, cheer: true, names: ['Luke', '우진'] },
     stats: { bossWins: 0, maxCombo: 0, perfect: 0, correct: 0, records: 0 },
     maxDay: '', gemV: 1, seenTip: false, gun: 1, bonus: 0, rank: null, xp: 0, xpV: 0, sp: {}, spSel: 'missile', hint: 5, petLv: {}, pcard: 0, stV: 2, nkV: 1, hatV: 1, xpFrac: 0, hatFrac: 0, cross: { c: 0, p: 0 }, cxDay: { d: '', n: 0 }, rushDay: { d: '', n: 0 }, snakeDay: { d: '', n: 0 }, snake: { r: 0, b: 0 }, rush: { b: 0, r: 0, c: 0 }, spell: { r: 0, b: 0 }, night: false, spLoad: null,
     hw: { unit: 23, due: '2026-10-15', on: true, days: [1, 2, 3] },
@@ -963,7 +963,7 @@ function setStat(set, w, st) {
   s.words[w.w] = st;
 }
 /* ---- 밤 모드: 낮 스테이지(처음 24개)를 모두 깨면 열려요. 밤 기록은 낮 기록과 따로(nstages) 저장해요 ---- */
-const NIGHT = { n: 24, q: 24, boss: 1.3, xp: 0.2, coin: 0.5 }; // 열리는 조건 / 문제 수 / 보스 체력 배율 / XP 보너스 / 코인 보너스
+const NIGHT = { n: 24, q: 24, boss: 1.3, bspd: 1.1, xp: 0.2, coin: 0.5 }; // 열리는 조건 / 문제 수 / 보스 체력 배율 / XP 보너스 / 코인 보너스
 const dayRec = (set, si) => { const s = Store.data.sets[set.id]; return (s && s.stages[si]) || { stars: 0, best: 0, runs: 0 }; };
 const nightNeed = set => set.id === 'custom' ? 0 : Math.min(NIGHT.n, set.stages.length);
 function nightProg(set) { let n = 0; const m = nightNeed(set); for (let i = 0; i < m; i++) if (dayRec(set, i).stars >= 1) n++; return n; }
@@ -3424,6 +3424,8 @@ function drawBuffAura(x, y, h) {
 const BOSS_Y = () => G.H * 0.53;
 const BOSS_SIZE = () => G.H * 0.22;
 
+/* 보스 세기: 속도 ×1.5 (밤은 ×1.1 더), 총이 세질수록 체력도 따라 올라요 (예전엔 총 위력 증가분의 절반만 반영했어요) */
+const BOSS_SPD = 1.5, BOSS_GUNK = 0.8, BOSS_HPK = 1.5;
 function startBoss() {
   const set = R.set, c = [];
   R.missed.forEach((v, wi) => { if (set.words[wi].typable) c.push(wi); });
@@ -3434,9 +3436,9 @@ function startBoss() {
   if (words.length < 3) { const more = shuffle(R.pool.filter(wi => set.words[wi].typable && !words.includes(wi))); words = words.concat(more).slice(0, Math.max(3, Math.min(want, words.length + more.length))); }
   if (!words.length) return endRun(false);
   words = shuffle(words);
-  const st = R.stages && R.stages.length ? R.stages.reduce((a, b) => a + b, 0) / R.stages.length : 0, gl = clamp((Store.data.gun || 1) - 1, 0, GUNS.length - 1), d0 = GUNS[0].dmg / GUNS[0].iv, dps = GUNS[gl].dmg / GUNS[gl].iv, ref = d0 * (1 + 0.5 * (dps / d0 - 1)), phaseHp = Math.round(ref * (9 + 0.2 * st) * 1.25 * (R.night ? NIGHT.boss : 1));
+  const st = R.stages && R.stages.length ? R.stages.reduce((a, b) => a + b, 0) / R.stages.length : 0, gl = clamp((Store.data.gun || 1) - 1, 0, GUNS.length - 1), d0 = GUNS[0].dmg / GUNS[0].iv, dps = GUNS[gl].dmg / GUNS[gl].iv, ref = d0 * (1 + BOSS_GUNK * (dps / d0 - 1)), phaseHp = Math.round(ref * (9 + 0.2 * st) * BOSS_HPK * (R.night ? NIGHT.boss : 1));
   R.bossOn = true;
-  R.boss = { weak: weakOf(Wd.world), words, n: words.length, rounds: 0, phaseHp, max: phaseHp * words.length, hp: phaseHp * words.length, bl: 1.5, t: 0, enter: 0, atk: 2.2, projs: [], state: 'intro', hits: 0 };
+  R.boss = { weak: weakOf(Wd.world), words, n: words.length, rounds: 0, phaseHp, max: phaseHp * words.length, hp: phaseHp * words.length, spd: BOSS_SPD * (R.night ? NIGHT.bspd : 1), bl: 1.5, t: 0, enter: 0, atk: 2.2, projs: [], state: 'intro', hits: 0 };
   R.phase = 'bossIntro'; R.scrollTarget = 0.4; HUD.prompt.hidden = true; R.q = null; R.bul.length = 0; R.firing = false; hudAll();
   SFX.hit();
 }
@@ -3821,7 +3823,7 @@ function judgeCloze(early, ln) {
 
 /* ============ Boss Rush: 깬 스테이지의 보스 3마리를 랜덤으로 연달아 (하루 5판) ============ */
 const RUSH_N = 3, RUSH_HP = 7, RUSH_DAY = 5;
-const RUSH_SPDS = [1.4, 1.7, 2.0];         // 보스별 속도 배율
+const RUSH_SPDS = [1.7, 1.95, 2.2];         // 보스별 속도 배율
 const RUSH_BASE = [0, 1, 2];               // 보스별 폭탄 시작 줄 수 (0=1줄부터, 1=2줄부터, 2=3줄부터)
 const rushSpd = k => RUSH_SPDS[Math.min(Math.max(0, k | 0), RUSH_SPDS.length - 1)];
 /* 하루 도전 횟수: 끝까지 간 판(클리어·게임오버)만 세요. 도중에 나가면 보상도 없고 횟수도 안 줄어요 */
@@ -4292,6 +4294,7 @@ function renderSettings() {
   const row = (lb, sm, ctl) => `<div class="set-row"><div class="lb">${lb}<small>${sm}</small></div>${ctl}</div>`;
   $('#settings-body').innerHTML =
     row('효과음', '정답과 오답 소리', `<button class="tog ${s.sound ? 'on' : ''}" data-act="tog" data-k="sound" aria-label="효과음"></button>`) +
+    row('Snake 배경음악', '뱀 게임 할 때 나오는 음악이에요 (게임 화면에서도 끌 수 있어요)', `<button class="tog ${s.bgm !== false ? 'on' : ''}" data-act="tog" data-k="bgm" aria-label="배경음악"></button>`) +
     row('영어 발음 읽어 주기', '소리를 켜고 끄는 스위치예요', `<button class="tog ${s.speech ? 'on' : ''}" data-act="tog" data-k="speech" aria-label="발음"></button>`) +
     row('보스 목소리', '보스 대사를 읽는 목소리예요. 누르면 들려줘요', `<div class="seg" style="width:calc(var(--m)*58)">${Object.entries(BOSS_VOICE).map(([k, v]) => `<button class="${(s.bossVoice || 'gen') === k ? 'on' : ''}" data-act="bossVoice" data-k="${k}">${v.n}</button>`).join('')}</div>`) +
     row('문제 읽어 주기', s.readMode === 'always' ? '모든 문제에서 문제가 나올 때 영어를 읽어요. 뜻→영어 문제는 정답 발음이 미리 들려요 (힌트)' : '영어→뜻 문제는 처음에, 나머지는 답을 확인한 뒤에 읽어요', `<div class="seg" style="width:calc(var(--m)*52)"><button class="${s.readMode !== 'always' ? 'on' : ''}" data-act="readMode" data-v="after">정답 확인 후</button><button class="${s.readMode === 'always' ? 'on' : ''}" data-act="readMode" data-v="always">항상 먼저</button></div>`) +
@@ -4527,7 +4530,7 @@ const ACT = {
   wFilter(d) { App.wFilter = d.k; App.wMax = 150; renderWords(); },
   wGo(d) { openPrep({ kind: 'stage', si: +d.si }); },
   wMore() { App.wMax += 200; const y = $('#words-body').scrollTop; renderWords(); $('#words-body').scrollTop = y; },
-  tog(d) { const s = Store.data.settings; s[d.k] = !s[d.k]; Store.touch(); if (d.k === 'sound' && s.sound) { audioInit(); SFX.ok(0); } renderSettings(); },
+  tog(d) { const s = Store.data.settings; s[d.k] = d.k === 'bgm' ? !(s.bgm !== false) : !s[d.k]; Store.touch(); if (d.k === 'sound' && s.sound) { audioInit(); SFX.ok(0); } renderSettings(); },
   setPace(d) { Store.data.settings.pace = +d.i; Store.touch(); renderSettings(); },
   hwOn() { const h = Store.data.hw; h.on = h.on === false; Store.touch(); SFX.tap(); renderSettings(); },
   hwUnit(d) { const h = Store.data.hw, n = (h.unit | 0) + (+d.d), u = clamp(n, 1, HW_MAX); h.unit = u; Store.touch(); SFX.tap(); renderSettings(); },
@@ -5921,9 +5924,102 @@ function renderCross() {
 }
 function leaveCross() { if (CX.api) CX.api.leave(); }
 
+/* ============ Snake 배경음악 (직접 작곡한 8비트 루프 · 파일 없이 WebAudio로 연주) ============ */
+const BGM = { bpm: 156, gain: 0.30, playing: false, g: null, timer: 0, next: 0, duck: false, run: 0 };
+/* 한 마디 = 8분음표 8칸. 'C5' 같은 음이름, '.' 는 쉼표. 화음은 마디마다 하나 (루트 음이름) */
+const BGM_NOTES = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
+const BGM_BARS = [
+  // A 가락
+  ['C', 'E5 G5 E5 C5 D5 E5 G5 .'], ['A', 'E5 A5 E5 C5 B4 C5 E5 .'],
+  ['F', 'F5 A5 F5 C5 D5 F5 A5 .'], ['G', 'G5 B5 G5 D5 E5 D5 B4 .'],
+  ['C', 'E5 G5 C6 G5 E5 G5 E5 C5'], ['E', 'G5 B5 G5 E5 D5 E5 G5 .'],
+  ['F', 'A5 F5 A5 C6 A5 F5 E5 D5'], ['G', 'D5 G5 B5 G5 D5 . G4 B4'],
+  // B 가락 (조금 높고 바빠져요)
+  ['F', 'C6 . A5 F5 A5 C6 . A5'], ['G', 'D6 . B5 G5 B5 D6 . B5'],
+  ['E', 'E6 D6 B5 G5 E5 G5 B5 .'], ['A', 'C6 B5 A5 E5 A5 C6 E6 .'],
+  ['F', 'A5 C6 A5 F5 G5 A5 C6 .'], ['G', 'B5 D6 B5 G5 A5 B5 D6 .'],
+  ['C', 'E6 C6 G5 E5 G5 C6 E6 G6'], ['G', 'D6 . B5 . G5 . . .'],
+];
+function bgmMidi(n) { const m = /^([A-G])(#?)(\d)$/.exec(n); if (!m) return 0; return 12 * (+m[3] + 1) + BGM_NOTES[m[1]] + (m[2] ? 1 : 0); }
+const bgmHz = m => 440 * Math.pow(2, (m - 69) / 12);
+const BGM_STEP = () => 60 / BGM.bpm / 2;               // 8분음표 길이(초)
+const BGM_LEN = () => BGM_BARS.length * 8 * BGM_STEP(); // 한 바퀴 길이(초)
+let BGM_PULSE = null, BGM_NOISE = null;
+function bgmWaves(ctx) {
+  if (!BGM_PULSE || BGM_PULSE.c !== ctx) {
+    const N = 32, re = new Float32Array(N), im = new Float32Array(N), d = 0.25; // 25% 펄스파 (게임기 느낌)
+    for (let n = 1; n < N; n++) re[n] = (2 / (n * Math.PI)) * Math.sin(n * Math.PI * d);
+    BGM_PULSE = { c: ctx, w: ctx.createPeriodicWave(re, im) };
+    const b = ctx.createBuffer(1, ctx.sampleRate * 0.2, ctx.sampleRate), a = b.getChannelData(0);
+    for (let i = 0; i < a.length; i++) a[i] = Math.random() * 2 - 1;
+    BGM_NOISE = b;
+  }
+  return BGM_PULSE.w;
+}
+/* 한 바퀴(16마디)를 ctx 시각 t0부터 예약해요. 실제 재생도, 샘플 파일 렌더도 이 함수를 써요. */
+function bgmSchedule(ctx, dest, t0) {
+  const pulse = bgmWaves(ctx), st = BGM_STEP();
+  const env = (g, t, a, hold, rel, v) => { g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(v, t + a); g.gain.setValueAtTime(v, t + a + hold); g.gain.exponentialRampToValueAtTime(0.0001, t + a + hold + rel); };
+  const osc = (type, f, t, dur, v, wave) => {
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    if (wave) o.setPeriodicWave(wave); else o.type = type;
+    o.frequency.setValueAtTime(f, t); env(g, t, 0.006, Math.max(0.01, dur * 0.55), Math.max(0.03, dur * 0.4), v);
+    o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 0.08);
+  };
+  const noise = (t, dur, v, hp) => {
+    const s = ctx.createBufferSource(), g = ctx.createGain(), f = ctx.createBiquadFilter();
+    s.buffer = BGM_NOISE; f.type = 'highpass'; f.frequency.value = hp; env(g, t, 0.002, 0.005, dur, v);
+    s.connect(f); f.connect(g); g.connect(dest); s.start(t); s.stop(t + dur + 0.05);
+  };
+  const kick = (t) => {
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine';
+    o.frequency.setValueAtTime(150, t); o.frequency.exponentialRampToValueAtTime(45, t + 0.11);
+    env(g, t, 0.003, 0.02, 0.12, 0.5); o.connect(g); g.connect(dest); o.start(t); o.stop(t + 0.2);
+  };
+  BGM_BARS.forEach((bar, bi) => {
+    const tb = t0 + bi * 8 * st, root = 36 + BGM_NOTES[bar[0]]; // 베이스: 낮은 도~시 근처
+    // 가락 (펄스파)
+    bar[1].split(' ').forEach((tok, i) => { if (tok === '.') return; osc('square', bgmHz(bgmMidi(tok)), tb + i * st, st * 0.92, 0.2, pulse); });
+    // 베이스 (삼각파): 근음, 근음, 5도, 근음 … 통통 튀게
+    const bp = [0, null, 0, null, 7, null, 0, 7];
+    bp.forEach((iv, i) => { if (iv === null) return; osc('triangle', bgmHz(root + iv), tb + i * st, st * 0.85, 0.42); });
+    // 리듬: 킥(1·3박), 하이햇(엇박)
+    kick(tb); kick(tb + 4 * st);
+    for (let i = 1; i < 8; i += 2) noise(tb + i * st, 0.04, 0.07, 6000);
+    // 2마디마다 마지막 칸에 작은 스네어
+    if (bi % 2 === 1) noise(tb + 7 * st, 0.09, 0.09, 2500);
+  });
+}
+function bgmEnabled() { const s = Store.data.settings; return s.sound !== false && s.bgm !== false; }
+function bgmLoopTick(run) {
+  if (!BGM.playing || run !== BGM.run) return;
+  const ctx = AU.ctx, len = BGM_LEN();
+  // 다음 바퀴는 끝나기 1.5초 전에 예약해요
+  if (BGM.next - ctx.currentTime < 1.5) { bgmSchedule(ctx, BGM.g, BGM.next); BGM.next += len; }
+  BGM.timer = setTimeout(() => bgmLoopTick(run), 400);
+}
+function bgmPlay() {
+  try {
+    if (BGM.playing || !bgmEnabled()) return;
+    audioInit(); if (!AU.ctx) return;
+    const ctx = AU.ctx; BGM.g = ctx.createGain(); BGM.g.gain.value = BGM.gain * (BGM.duck ? 0.3 : 1); BGM.g.connect(AU.master);
+    BGM.playing = true; BGM.run++; BGM.next = ctx.currentTime + 0.08;
+    bgmLoopTick(BGM.run);
+  } catch (e) { BGM.playing = false; }
+}
+function bgmStop(fade = 0.35) {
+  try {
+    if (!BGM.playing) return; BGM.playing = false; BGM.run++; clearTimeout(BGM.timer);
+    const g = BGM.g, ctx = AU.ctx; BGM.g = null; if (!g) return;
+    g.gain.cancelScheduledValues(ctx.currentTime); g.gain.setTargetAtTime(0.0001, ctx.currentTime, fade / 4);
+    setTimeout(() => { try { g.disconnect(); } catch (e) { } }, fade * 1000 + 150);
+  } catch (e) { }
+}
+function bgmDuck(on) { BGM.duck = !!on; try { if (BGM.g) BGM.g.gain.setTargetAtTime(BGM.gain * (on ? 0.3 : 1), AU.ctx.currentTime, 0.05); } catch (e) { } }
+
 /* ============ Snake! 미니게임 (보너스 길 Snake! 판) — snake_src.html을 앱에 맞게 옮긴 것 (build_snake.py가 생성) ============ */
-const SNK_CSS = "\n/* 레이아웃: 한 화면 앱. 위에 진행 막대와 문제 카드, 나머지는 모눈종이 보드(캔버스). 노트 위에서 노는 뱀. */\n/* 게임 화면이라 밝은 한 가지 모습으로 고정하고, 배경과 글자색은 모두 명시한다. */\n.snk{\n  --paper:#E4EFF7; --grid:#F8FBFE; --grid-line:#D5E7F3; --card:#FFFFFF;\n  --ink:#1D3557; --ink-soft:#586D8C;\n  --sun:#FFC83D; --good:#2FB57A; --good-soft:#BDEFD5; --bad:#FF6B5B; --bad-soft:#FFD2CB;\n  --snake-a:#43C183; --snake-b:#2E9E69;\n  --b1:#FFE49A; --b2:#FFC6D3; --b3:#BDE3FF; --b4:#C8F0D6;\n  --veil:rgba(248,251,254,.86); --shade:rgba(29,53,87,.22);\n  --font-display:'Jua','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-mono:ui-monospace,Menlo,Consolas,monospace;\n}\n.snk,.snk *{box-sizing:border-box}\n.snk{position:absolute;inset:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;-webkit-user-select:none;user-select:none;touch-action:none}\n:host{position:fixed;inset:0;z-index:60;display:block}\n:host([hidden]){display:none}\nbutton{font-family:inherit;color:inherit}\n:focus-visible{outline:3px solid var(--ink);outline-offset:2px}\n\n#app{height:100%;display:flex;flex-direction:column;gap:10px;max-width:560px;margin-inline:auto;padding-inline:16px;padding-block:12px}\n@media (min-aspect-ratio:11/10) and (min-width:700px){#app{max-width:min(100%,1040px);padding-inline:28px}.q-ko{font-size:clamp(34px,5vw,56px)}}\n\n.top{display:flex;align-items:center;gap:10px}\n.icon{width:44px;height:44px;flex:none;padding:0;display:grid;place-items:center;border:3px solid var(--ink);border-radius:14px;background:var(--card);box-shadow:3px 3px 0 var(--ink);cursor:pointer}\n.icon:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}\n#pips{flex:1;min-width:0;display:flex;gap:4px}\n.pip{flex:1;min-width:0;height:12px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);transition:background .2s}\n.pip.ok{background:var(--good)}\n.pip.miss{background:var(--bad)}\n.pip.cur{background:var(--sun)}\n.round{min-width:3.4em;text-align:right;font-family:var(--font-display);font-size:18px;font-variant-numeric:tabular-nums}\n\n.qcard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px 12px;background:var(--card);border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink)}\n.q-label{font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.q-ko{font-family:var(--font-display);font-size:clamp(34px,11vw,50px);line-height:1.1;overflow-wrap:anywhere}\n.q-ko.m{font-size:clamp(26px,8vw,38px)}.q-ko.l{font-size:clamp(21px,6.2vw,30px)}\n.stats{display:flex;gap:14px}\n.stat{display:flex;flex-direction:column;align-items:flex-end}\n.stat span{font-size:12px;color:var(--ink-soft)}\n.stat b{font-family:var(--font-display);font-size:24px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}\n\n#board{position:relative;flex:1;min-height:0;overflow:hidden;border:3px solid var(--ink);border-radius:20px;background-color:var(--grid)}\n#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}\n\n.fb{position:absolute;top:10px;left:50%;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 16px;border:3px solid var(--ink);border-radius:99px;background:var(--card);font-family:var(--font-display);font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transition:opacity .18s;z-index:2}\n.fb.show{opacity:1}\n.fb.ok{background:var(--good-soft)}\n.fb.no{background:var(--bad-soft)}\n.combo{position:absolute;left:12px;bottom:12px;padding:5px 14px;border:3px solid var(--ink);border-radius:99px;background:var(--sun);font-family:var(--font-display);font-size:18px;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transform:scale(.8);transition:opacity .15s,transform .2s;z-index:2}\n.combo.show{opacity:1;transform:none}\n.tip{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 14px;border-radius:99px;background:var(--ink);color:#fff;font-size:14px;text-align:center;pointer-events:none;z-index:2}\n\n.ov{position:absolute;inset:0;display:flex;overflow:auto;padding:14px;background:var(--veil);z-index:3}\n.panel{width:min(100%,380px);margin:auto;display:flex;flex-direction:column;gap:14px;padding:18px 18px 16px;background:var(--card);border:3px solid var(--ink);border-radius:20px;box-shadow:5px 5px 0 var(--ink)}\n.title{margin:0;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.1;text-wrap:balance}\n.lead{margin:0;color:var(--ink-soft);line-height:1.55}\n.flabel{margin-bottom:6px;font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{min-height:44px;padding:6px 14px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);font-size:15px;cursor:pointer}\n.chip[aria-pressed=\"true\"]{background:var(--sun);box-shadow:2px 2px 0 var(--ink)}\n.cta{min-height:54px;border:3px solid var(--ink);border-radius:16px;background:var(--sun);font-family:var(--font-display);font-size:22px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}\n.cta:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}\n.ghost{min-height:46px;border:3px solid var(--ink);border-radius:14px;background:var(--card);font-size:16px;cursor:pointer}\n.ghost:active{background:var(--paper)}\n.note{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.5}\n\n.stars{display:flex;gap:6px}\n.stars svg{width:44px;height:44px}\n.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}\n.rtile{padding:8px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--grid)}\n.rtile span{display:block;font-size:12px;color:var(--ink-soft)}\n.rtile b{font-family:var(--font-display);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums}\n.wl{list-style:none;margin:0;padding:0;display:grid;gap:6px}\n.wl li{display:flex;align-items:center;gap:10px;min-width:0;padding:4px 6px 4px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--bad-soft)}\n.wl .en{font-family:var(--font-display);font-size:20px}\n.wl .ko{flex:1;min-width:0;color:var(--ink-soft);overflow-wrap:anywhere}\n.spk{width:40px;height:40px;flex:none;padding:0;display:grid;place-items:center;border:2.5px solid var(--ink);border-radius:50%;background:var(--card);cursor:pointer}\n.good-note{margin:0;padding:10px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--good-soft)}\n.dev summary{min-height:32px;cursor:pointer;font-size:14px;color:var(--ink-soft)}\n.dev pre{margin:8px 0 0;padding:10px;border-radius:10px;background:var(--paper);font:12px/1.5 var(--font-mono);white-space:pre;overflow-x:auto}\n\n.pop{animation:pop .28s cubic-bezier(.3,1.6,.5,1)}\n@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n\n[hidden]{display:none!important}\n#board{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}\n.band{position:absolute;left:0;top:0;pointer-events:none;z-index:3;border-block:5px solid #1D3557;background:repeating-linear-gradient(90deg,#43C183 0 26px,#2E9E69 26px 52px);box-shadow:0 8px 0 rgba(29,53,87,.28);will-change:transform}\n.band::after{content:\"\";position:absolute;right:-2px;top:50%;width:46px;height:46px;border-radius:50%;transform:translate(60%,-50%);background:#43C183;border:5px solid #1D3557}\n.stxt{position:absolute;left:50%;top:42%;z-index:4;pointer-events:none;transform:translate(-50%,-50%) rotate(-4deg);padding:10px 20px;background:#fff;border:4px solid #1D3557;border-radius:18px;box-shadow:0 6px 0 #1D3557;text-align:center;white-space:nowrap;color:#1D3557}\n.stxt small{display:block;font-size:13px;color:#586D8C}.stxt b{display:block;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.15}\n.cd{position:absolute;left:50%;top:44%;z-index:5;pointer-events:none;transform:translate(-50%,-50%);font-family:var(--font-display);font-size:clamp(90px,26vw,150px);color:#fff;-webkit-text-stroke:7px #1D3557;paint-order:stroke fill;text-shadow:0 8px 0 #1D3557;animation:pop .32s cubic-bezier(.3,1.6,.5,1)}\n.cd.go{color:#FFC83D}\n.rnote{margin:0;text-align:center;font-size:13px;color:var(--ink-soft)}\n";
-const SNK_HTML = "<div class=\"snk\" id=\"snk\"><div id=\"app\">\n  <header class=\"top\">\n    <button class=\"icon\" id=\"btnPause\" type=\"button\" aria-label=\"일시정지\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" aria-hidden=\"true\"><rect x=\"3\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/><rect x=\"11\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/></svg>\n    </button>\n    <div id=\"pips\" role=\"img\" aria-label=\"진행 상황\"></div>\n    <div class=\"round\" id=\"roundTxt\">0/7</div>\n  </header>\n\n  <section class=\"qcard\" aria-live=\"polite\">\n    <div>\n      <div class=\"q-label\" id=\"qLabel\">뜻을 보고 영단어를 먹어요</div>\n      <div class=\"q-ko\" id=\"qKo\">준비!</div>\n    </div>\n    <div class=\"stats\">\n      <div class=\"stat\"><span>코인</span><b id=\"coins\">0</b></div>\n      <div class=\"stat\"><span>길이</span><b id=\"len\">8</b></div>\n    </div>\n  </section>\n\n  <main id=\"board\">\n    <canvas id=\"cv\"></canvas>\n    <div class=\"fb\" id=\"fb\" role=\"status\"></div>\n    <div class=\"combo\" id=\"combo\"></div>\n    <div class=\"tip\" id=\"tip\" hidden>화면을 손가락으로 끌어서 방향을 바꿔요</div>\n\n\n    <section class=\"ov\" id=\"result\" hidden>\n      <div class=\"panel\">\n        <div class=\"stars\" id=\"stars\" role=\"img\"></div>\n        <h2 class=\"title\" id=\"resTitle\">잘했어요!</h2>\n        <div class=\"rgrid\">\n          <div class=\"rtile\"><span>한 번에 맞힌 단어</span><b id=\"rOk\">0</b></div>\n          <div class=\"rtile\"><span>뱀 길이</span><b id=\"rLen\">0</b></div>\n          <div class=\"rtile\"><span>XP</span><b id=\"rXp\">0</b></div>\n          <div class=\"rtile\"><span>코인</span><b id=\"rCoin\">0</b></div>\n        </div>\n        <div id=\"wrongBox\">\n          <div class=\"flabel\">다시 볼 단어</div>\n          <ul class=\"wl\" id=\"wrongList\"></ul>\n          <p class=\"good-note\" id=\"allGood\" hidden>모든 단어를 한 번에 맞혔어요!</p>\n        </div>\n        <p class=\"rnote\" id=\"rnote\">보상은 이번 스테이지 결과에 더해져요</p>\n        <button class=\"cta\" id=\"btnDone\" type=\"button\">스테이지로 돌아가기</button>\n      </div>\n    </section>\n\n    <section class=\"ov\" id=\"pause\" hidden>\n      <div class=\"panel\">\n        <h2 class=\"title\">잠깐 멈춤</h2>\n        <button class=\"cta\" id=\"btnResume\" type=\"button\">계속하기</button>\n        <button class=\"ghost\" id=\"btnQuit\" type=\"button\">여기서 끝내기</button>\n      </div>\n    </section>\n  </main>\n</div><div class=\"cd\" id=\"cd\" hidden></div></div><div class=\"band\" id=\"band\" hidden></div><div class=\"stxt\" id=\"stxt\" hidden><small>단어 뱀 키우기 · 7라운드</small><b>SNAKE TIME!</b></div>";
+const SNK_CSS = "\n/* 레이아웃: 한 화면 앱. 위에 진행 막대와 문제 카드, 나머지는 모눈종이 보드(캔버스). 노트 위에서 노는 뱀. */\n/* 게임 화면이라 밝은 한 가지 모습으로 고정하고, 배경과 글자색은 모두 명시한다. */\n.snk{\n  --paper:#E4EFF7; --grid:#F8FBFE; --grid-line:#D5E7F3; --card:#FFFFFF;\n  --ink:#1D3557; --ink-soft:#586D8C;\n  --sun:#FFC83D; --good:#2FB57A; --good-soft:#BDEFD5; --bad:#FF6B5B; --bad-soft:#FFD2CB;\n  --snake-a:#43C183; --snake-b:#2E9E69;\n  --b1:#FFE49A; --b2:#FFC6D3; --b3:#BDE3FF; --b4:#C8F0D6;\n  --veil:rgba(248,251,254,.86); --shade:rgba(29,53,87,.22);\n  --font-display:'Jua','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-body:'Gowun Dodum','Apple SD Gothic Neo','Malgun Gothic',sans-serif;\n  --font-mono:ui-monospace,Menlo,Consolas,monospace;\n}\n.snk,.snk *{box-sizing:border-box}\n.snk{position:absolute;inset:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent;overscroll-behavior:none;-webkit-user-select:none;user-select:none;touch-action:none}\n:host{position:fixed;inset:0;z-index:60;display:block}\n:host([hidden]){display:none}\nbutton{font-family:inherit;color:inherit}\n:focus-visible{outline:3px solid var(--ink);outline-offset:2px}\n\n#app{height:100%;display:flex;flex-direction:column;gap:10px;max-width:560px;margin-inline:auto;padding-inline:16px;padding-block:12px}\n@media (min-aspect-ratio:11/10) and (min-width:700px){#app{max-width:min(100%,1040px);padding-inline:28px}.q-ko{font-size:clamp(34px,5vw,56px)}}\n\n.top{display:flex;align-items:center;gap:10px}\n.icon{width:44px;height:44px;flex:none;padding:0;display:grid;place-items:center;border:3px solid var(--ink);border-radius:14px;background:var(--card);box-shadow:3px 3px 0 var(--ink);cursor:pointer}\n.icon:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}\n#pips{flex:1;min-width:0;display:flex;gap:4px}\n.pip{flex:1;min-width:0;height:12px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);transition:background .2s}\n.pip.ok{background:var(--good)}\n.pip.miss{background:var(--bad)}\n.pip.cur{background:var(--sun)}\n.round{min-width:3.4em;text-align:right;font-family:var(--font-display);font-size:18px;font-variant-numeric:tabular-nums}\n\n.qcard{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 16px 12px;background:var(--card);border:3px solid var(--ink);border-radius:18px;box-shadow:4px 4px 0 var(--ink)}\n.q-label{font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.q-ko{font-family:var(--font-display);font-size:clamp(34px,11vw,50px);line-height:1.1;overflow-wrap:anywhere}\n.q-ko.m{font-size:clamp(26px,8vw,38px)}.q-ko.l{font-size:clamp(21px,6.2vw,30px)}\n.stats{display:flex;gap:14px}\n.stat{display:flex;flex-direction:column;align-items:flex-end}\n.stat span{font-size:12px;color:var(--ink-soft)}\n.stat b{font-family:var(--font-display);font-size:24px;font-weight:400;line-height:1.1;font-variant-numeric:tabular-nums}\n\n#board{position:relative;flex:1;min-height:0;overflow:hidden;border:3px solid var(--ink);border-radius:20px;background-color:var(--grid)}\n#cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}\n\n.fb{position:absolute;top:10px;left:50%;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 16px;border:3px solid var(--ink);border-radius:99px;background:var(--card);font-family:var(--font-display);font-size:19px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transition:opacity .18s;z-index:2}\n.fb.show{opacity:1}\n.fb.ok{background:var(--good-soft)}\n.fb.no{background:var(--bad-soft)}\n.combo{position:absolute;left:12px;bottom:12px;padding:5px 14px;border:3px solid var(--ink);border-radius:99px;background:var(--sun);font-family:var(--font-display);font-size:18px;box-shadow:3px 3px 0 var(--ink);pointer-events:none;opacity:0;transform:scale(.8);transition:opacity .15s,transform .2s;z-index:2}\n.combo.show{opacity:1;transform:none}\n.tip{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);max-width:calc(100% - 24px);padding:6px 14px;border-radius:99px;background:var(--ink);color:#fff;font-size:14px;text-align:center;pointer-events:none;z-index:2}\n\n.ov{position:absolute;inset:0;display:flex;overflow:auto;padding:14px;background:var(--veil);z-index:3}\n.panel{width:min(100%,380px);margin:auto;display:flex;flex-direction:column;gap:14px;padding:18px 18px 16px;background:var(--card);border:3px solid var(--ink);border-radius:20px;box-shadow:5px 5px 0 var(--ink)}\n.title{margin:0;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.1;text-wrap:balance}\n.lead{margin:0;color:var(--ink-soft);line-height:1.55}\n.flabel{margin-bottom:6px;font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}\n.chips{display:flex;flex-wrap:wrap;gap:8px}\n.chip{min-height:44px;padding:6px 14px;border:2.5px solid var(--ink);border-radius:99px;background:var(--card);font-size:15px;cursor:pointer}\n.chip[aria-pressed=\"true\"]{background:var(--sun);box-shadow:2px 2px 0 var(--ink)}\n.cta{min-height:54px;border:3px solid var(--ink);border-radius:16px;background:var(--sun);font-family:var(--font-display);font-size:22px;cursor:pointer;box-shadow:4px 4px 0 var(--ink)}\n.cta:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}\n.ghost{min-height:46px;border:3px solid var(--ink);border-radius:14px;background:var(--card);font-size:16px;cursor:pointer}\n.ghost:active{background:var(--paper)}\n.note{margin:0;font-size:13px;color:var(--ink-soft);line-height:1.5}\n\n.stars{display:flex;gap:6px}\n.stars svg{width:44px;height:44px}\n.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}\n.rtile{padding:8px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--grid)}\n.rtile span{display:block;font-size:12px;color:var(--ink-soft)}\n.rtile b{font-family:var(--font-display);font-weight:400;font-size:24px;font-variant-numeric:tabular-nums}\n.wl{list-style:none;margin:0;padding:0;display:grid;gap:6px}\n.wl li{display:flex;align-items:center;gap:10px;min-width:0;padding:4px 6px 4px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--bad-soft)}\n.wl .en{font-family:var(--font-display);font-size:20px}\n.wl .ko{flex:1;min-width:0;color:var(--ink-soft);overflow-wrap:anywhere}\n.spk{width:40px;height:40px;flex:none;padding:0;display:grid;place-items:center;border:2.5px solid var(--ink);border-radius:50%;background:var(--card);cursor:pointer}\n.good-note{margin:0;padding:10px 12px;border:2.5px solid var(--ink);border-radius:12px;background:var(--good-soft)}\n.dev summary{min-height:32px;cursor:pointer;font-size:14px;color:var(--ink-soft)}\n.dev pre{margin:8px 0 0;padding:10px;border-radius:10px;background:var(--paper);font:12px/1.5 var(--font-mono);white-space:pre;overflow-x:auto}\n\n.pop{animation:pop .28s cubic-bezier(.3,1.6,.5,1)}\n@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}\n@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}\n\n[hidden]{display:none!important}\n#board{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}\n.band{position:absolute;left:0;top:0;pointer-events:none;z-index:3;border-block:5px solid #1D3557;background:repeating-linear-gradient(90deg,#43C183 0 26px,#2E9E69 26px 52px);box-shadow:0 8px 0 rgba(29,53,87,.28);will-change:transform}\n.band::after{content:\"\";position:absolute;right:-2px;top:50%;width:46px;height:46px;border-radius:50%;transform:translate(60%,-50%);background:#43C183;border:5px solid #1D3557}\n.stxt{position:absolute;left:50%;top:42%;z-index:4;pointer-events:none;transform:translate(-50%,-50%) rotate(-4deg);padding:10px 20px;background:#fff;border:4px solid #1D3557;border-radius:18px;box-shadow:0 6px 0 #1D3557;text-align:center;white-space:nowrap;color:#1D3557}\n.stxt small{display:block;font-size:13px;color:#586D8C}.stxt b{display:block;font-family:var(--font-display);font-weight:400;font-size:30px;line-height:1.15}\n.cd{position:absolute;left:50%;top:44%;z-index:5;pointer-events:none;transform:translate(-50%,-50%);font-family:var(--font-display);font-size:clamp(90px,26vw,150px);color:#fff;-webkit-text-stroke:7px #1D3557;paint-order:stroke fill;text-shadow:0 8px 0 #1D3557;animation:pop .32s cubic-bezier(.3,1.6,.5,1)}\n.cd.go{color:#FFC83D}\n.rnote{margin:0;text-align:center;font-size:13px;color:var(--ink-soft)}\n\n#btnBgm{margin-left:2px}\n#btnBgm .x{display:none}\n#btnBgm.off{opacity:.6}\n#btnBgm.off .x{display:block}\n";
+const SNK_HTML = "<div class=\"snk\" id=\"snk\"><div id=\"app\">\n  <header class=\"top\">\n    <button class=\"icon\" id=\"btnPause\" type=\"button\" aria-label=\"일시정지\">\n      <svg width=\"18\" height=\"18\" viewBox=\"0 0 18 18\" aria-hidden=\"true\"><rect x=\"3\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/><rect x=\"11\" y=\"2\" width=\"4\" height=\"14\" rx=\"1.5\" fill=\"currentColor\"/></svg>\n    </button>\n    <div id=\"pips\" role=\"img\" aria-label=\"진행 상황\"></div>\n    <div class=\"round\" id=\"roundTxt\">0/7</div>\n    <button class=\"icon\" id=\"btnBgm\" type=\"button\" aria-label=\"배경음악\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M7 15.2V4.5l9-2v10.7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/><ellipse cx=\"5\" cy=\"15.4\" rx=\"2.4\" ry=\"2\" fill=\"currentColor\"/><ellipse cx=\"14\" cy=\"13.4\" rx=\"2.4\" ry=\"2\" fill=\"currentColor\"/><line class=\"x\" x1=\"2.5\" y1=\"2.5\" x2=\"17.5\" y2=\"17.5\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg></button>\n  </header>\n\n  <section class=\"qcard\" aria-live=\"polite\">\n    <div>\n      <div class=\"q-label\" id=\"qLabel\">뜻을 보고 영단어를 먹어요</div>\n      <div class=\"q-ko\" id=\"qKo\">준비!</div>\n    </div>\n    <div class=\"stats\">\n      <div class=\"stat\"><span>코인</span><b id=\"coins\">0</b></div>\n      <div class=\"stat\"><span>길이</span><b id=\"len\">8</b></div>\n    </div>\n  </section>\n\n  <main id=\"board\">\n    <canvas id=\"cv\"></canvas>\n    <div class=\"fb\" id=\"fb\" role=\"status\"></div>\n    <div class=\"combo\" id=\"combo\"></div>\n    <div class=\"tip\" id=\"tip\" hidden>화면을 손가락으로 끌어서 방향을 바꿔요</div>\n\n\n    <section class=\"ov\" id=\"result\" hidden>\n      <div class=\"panel\">\n        <div class=\"stars\" id=\"stars\" role=\"img\"></div>\n        <h2 class=\"title\" id=\"resTitle\">잘했어요!</h2>\n        <div class=\"rgrid\">\n          <div class=\"rtile\"><span>한 번에 맞힌 단어</span><b id=\"rOk\">0</b></div>\n          <div class=\"rtile\"><span>뱀 길이</span><b id=\"rLen\">0</b></div>\n          <div class=\"rtile\"><span>XP</span><b id=\"rXp\">0</b></div>\n          <div class=\"rtile\"><span>코인</span><b id=\"rCoin\">0</b></div>\n        </div>\n        <div id=\"wrongBox\">\n          <div class=\"flabel\">다시 볼 단어</div>\n          <ul class=\"wl\" id=\"wrongList\"></ul>\n          <p class=\"good-note\" id=\"allGood\" hidden>모든 단어를 한 번에 맞혔어요!</p>\n        </div>\n        <p class=\"rnote\" id=\"rnote\">보상은 이번 스테이지 결과에 더해져요</p>\n        <button class=\"cta\" id=\"btnDone\" type=\"button\">스테이지로 돌아가기</button>\n      </div>\n    </section>\n\n    <section class=\"ov\" id=\"pause\" hidden>\n      <div class=\"panel\">\n        <h2 class=\"title\">잠깐 멈춤</h2>\n        <button class=\"cta\" id=\"btnResume\" type=\"button\">계속하기</button>\n        <button class=\"ghost\" id=\"btnQuit\" type=\"button\">여기서 끝내기</button>\n      </div>\n    </section>\n  </main>\n</div><div class=\"cd\" id=\"cd\" hidden></div></div><div class=\"band\" id=\"band\" hidden></div><div class=\"stxt\" id=\"stxt\" hidden><small>단어 뱀 키우기 · 7라운드</small><b>SNAKE TIME!</b></div>";
 function snakeBuild(host){
 const SR=host.attachShadow({mode:'open'});
 SR.innerHTML='<style>'+SNK_CSS+'</style>'+SNK_HTML;
@@ -6089,7 +6185,7 @@ function nextQuestion(){
 /* ---------- 라운드 시작/끝 ---------- */
 function show(id,on){$(id).hidden=!on;}
 function startRound(){
-  ensureAudio();
+  ensureAudio();try{bgmPlay();}catch(e){}
   var qs=(conf&&conf.qs||[]).slice();
   if(!qs.length)return;
   S.run++;timers=[];parts=[];floats=[];
@@ -6103,6 +6199,7 @@ function startRound(){
   nextQuestion();
 }
 function finish(reason){
+  try{bgmStop();}catch(e){}
   S.run++;timers=[];
   S.mode='result';S.locked=true;hideFb();$('#tip').hidden=true;
   if(reason==='bite'&&S.marks[S.qi]==='cur')S.marks[S.qi]='todo';
@@ -6463,8 +6560,10 @@ window.addEventListener('keydown',function(e){
 window.addEventListener('keyup',function(e){if(!opened)return;delete keys[e.key.toLowerCase()];});
 
 /* ---------- 버튼 ---------- */
-function pause(){if(S.mode!=='play'||S.paused)return;S.paused=true;ptr.active=false;show('#pause',true);}
-function resume(){S.paused=false;show('#pause',false);}
+function pause(){if(S.mode!=='play'||S.paused)return;S.paused=true;ptr.active=false;show('#pause',true);try{bgmDuck(true);}catch(e){}}
+function resume(){S.paused=false;show('#pause',false);try{bgmDuck(false);}catch(e){}}
+function syncBgm(){var b=$('#btnBgm');if(!b)return;var on=false;try{on=bgmEnabled();}catch(e){}b.classList.toggle('off',!on);b.setAttribute('aria-pressed',on?'true':'false');}
+$('#btnBgm').addEventListener('click',function(){try{bgmToggle();}catch(e){}syncBgm();if(S.mode==='play'){try{bgmEnabled()?bgmPlay():bgmStop();}catch(e){}}});
 $('#btnPause').addEventListener('click',function(){if(S.paused)resume();else pause();});
 $('#btnResume').addEventListener('click',resume);
 $('#btnQuit').addEventListener('click',function(){S.paused=false;show('#pause',false);finish('quit');});
@@ -6508,7 +6607,7 @@ function countdown(){
   tick();
 }
 function leave(){
-  if(!opened)return;
+  if(!opened)return;try{bgmStop();}catch(e){}
   clearIntro();show('#result',true);
   wipe(-1,760,function(){
     opened=false;S.mode='off';S.run++;timers=[];
@@ -6522,7 +6621,7 @@ function leave(){
 resize();
 var api={
   open:function(c){
-    conf=c;$('#rnote').textContent=c.note||'보상은 이번 스테이지 결과에 더해져요';$('#btnDone').textContent=c.doneLabel||'스테이지로 돌아가기';WORDS=c.pool||[];cfg.count=c.count||7;lastPayload=null;clearIntro();
+    conf=c;syncBgm();$('#rnote').textContent=c.note||'보상은 이번 스테이지 결과에 더해져요';$('#btnDone').textContent=c.doneLabel||'스테이지로 돌아가기';WORDS=c.pool||[];cfg.count=c.count||7;lastPayload=null;clearIntro();
     S.run++;timers=[];parts=[];floats=[];S.mode='intro';S.qs=[];S.qi=0;S.bubbles=[];S.marks=[];S.combo=0;S.paused=false;
     show('#result',false);show('#pause',false);hideFb();$('#tip').hidden=true;cdEl.hidden=true;
     $('#qKo').textContent='준비!';$('#qKo').className='q-ko';$('#qLabel').textContent='뜻을 보고 영단어를 먹어요';
@@ -6534,7 +6633,7 @@ var api={
   },
   isOpen:function(){return opened;},
   dbg:function(){return {S:S,snake:snake,WORDS:WORDS,cfg:cfg,W:W,H:H,WW:WW,WH:WH,cam:cam};},
-  abort:function(){opened=false;clearIntro();if(wipeRaf){cancelAnimationFrame(wipeRaf);wipeRaf=0;}snkEl.style.clipPath='';bandEl.hidden=true;stxtEl.hidden=true;SR.host.hidden=true;conf=null;}
+  abort:function(){try{bgmStop(0.1);}catch(e){}opened=false;clearIntro();if(wipeRaf){cancelAnimationFrame(wipeRaf);wipeRaf=0;}snkEl.style.clipPath='';bandEl.hidden=true;stxtEl.hidden=true;SR.host.hidden=true;conf=null;}
 };
 return api;
 }
@@ -6592,6 +6691,7 @@ function snakeDone(run, pl) {
   setTimeout(tick, 1350);
 }
 
+function bgmToggle() { const s = Store.data.settings; s.bgm = !(s.bgm !== false); Store.touch(); }
 function snakeApi() {
   if (!SNK.font) { SNK.font = true; try { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = 'https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap'; document.head.appendChild(l); } catch (e) { } }
   if (!SNK.host) { SNK.host = document.createElement('div'); SNK.host.id = 'scr-snake'; SNK.host.hidden = true; document.body.appendChild(SNK.host); }
